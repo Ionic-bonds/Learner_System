@@ -35,7 +35,7 @@ CREATE TABLE `CourseRecord` (
 --
 
 CREATE TABLE `Trainer` (
-  `id` int(11) NOT NULL,
+  `TrainerID` int(11) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -46,7 +46,8 @@ CREATE TABLE `Trainer` (
 --
 
 CREATE TABLE `Learner` (
-  `id` int(11) NOT NULL,
+  `LearnerID` int(11) NOT NULL,
+  `EnrolledCourses` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
