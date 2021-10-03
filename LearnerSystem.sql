@@ -4,9 +4,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `LearnerSystem`
 --
-DROP DATABASE IF EXISTS `LearnerSystem` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+DROP DATABASE IF EXISTS `LearnerSystem`;
 CREATE DATABASE `LearnerSystem`;
 USE `LearnerSystem`;
+
+
+
+--
+-- Table structure for table `CourseOverview`
+--
+
+CREATE TABLE IF NOT EXISTS `CourseOverview` (
+  `CourseID` integer NOT NULL AUTO_INCREMENT,
+  `CourseName` varchar(100),
+  `CourseDescription` varchar(100),
+  `CourseStatus` boolean,
+  constraint CourseOverview_pk primary key(CourseID)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
+values(1, 'Software Engineering', 'This is a course', TRUE);
+
 
 
 -- Table structure for table `Person`
@@ -18,8 +37,7 @@ CREATE TABLE IF NOT EXISTS `Person` (
   `NRIC` varchar(15) DEFAULT NULL,
   `ContactNo` int(11) DEFAULT NULL,
   constraint Person_pk primary key (personID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- --------------------------------------------------------
 --
@@ -31,36 +49,8 @@ CREATE TABLE IF NOT EXISTS `Trainer` (
   `personid` integer NOT NULL,
   constraint Trainer_pk primary key (TrainerID),
   constraint Trainer_fk foreign key (personid) references Person(personID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
--- Table structure for table `Trainer Schedule`
---
-
-CREATE TABLE IF NOT EXISTS `TrainerSchedule` (
-  `TrainerScheduleID` integer AUTO_INCREMENT NOT NULL,
-  `TrainerID` integer NOT NULL,
-  `CourseID` integer NOT NULL,
-  constraint TrainerSchedule_pk primary key (TrainerScheduleID),
-  constraint TrainerSchedule_fk foreign key (TrainerID) references Trainer(TrainerID),
-  constraint TrainerSchedule_fk foreign key (CourseID) references CourseOverview(CourseID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- Table structure for table `CourseRecord`
---
-
-CREATE TABLE IF NOT EXISTS `CourseRecord` (
-  `CourseID` integer AUTO_INCREMENT NOT NULL,
-  `TrainerScheduleID` integer NOT NULL,
-  `LearnerID` integer NOT NULL,
-  `ClassID` integer NOT NULL,
-  constraint CourseRecord_pk primary key (CourseID, TrainerScheduleID, LearnerID, ClassID),
-  constraint CourseRecord_fk foreign key (CourseID) references CourseOverview(CourseID),
-  constraint CourseRecord_fk foreign key (LearnerID) references Learner(LearnerID),
-  constraint CourseRecord_fk foreign key (ClassID) references ClassDescription(ClassID)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- -------
 --
 -- -------
 --
@@ -73,6 +63,67 @@ CREATE TABLE IF NOT EXISTS `Learner` (
   constraint Learner_pk primary key (LearnerID),
   constraint Learner_fk foreign key (personid) references Person(personID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+-- Table structure for table `Trainer Schedule`
+--
+insert into Person(personID, name, nric, ContactNo)
+values(1, 'Jacky', 'S9624229H', 82011734);
+
+insert into Person(personID, name, nric, ContactNo)
+values(2, 'Leeky', 'S91234567A', 97011734);
+
+insert into Trainer(TrainerID, personid) values(1,1);
+
+insert into Learner(LearnerID, personid) values(1,2);
+
+CREATE TABLE IF NOT EXISTS `TrainerSchedule` (
+  `TrainerScheduleID` integer AUTO_INCREMENT NOT NULL,
+  `TrainerID` integer NOT NULL,
+  `CourseID` integer NOT NULL,
+  constraint TrainerSchedule_pk primary key (TrainerScheduleID),
+  constraint TrainerSchedule_fk1 foreign key (TrainerID) references Trainer(TrainerID),
+  constraint TrainerSchedule_fk2 foreign key (CourseID) references CourseOverview(CourseID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `ClassDescription`
+--
+insert into TrainerSchedule(TrainerScheduleID, TrainerID, CourseID) values(1,1,1);
+
+CREATE TABLE IF NOT EXISTS `ClassDescription` (
+  `ClassID` integer,
+  `CourseID` integer,
+  `ClassSize` integer,
+  `StartTime` timestamp,
+  `Duration` integer,
+  `StartDate` timestamp,
+  `EndDate` timestamp,
+  constraint ClassDescription_pk primary key(ClassID, CourseID),
+  constraint ClassDescription_fk foreign key(CourseID) references CourseOverview(CourseID)
+  
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, Duration, StartDate, EndDate) values(1,1,50,'12:30pm',90, '21 September 2021', '2:00pm');
+
+-- Table structure for table `CourseRecord`
+--
+
+CREATE TABLE IF NOT EXISTS `CourseRecord` (
+  `CourseID` integer AUTO_INCREMENT NOT NULL,
+  `TrainerScheduleID` integer NOT NULL,
+  `LearnerID` integer NOT NULL,
+  `ClassID` integer NOT NULL,
+  constraint CourseRecord_pk primary key (CourseID, TrainerScheduleID, LearnerID, ClassID),
+  constraint CourseRecord_fk1 foreign key (CourseID) references CourseOverview(CourseID),
+  constraint CourseRecord_fk2 foreign key (LearnerID) references Learner(LearnerID),
+  constraint CourseRecord_fk3 foreign key (ClassID) references ClassDescription(ClassID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,1,1);
+
+-- -------
 
 -- --------------------------------------------------------
 -- Table structure for table `LearnerRecord`
@@ -93,39 +144,7 @@ CREATE TABLE IF NOT EXISTS `LearnerRecord` (
 
 -- --------------------------------------------------------
 
-
---
--- Table structure for table `CourseOverview`
---
-
-CREATE TABLE IF NOT EXISTS `CourseOverview` (
-  `CourseID` integer NOT NULL AUTO_INCREMENT,
-  `CourseName` varchar(100),
-  `CourseDescription` varchar(100),
-  `CourseStatus` boolean,
-  constraint CourseOverview_pk primary key(CourseID)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
 -- --------------------------------------------------------
---
--- Table structure for table `ClassDescription`
---
-
-CREATE TABLE IF NOT EXISTS `ClassDescription` (
-  `ClassID` integer,
-  `CourseID` integer,
-  `ClassSize` integer,
-  `StartTime` timestamp,
-  `Duration` integer,
-  `StartDate` timestamp,
-  `EndDate` timestamp,
-  constraint ClassDescription_pk primary key(ClassID, CourseID),
-  constraint ClassDescription_fk foreign key(CourseID) references CourseOverview(CourseID)
-  
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 -- --------------------------------------------------------
@@ -143,19 +162,22 @@ CREATE TABLE IF NOT EXISTS `SectionOverview` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(1, 1, 'This is a good section', 20);
+
 -- --------------------------------------------------------
 -- Table structure for table `SectionMaterials`
 --
 
-CREATE TABLE IF NOT EXISTS`SectionMaterials` (
+CREATE TABLE IF NOT EXISTS `SectionMaterials` (
   `SectionMaterialsID` integer AUTO_INCREMENT NOT NULL,
   `SectionID` integer,
   `SectionMaterials` varchar(100),
   `CourseID` integer,
   constraint SectionMaterials_pk primary key(SectionMaterialsID, SectionID),
-  constraint SectionMaterials_fk foreign key(SectionID) references SessionOverview(SessionID),
-  constraint SectionMaterials_fk foreign key(CourseID) references CourseOverview(CourseID)
-  
+  constraint SectionMaterials_fk1 foreign key(SectionID) references SectionOverview(SectionID),
+  constraint SectionMaterials_fk2 foreign key(CourseID) references CourseOverview(CourseID)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -165,7 +187,7 @@ CREATE TABLE IF NOT EXISTS`SectionMaterials` (
 --
 
 CREATE TABLE `SectionQuiz` (
-  `SectionQuizID` integer NOT NULL AUTO_INCREMENT NOT NULL,
+  `SectionQuizID` integer NOT NULL AUTO_INCREMENT,
   `SectionID` integer NULL,
   `QuizType` varchar(100) NULL,
   `QuizResult` varchar(1) NULL,
