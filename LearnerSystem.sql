@@ -25,6 +25,8 @@ CREATE TABLE IF NOT EXISTS CourseOverview (
 
 insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
 values(1, 'Software Engineering', 'This is a course', TRUE);
+insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
+values(2, 'Software Practices', 'This is a software practices course', TRUE);
 
 
 -- Table structure for table Person
@@ -105,6 +107,7 @@ CREATE TABLE IF NOT EXISTS ClassDescription (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, Duration, StartDate, EndDate) values(1,1,50,'12:30pm',90, '21 September 2021', '2:00pm');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, Duration, StartDate, EndDate) values(2,2,40,'13:30pm',120, '23 September 2021', '4:00pm');
 
 -- Table structure for table CourseRecord
 --
@@ -139,6 +142,9 @@ CREATE TABLE IF NOT EXISTS LearnerRecord (
     constraint LearnerRecord_pk primary key(LearnerID,LearnerRecordID),
     constraint LearnerRecord_fk foreign key(LearnerID) references Learner(LearnerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,1,'Software Engineering', 1, 'Pass', TRUE, 20.5);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,2,'Software Practices', 2, 'Pass', TRUE, 17.5);
 
 -- --------------------------------------------------------
 
