@@ -10,7 +10,13 @@ class Person:
         print("ID" + self.PersonID)
     
     def retrieveAlldetails(self):
-        return self.name, self.PersonID, self.NRIC, self.email, self.ContactNo
+        #Change all of this below to return statement from print in this function
+        print("Person Name:" , self.name)
+        print("Person PersonID:" , self.PersonID)
+        print("Person NRIC:" , self.NRIC)
+        print("Person ContactNo:" , self.ContactNo)
+        print("Person Email:" , self.email)
+
     def retrievePersonNRIC(self):
         return self.NRIC
     
@@ -22,35 +28,29 @@ class Person:
 
 class Learner(Person):
     def __init__(self, LearnerID, PersonID, learnername, learnernric, learnercontact, learneremail):
+        super().__init__(PersonID, learnername, learnernric, learnercontact, learneremail)
         self.LearnerID = LearnerID
-        Person.__init__(self, PersonID, learnername, learnernric, learnercontact, learneremail)
-    
+        
     def displaylearner(self):
         print("LearnerID", self.LearnerID)
         Person.retrieveAlldetails(self)
 
-
 class Trainer(Person):
     def __init__(self, TrainerID, PersonID, TrainerName, TrainerNric, TrainerContact, TrainerEmail):
+        super().__init__(PersonID,TrainerName, TrainerNric, TrainerContact, TrainerEmail)
         self.TrainerID = TrainerID
-        Person.__init__(self, PersonID, TrainerName, TrainerNric, TrainerContact, TrainerEmail)
-    
+        
     def displayTrainer(self):
         print("TrainerID", self.TrainerID)
-        print(Person.retrieveAlldetails(self))
+        Person.retrieveAlldetails(self)
 
-person = Person(1,'Cheebye','12345679A','82011734','tczh@gmail.com')
-person1 = Person(2,'Talkcock','9123712A','9712312','tczh@ALBCX.com')
+
 
 learner = Learner(1,1,'Cheebye','12345679A','82011734','tczh@gmail.com')
 learner.displaylearner()
 
-trainer = Trainer(1,2,'Talkcock','9123712A','9712312','tczh@ALBCX.com')
+trainer = Trainer(1,2,'Milopeng','97456723A','9761231','Milokosong@company.com')
 trainer.displayTrainer()
 
-print(person.name)
-
-print(isinstance(learner, Learner))
-print(isinstance(person, Person))
-print(issubclass(Person,Learner))
 print(issubclass(Learner,Person))
+print(issubclass(Trainer,Person))
