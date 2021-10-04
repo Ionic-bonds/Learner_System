@@ -177,16 +177,17 @@ values(1, 1, 'This is a good section', 20);
 --
 
 CREATE TABLE IF NOT EXISTS SectionMaterials (
-  SectionMaterialsID integer AUTO_INCREMENT NOT NULL,
+  SectionMaterialsID integer,
   CourseID integer,
+  SectionID integer,
   SectionMaterials varchar(100),
-  constraint SectionMaterials_pk primary key(SectionMaterialsID, CourseID),
-  constraint SectionMaterials_fk1 foreign key(CourseID) references CourseOverview(CourseID)
+  constraint SectionMaterials_pk primary key(SectionMaterialsID, CourseID, SectionID),
+  constraint SectionMaterials_fk2 foreign key(CourseID,SectionID) references sectionoverview(CourseID,SectionID)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionMaterials)
-values(1, 1, 'This is a good section');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(1, 1, 1,'This is a good section');
 -- --------------------------------------------------------
 -- Table structure for table SectionMaterials
 --
@@ -201,10 +202,40 @@ CREATE TABLE IF NOT EXISTS SectionQuiz (
   quizResult varchar(1),
   duration integer,
   quizStartTime timestamp,
-  constraint SectionQuiz_pk primary key(SectionID, SectionMaterialsID, SectionQuizID),
-  constraint SectionMaterials_f12 foreign key(SectionMaterialsID) references SectionMaterials(SectionMaterialsID)
+  CourseID integer,
+  constraint SectionQuiz_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID),
+  constraint SectionMaterials_f12 foreign key(SectionMaterialsID, CourseID, SectionID) references SectionMaterials(SectionMaterialsID, CourseID, SectionID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,quizType,quizResult,duration,quizStartTime)
-values(1,1,1,'MCQ','P',90,'12:30:00 pm');
+INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
+values(1,1,1,1,'MCQ','P',90,'12:30:00 pm');
 
+
+-- Table structure for table SectionQuiz
+--
+CREATE TABLE IF NOT EXISTS QuizQn(
+    QuizQnID integer,
+    CourseID integer,
+    SectionMaterialsID integer,
+    SectionQuizID integer,
+    SectionID integer,
+    QuizQuestion varchar(1000),
+    QuizSolutions varchar(20),
+    constraint QuizQn_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
+    constraint QuizQn_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID) references SectionQuiz(SectionID,SectionMaterialsID, SectionQuizID, CourseID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS LearnerQuizAnswer (
+  QuizQnID integer,
+  SectionQuizID integer,
+  SectionMaterialsID integer,
+  CourseID integer,
+  SectionID integer,
+  LearnerID integer,
+  quizAnswer varchar(100),
+  constraint LearnerQuizAnswer_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID, LearnerID),
+  constraint LearnerQuizAnswer_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID) references QuizQn(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
+  constraint LearnerQuizAnswer_fk1 foreign key(LearnerID) references Learner(LearnerID)
+    
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
