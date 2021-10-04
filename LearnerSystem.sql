@@ -190,3 +190,21 @@ values(1, 1, 'This is a good section');
 -- --------------------------------------------------------
 -- Table structure for table SectionMaterials
 --
+
+-- Table structure for table SectionQuiz
+--
+CREATE TABLE IF NOT EXISTS SectionQuiz (
+  SectionQuizID integer,
+  SectionID integer,
+  SectionMaterialsID integer,
+  quizType varchar(10),
+  quizResult varchar(1),
+  duration integer,
+  quizStartTime timestamp,
+  constraint SectionQuiz_pk primary key(SectionID, SectionMaterialsID, SectionQuizID),
+  constraint SectionMaterials_f12 foreign key(SectionMaterialsID) references SectionMaterials(SectionMaterialsID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,quizType,quizResult,duration,quizStartTime)
+values(1,1,1,'MCQ','P',90,'12:30:00 pm');
+
