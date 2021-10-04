@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS Person (
   name varchar(100) DEFAULT NULL,
   NRIC varchar(15) DEFAULT NULL,
   ContactNo int(11) DEFAULT NULL,
+  email varchar(100) DEFAULT NULL,
   constraint Person_pk primary key (personID)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -68,11 +69,11 @@ CREATE TABLE IF NOT EXISTS Learner (
 -- --------------------------------------------------------
 -- Table structure for table Trainer Schedule
 --
-insert into Person(personID, name, nric, ContactNo)
-values(1, 'Jacky', 'S9624229H', 82011734);
+insert into Person(personID, name, nric, ContactNo, email)
+values(1, 'Jacky', 'S9624229H', 82011734, 'jacky@company.com');
 
-insert into Person(personID, name, nric, ContactNo)
-values(2, 'Leeky', 'S91234567A', 97011734);
+insert into Person(personID, name, nric, ContactNo , email)
+values(2, 'Leeky', 'S91234567A', 97011734, 'leeky@company.com');
 
 insert into Trainer(TrainerID, personid) values(1,1);
 
