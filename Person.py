@@ -7,10 +7,12 @@ class Person:
         self.email = email
 
     def retrievePersonID(self):
-        print("ID" + self.PersonID)
+        return self.PersonID
+    
+    def retrievePersonName(self):
+        return self.name
     
     def retrieveAlldetails(self):
-        #Change all of this below to return statement from print in this function
         print("Person Name:" , self.name)
         print("Person PersonID:" , self.PersonID)
         print("Person NRIC:" , self.NRIC)
@@ -44,12 +46,15 @@ class Trainer(Person):
         print("TrainerID", self.TrainerID)
         Person.retrieveAlldetails(self)
 
+#Driver code to create 2 Person objects in order to instantiate 1 Learner & 1 Trainer Class
+P = Person(1,'Cheebye', '12345679A','82011734','tczh@gmail.com')
+P1 = Person(2,'Milopeng','97456723A','9761231','Milokosong@company.com')
+print(P.name)
 
-
-learner = Learner(1,1,'Cheebye','12345679A','82011734','tczh@gmail.com')
+learner = Learner(1,P.PersonID,P.name,P.NRIC,P.ContactNo,P.email)
 learner.displaylearner()
 
-trainer = Trainer(1,2,'Milopeng','97456723A','9761231','Milokosong@company.com')
+trainer = Trainer(1,P1.PersonID,P1.name,P1.NRIC,P1.ContactNo,P1.email)
 trainer.displayTrainer()
 
 print(issubclass(Learner,Person))
