@@ -211,8 +211,10 @@ INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quiz
 values(1,1,1,1,'MCQ','P',90,'12:30:00 pm');
 
 
--- Table structure for table SectionQuiz
+-- --------------------------------------------------------
+-- Table structure for table QuizQn
 --
+
 CREATE TABLE IF NOT EXISTS QuizQn(
     QuizQnID integer,
     CourseID integer,
@@ -220,11 +222,15 @@ CREATE TABLE IF NOT EXISTS QuizQn(
     SectionQuizID integer,
     SectionID integer,
     QuizQuestion varchar(1000),
-    QuizSolutions varchar(20),
-    constraint QuizQn_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
+    QuizOptionNo integer,
+    QuizOption varchar(100),
+    constraint QuizQn_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID, QuizOptionNo),
     constraint QuizQn_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID) references SectionQuiz(SectionID,SectionMaterialsID, SectionQuizID, CourseID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+-- Table structure for table LearnerQuizAnswer
+--
 
 CREATE TABLE IF NOT EXISTS LearnerQuizAnswer (
   QuizQnID integer,
@@ -237,5 +243,21 @@ CREATE TABLE IF NOT EXISTS LearnerQuizAnswer (
   constraint LearnerQuizAnswer_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID, LearnerID),
   constraint LearnerQuizAnswer_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID) references QuizQn(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
   constraint LearnerQuizAnswer_fk1 foreign key(LearnerID) references Learner(LearnerID)
+    
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+-- Table structure for table SolutionTable
+--
+
+CREATE TABLE IF NOT EXISTS SolutionTable (
+  QuizQnID integer,
+  SectionQuizID integer,
+  SectionMaterialsID integer,
+  CourseID integer,
+  SectionID integer,
+  quizSolution varchar(100),
+  constraint SolutionTable_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
+  constraint SolutionTable_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID) references QuizQn(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID)
     
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
