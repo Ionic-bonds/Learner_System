@@ -59,3 +59,22 @@ trainer.displayTrainer()
 
 print(issubclass(Learner,Person))
 print(issubclass(Trainer,Person))
+
+
+class LearnerRecord(Learner):
+    def __init__(self,LearnerID, LearnerRecordID, EnrolledCourse, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress):
+        self.LearnerID = LearnerID
+        self.LearnerRecordID = LearnerRecordID
+        self.EnrolledCourse = EnrolledCourse
+        self.EnrolledClass = EnrolledClass
+        self.FinalQuizResult = FinalQuizResult
+        self.CourseStatus = CourseStatus
+        self.SectionProgress = SectionProgress
+    
+    def printAll(self):
+        print("This is LearnerID", self.LearnerID)
+        print(self.LearnerRecordID)
+
+LearnersRecords = LearnerRecord(learner.LearnerID,1,'Software Engineering Practices','G1','P',1,30)
+print('LearnerRecord of ID',LearnersRecords.LearnerID)
+LearnersRecords.printAll()
