@@ -80,6 +80,9 @@ class CourseOverview(db.Model):
     CourseDescription = db.Column(db.String(100), nullable=False)
     CourseStatus = db.Column(db.Boolean, nullable=False)
 
+    def json(self):
+        return {'CourseID': self.CourseID, 'CourseName':self.CourseName , 'CourseDescription':self.CourseDescription ,'CourseStatus':self.CourseStatus }
+
 
 class TrainerSchedule(db.Model):
     __tableName__ = 'TrainerSchedule'
@@ -90,6 +93,9 @@ class TrainerSchedule(db.Model):
 
     TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
     TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
+
+    def json(self):
+        return {'TrainerID': self.TrainerID, 'CourseID':self.CourseID , 'TrainerScheduleID':self.TrainerScheduleID}
 
 
 @app.route('/trainer/<string:email>')
