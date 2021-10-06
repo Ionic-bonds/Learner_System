@@ -102,20 +102,40 @@ class SectionOverview(db.Model):
     def json(self):
         return {'SectionID': self.SectionID, 'CourseID':self.CourseID , 'SectionDescription':self.SectionDescription ,'SectionProgress':self.SectionProgress }
 
-
 class SectionMaterials(db.Model):
     __tableName__ = 'SectionMaterials'
     __mapper_args__ = {'polymorphic_identity': 'SectionMaterials'}
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
+    SectionID = db.Column(db.Foreignkey('SectionOverview.SectionID'),nullable=False, primary_key=True)
+    SectionMaterials = db.Column(db.String(100), nullable=False)
     CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
-    SectionDescription = db.Column(db.String(100), nullable=False)
-    SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+    # SectionDescription = db.Column(db.String(100), nullable=False)
+    # SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
-    SectionOverview = db.relationship('courseoverview', primaryjoin='sectionoverview.CourseID == courseoverview.CourseID', backref='SectionOverview')
+    SectionMaterials = db.relationship('sectionoverview', primaryjoin='sectionmaterial.SectionID == sectionoverview.SectionID', backref='SectionMaterials')
+    SectionMaterials = db.relationship('courseoverview', primaryjoin='sectionmaterial.CourseID == courseoverview.CourseID', backref='SectionMaterials')
 
     def json(self):
-        return {'SectionID': self.SectionID, 'CourseID':self.CourseID , 'SectionDescription':self.SectionDescription ,'SectionProgress':self.SectionProgress }
+        return {'SectionMaterialsID': self.SectionMaterialsID, 'SectionID':self.SectionID , 'SectionMaterials':self.SectionMaterials ,'CourseID':self.CourseID }
 
+class SectionQuiz(db.Model):
+    __tableName__ = 'SectionQuiz'
+    __mapper_args__ = {'polymorphic_identity': 'SectionQuiz'}
+    SectionQuizID = db.Column(db.Integer, primary_key=True)
+    SectionID = db.Column(db.Foreignkey('SectionOverview.SectionID'),nullable=False, primary_key=True)
+    CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
+    SectionMaterialsID = db.Column(db.Integer, primary_key=True)
+    quizType = db.Column(db.String(1), nullable=False)
+    quizResult = db.Column(db.Integer, primary_key=True)
+    duration = db.Column(db.Integer, primary_key=True)
+    quizStartTime = db.Column(db.DateTime, nullable=False)
+
+    SectionMaterials = db.relationship('sectionmaterials', primaryjoin='sectionquiz.SectionMaterialsID == sectionmaterials.SectionMaterialsID', backref='SectionQuiz')
+    SectionMaterials = db.relationship('sectionoverview', primaryjoin='sectionquiz.SectionID == sectionoverview.SectionID', backref='SectionQuiz')
+    SectionMaterials = db.relationship('courseoverview', primaryjoin='sectionquiz.CourseID == courseoverview.CourseID', backref='SectionQuiz')
+
+    def json(self):
+        return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizType':self.quizType ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
 
 class TrainerSchedule(db.Model):
     __tableName__ = 'TrainerSchedule'
