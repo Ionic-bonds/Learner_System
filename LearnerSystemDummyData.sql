@@ -104,28 +104,63 @@ insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledCl
 -- Dummy Data for table SectionOverview
 --
 insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
-values(1, 1, 'This is a good section', 20);
+values(1, 1, 'In this section, you will be learning how to keep your documents safe by utilizing the secure print features. You will learn to use various security features and tools.', 100);
+insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(2, 1, 'In this section, you will learn how to maximize your machine uptime by properly clearing paper jams.', 60);
+insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(3, 1, 'In this section, you will learn how to go digital with scan to email and more. You will learn the functionalities of wireless and digital printing.', 0);
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionMaterials
 --
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(1, 1, 1,'This is a good section');
+values(1, 1, 1,'BLOB');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(2, 1, 2,'BLOB');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(3, 1, 3,'BLOB');
 
 -- --------------------------------------------------------
--- Dummy Data for table SectionMaterials
+-- Dummy Data for table SectionQuiz
 --
 INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
 values(1,1,1,1,'MCQ','P',90,'12:30:00 pm');
 
 -- --------------------------------------------------------
--- Dummy Data for table SectionQuiz
---
-
--- --------------------------------------------------------
 -- Dummy Data for table QuizQn
 --
 
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(1,1,1,1,1,'A display listing of program options which users can select, is called',1,'Icons');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(1,1,1,1,1,'A display listing of program options which users can select, is called',2,'Options');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(1,1,1,1,1,'A display listing of program options which users can select, is called',3,'Selection');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(1,1,1,1,1,'A display listing of program options which users can select, is called',4,'Menu');
+
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(2,1,1,1,1,'An inventory management program can assist with the',1,'Distribution of inventory');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(2,1,1,1,1,'An inventory management program can assist with the',2,'Purchasing of inventory');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(2,1,1,1,1,'An inventory management program can assist with the',3,'Planning of inventory');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(2,1,1,1,1,'An inventory management program can assist with the',4,'All of these');
+
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(3,1,1,1,1,'In any software package, which of the following version represents a major improvement on the earlier version?',1,'1.1');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(3,1,1,1,1,'In any software package, which of the following version represents a major improvement on the earlier version?',2,'1.5');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(3,1,1,1,1,'In any software package, which of the following version represents a major improvement on the earlier version?',3,'2.0');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(3,1,1,1,1,'In any software package, which of the following version represents a major improvement on the earlier version?',4,'2.5');
+
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(1,1,1,1,1,'PHP is an open source software',4,1,'True');
+INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
+values(1,1,1,1,1,'PHP is an open source software',4,2,'False');
 -- --------------------------------------------------------
 -- Dummy Data for table LearnerQuizAnswer
 --
@@ -133,3 +168,11 @@ values(1,1,1,1,'MCQ','P',90,'12:30:00 pm');
 -- --------------------------------------------------------
 -- Dummy Data for table SolutionTable
 --
+INSERT INTO SolutionTable(QuizQnID,SectionQuizID,SectionMaterialsID,CourseID,SectionID,quizSolution)
+values (1,1,1,1,1,'Menu');
+INSERT INTO SolutionTable(QuizQnID,SectionQuizID,SectionMaterialsID,CourseID,SectionID,quizSolution)
+values (2,1,1,1,1,'All of these');
+INSERT INTO SolutionTable(QuizQnID,SectionQuizID,SectionMaterialsID,CourseID,SectionID,quizSolution)
+values (3,1,1,1,1,'2.0');
+INSERT INTO SolutionTable(QuizQnID,SectionQuizID,SectionMaterialsID,CourseID,SectionID,quizSolution)
+values (4,1,1,1,1,'True');
