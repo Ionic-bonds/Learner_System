@@ -19,16 +19,16 @@ insert into Person(personID, name, nric, ContactNo, email)
 values(1, 'Jacky', 'S9624229H', 82011734, 'jacky@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'Leeky', 'S91234567A', 97011734, 'leeky@company.com');
+values(2, 'Leaky', 'S91234567A', 97011734, 'leeky@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'JiaQi', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
+values(2, 'JaiQee', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'kingson', 'S91111111A', 91111111, 'imtheking@company.com');
+values(2, 'kingston', 'S91111111A', 91111111, 'imtheking@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'leonard', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
+values(2, 'leenord', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
 
 -- --------------------------------------------------------
 -- Dummy Data for table Trainer
