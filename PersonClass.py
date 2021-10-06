@@ -62,7 +62,7 @@ class Learner(Person):
 class LearnerRecord(db.Model):
     __tableName__ = 'LearnerRecord'
     __mapper_args__ = {'polymorphic_identity': 'LearnerRecord'}
-    LearnerID = db.Column(db.Foreignkey('trainer.LearnerID'), nullable=False, primary_key = True)
+    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
     LearnerRecordID = db.Column(db.Integer,nullable=False, primary_key=True)
     enrolledCourse = db.Column(db.String(100), nullable=False)
     enrolledClass = db.Column(db.String(100), nullable=False)
@@ -71,6 +71,12 @@ class LearnerRecord(db.Model):
     SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
     LearnerRecord = db.relationship('learner', primaryjoin='learnerrecord.LearnerID == learner.LearnerID', backref='LearnerRecord')
+
+    def json(self):
+        return {'LearnerID': self.LearnerID, 'LearnerRecordID': self.LearnerRecordID, 'enrolledCourse': self.enrolledCourse, 'enrolledClass': self.enrolledClass,
+        'FinalQuizResult' :self.FinalQuizResult, 'courseStatus': self.courseStatus, 'SectionProgress': self.SectionProgress}
+
+
 
 class CourseOverview(db.Model):
     __tableName__ = 'CourseOverview'

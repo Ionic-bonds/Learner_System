@@ -2,9 +2,9 @@
 -- Dummy Data for table CourseOverview
 --
 insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(1, 'Software Engineering X123', 'This is a course', TRUE);
+values(1, ' Xerox WorkCentre 7845', 'This is a course', TRUE);
 insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(2, 'Software Practices Q43', 'This is a software practices course', TRUE);
+values(2, 'Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
 insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
 values(3, 'Software Theory G64', 'The ultimate theory and go to for software everything', TRUE);
 insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
@@ -19,16 +19,16 @@ insert into Person(personID, name, nric, ContactNo, email)
 values(1, 'Jacky', 'S9624229H', 82011734, 'jacky@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'Leeky', 'S91234567A', 97011734, 'leeky@company.com');
+values(2, 'Leaky', 'S91234567A', 97011734, 'leeky@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'JiaQi', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
+values(2, 'JaiQee', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'kingson', 'S91111111A', 91111111, 'imtheking@company.com');
+values(2, 'kingston', 'S91111111A', 91111111, 'imtheking@company.com');
 
 insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'leonard', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
+values(2, 'leenord', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
 
 -- --------------------------------------------------------
 -- Dummy Data for table Trainer
@@ -99,6 +99,12 @@ insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(
 insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,1,'Software Engineering X123', 1, 'Pass', TRUE, 20.5);
 insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,2,'Software Practices Q43', 2, 'Pass', TRUE, 17.5);
 insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,3,'Practical Practices W76', 5, 'Pass', TRUE, 15.5);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(2,4,'Software Engineering X123', 1, 'Pass', TRUE, 19.5);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(2,5,'Software Practices Q43', 2, 'Pass', TRUE, 18);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(2,6,'Practical Practices W76', 5, 'Pass', TRUE, 15);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(3,7,'Theoratical Theory R23', 4, 'Pass', TRUE, 14.5);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(3,8,'Software Theory G64', 3, 'Pass', TRUE, 16.5);
+insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(3,9,'Software Engineering X123', 1, 'Pass', TRUE, 18);
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionOverview
@@ -119,12 +125,26 @@ insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMat
 values(2, 1, 2,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
 values(3, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(4, 2, 4,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(5, 2, 5,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(6, 2, 6,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(7, 3, 7,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(8, 3, 8,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(9, 3, 9,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionQuiz
 --
 INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
 values(1,1,1,1,'MCQ','P',90,'12:30:00 pm');
+INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
+values(2,1,1,1,'MCQ','G',90,'12:30:00 pm');
 
 -- --------------------------------------------------------
 -- Dummy Data for table QuizQn
