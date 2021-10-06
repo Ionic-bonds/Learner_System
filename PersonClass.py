@@ -8,7 +8,7 @@ import json
 from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/payment'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/person'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
@@ -58,6 +58,39 @@ class Learner(Person):
     
     def json(self):
         return {'LearnerID': self.LearnerID, 'PersonID':self.PersonID}
+
+class LearnerRecord(db.Model):
+    __tableName__ = 'LearnerRecord'
+    __mapper_args__ = {'polymorphic_identity': 'LearnerRecord'}
+    LearnerID = db.Column(db.Foreignkey('trainer.LearnerID'), nullable=False, primary_key = True)
+    LearnerRecordID = db.Column(db.Integer,nullable=False, primary_key=True)
+    enrolledCourse = db.Column(db.String(100), nullable=False)
+    enrolledClass = db.Column(db.String(100), nullable=False)
+    FinalQuizResult = db.Column(db.String(100), nullable=False)
+    courseStatus = db.Column(db.Boolean, nullable=False)
+    SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+
+    LearnerRecord = db.relationship('learner', primaryjoin='learnerrecord.LearnerID == learner.LearnerID', backref='LearnerRecord')
+
+class CourseOverview(db.Model):
+    __tableName__ = 'CourseOverview'
+    __mapper_args__ = {'polymorphic_identity': 'CourseOverview'}
+    CourseID = db.Column(db.Integer, primary_key=True)
+    CourseName = db.Column(db.String(100), nullable=False)
+    CourseDescription = db.Column(db.String(100), nullable=False)
+    CourseStatus = db.Column(db.Boolean, nullable=False)
+
+
+class TrainerSchedule(db.Model):
+    __tableName__ = 'TrainerSchedule'
+    __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
+    TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
+    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+    TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
+
+    TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
+    TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
+
 
 @app.route('/trainer/<string:email>')
 def trainer_by_email(email):
