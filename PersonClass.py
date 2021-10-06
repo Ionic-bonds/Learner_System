@@ -72,7 +72,24 @@ class LearnerRecord(db.Model):
 
     LearnerRecord = db.relationship('learner', primaryjoin='learnerrecord.LearnerID == learner.LearnerID', backref='LearnerRecord')
 
+class CourseOverview(db.Model):
+    __tableName__ = 'CourseOverview'
+    __mapper_args__ = {'polymorphic_identity': 'CourseOverview'}
+    CourseID = db.Column(db.Integer, primary_key=True)
+    CourseName = db.Column(db.String(100), nullable=False)
+    CourseDescription = db.Column(db.String(100), nullable=False)
+    CourseStatus = db.Column(db.Boolean, nullable=False)
 
+
+class TrainerSchedule(db.Model):
+    __tableName__ = 'TrainerSchedule'
+    __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
+    TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
+    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+    TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
+
+    TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
+    TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
 
 
 @app.route('/trainer/<string:email>')
