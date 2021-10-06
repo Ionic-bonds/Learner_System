@@ -114,11 +114,11 @@ values(3, 1, 'In this section, you will learn how to go digital with scan to ema
 -- Dummy Data for table SectionMaterials
 --
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(1, 1, 1,'BLOB');
+values(1, 1, 1,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(2, 1, 2,'BLOB');
+values(2, 1, 2,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(3, 1, 3,'BLOB');
+values(3, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionQuiz
