@@ -89,6 +89,33 @@ class CourseOverview(db.Model):
     def json(self):
         return {'CourseID': self.CourseID, 'CourseName':self.CourseName , 'CourseDescription':self.CourseDescription ,'CourseStatus':self.CourseStatus }
 
+class SectionOverview(db.Model):
+    __tableName__ = 'SectionOverview'
+    __mapper_args__ = {'polymorphic_identity': 'SectionOverview'}
+    SectionID = db.Column(db.Integer, primary_key=True)
+    CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
+    SectionDescription = db.Column(db.String(100), nullable=False)
+    SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+
+    SectionOverview = db.relationship('courseoverview', primaryjoin='sectionoverview.CourseID == courseoverview.CourseID', backref='SectionOverview')
+
+    def json(self):
+        return {'SectionID': self.SectionID, 'CourseID':self.CourseID , 'SectionDescription':self.SectionDescription ,'SectionProgress':self.SectionProgress }
+
+
+class SectionMaterials(db.Model):
+    __tableName__ = 'SectionMaterials'
+    __mapper_args__ = {'polymorphic_identity': 'SectionMaterials'}
+    SectionMaterialsID = db.Column(db.Integer, primary_key=True)
+    CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
+    SectionDescription = db.Column(db.String(100), nullable=False)
+    SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+
+    SectionOverview = db.relationship('courseoverview', primaryjoin='sectionoverview.CourseID == courseoverview.CourseID', backref='SectionOverview')
+
+    def json(self):
+        return {'SectionID': self.SectionID, 'CourseID':self.CourseID , 'SectionDescription':self.SectionDescription ,'SectionProgress':self.SectionProgress }
+
 
 class TrainerSchedule(db.Model):
     __tableName__ = 'TrainerSchedule'
