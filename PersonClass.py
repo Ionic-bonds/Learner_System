@@ -104,6 +104,43 @@ class TrainerSchedule(db.Model):
         return {'TrainerID': self.TrainerID, 'CourseID':self.CourseID , 'TrainerScheduleID':self.TrainerScheduleID}
 
 
+class QuizQn(db.Model):
+    __tableName__ = 'QuizQn'
+    __mapper_args__ = {'polymorphic_identity': 'QuizQn'}
+    QuizQnID = db.Column(db.Integer,nullable=False, primary_key=True)
+    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+    SectionMaterialsID = db.Column(db.Foreignkey('sectionoverview.SectionMaterialsID'),nullable=False)
+    SectionQuizID = db.Column(db.Foreignkey('sectionoverview.SectionQuizID'), nullable=False)
+    SectionID = db.Column(db.Foreignkey('sectionoverview.SectionID'), nullable=False)
+    QuizQuestion = db.Column(db.varchar(1000), nullable=False)
+    QuizOptionNo = db.Column(db.integer, nullable=False)
+    QuizOption = db.Column(db.varchar(100), nullable=False)
+
+    QuizQn = db.relationship('courseoverview', primaryjoin='QuizQn.CourseID == courseoverview.CourseID', backref='QuizQn')
+    QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='QuizQn')
+    QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionQuizID == sectionoverview.SectionQuizID', backref='QuizQn')
+    QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionID == sectionoverview.SectionID', backref='QuizQn')
+
+# class LearnerQuizAnswer(db.Model):
+#     __tableName__ = 'TrainerSchedule'
+#     __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
+#     TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
+#     CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+#     TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
+
+#     TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
+#     TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
+
+# class SolutionTable(db.Model):
+#     __tableName__ = 'TrainerSchedule'
+#     __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
+#     TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
+#     CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+#     TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
+
+#     TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
+#     TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
+
 @app.route('/trainer/<string:email>')
 def trainer_by_email(email):
     trainerDetails = Person.query.filter_by(email=email).first()
