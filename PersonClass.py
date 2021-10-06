@@ -150,6 +150,38 @@ class TrainerSchedule(db.Model):
     def json(self):
         return {'TrainerID': self.TrainerID, 'CourseID':self.CourseID , 'TrainerScheduleID':self.TrainerScheduleID}
 
+class ClassDescription(db.Model):
+    __tableName__ = 'ClassDescription'
+    __mapper_args__ = {'polymorphic_identity': 'ClassDescription'}
+    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False, primary_key=True)
+    ClassID = db.Column(db.Integer,nullable=False, primary_key=True)
+    ClassSize = db.Column(db.Integer, nullable=False)
+    StartTime = db.Column(db.DateTime, nullable=False)
+    StartDate = db.Column(db.DateTime, nullable=False)
+    EndTime = db.Column(db.DateTime, nullable=False)
+    EndDate = db.Column(db.DateTime, nullable=False)
+
+    ClassDescription = db.relationship('courseoverview', primaryjoin='classdescription.CourseID == courseoverview.CourseID', backref='ClassDescription')
+   
+    def json(self):
+        return {'CourseID': self.CourseID, 'ClassID':self.ClassID , 'ClassSize':self.ClassSize, 
+                'StartTime':self.StartTime,'StartDate':self.StartDate,'EndTime':self.EndTime,'EndDate':self.EndDate}
+
+class CourseRecord(db.Model):
+    __tableName__ = 'CourseRecord'
+    __mapper_args__ = {'polymorphic_identity': 'CourseRecord'}
+    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+    TrainerScheduleID = db.Column(db.ForeignKey('trainerschedule.TrainerScheduleID'),nullable=False, primary_key=True)
+    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
+    ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_key=True)
+
+    CourseRecord = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
+    CourseRecord = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
+
+    def json(self):
+        return {'CourseID': self.CourseID, 'TrainerScheduleID':self.TrainerScheduleID , 'LearnerID':self.LearnerID, 'ClassID':self.ClassID}
+
+
 
 class QuizQn(db.Model):
     __tableName__ = 'QuizQn'
