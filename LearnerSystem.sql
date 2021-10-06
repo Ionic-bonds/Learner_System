@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS SectionMaterials (
   SectionMaterialsID integer,
   CourseID integer,
   SectionID integer,
-  SectionMaterials varchar(100),
+  SectionMaterials varchar(1000),
   constraint SectionMaterials_pk primary key(SectionMaterialsID, CourseID, SectionID),
   constraint SectionMaterials_fk2 foreign key(CourseID,SectionID) references sectionoverview(CourseID,SectionID)
 
