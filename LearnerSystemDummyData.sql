@@ -50,13 +50,21 @@ insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledCl
 -- Dummy Data for table SectionOverview
 --
 insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
-values(1, 1, 'This is a good section', 20);
+values(1, 1, 'In this section, you will be learning how to keep your documents safe by utilizing the secure print features. You will learn to use various security features and tools.', 100);
+insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(2, 1, 'In this section, you will learn how to maximize your machine uptime by properly clearing paper jams.', 60);
+insert into SectionOverview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(3, 1, 'In this section, you will learn how to go digital with scan to email and more. You will learn the functionalities of wireless and digital printing.', 0);
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionMaterials
 --
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(1, 1, 1,'This is a good section');
+values(1, 1, 1,'BLOB');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(2, 1, 2,'BLOB');
+insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(3, 1, 3,'BLOB');
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionQuiz

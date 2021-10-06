@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 CORS(app)
 
 class Person(db.Model):
-    __tableName__ = 'Person'
+    __tableName__ = 'person'
     __mapper_args__ = {'polymorphic_identity': 'Person'}
     PersonID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -40,10 +40,10 @@ class Person(db.Model):
 class Trainer(Person):
     __tableName__ = 'Trainer'
     __mapper_args__ = {'polymorphic_identity': 'Trainer'}
-    PersonID = db.Column(db.ForeignKey('Person.PersonID'), nullable=False, primary_key=False)
+    PersonID = db.Column(db.ForeignKey('person.PersonID'), nullable=False)
     TrainerID = db.Column(db.Integer, primary_key=True)
 
-    Trainer = db.relationship('Person', primaryjoin='Trainer.PersonID == Person.PersonID', backref='Trainer')
+    Trainer = db.relationship('person', primaryjoin='Trainer.PersonID == Person.PersonID', backref='Trainer')
     
     def json(self):
         return {'TrainerID': self.TrainerID,'PersonID': self.PersonID}
@@ -51,10 +51,10 @@ class Trainer(Person):
 class Learner(Person):
     __tableName__ = 'Learner'
     __mapper_args__ = {'polymorphic_identity': 'Learner'}
-    PersonID = db.Column(db.ForeignKey('Person.PersonID'), nullable=False, primary_key=False)
+    PersonID = db.Column(db.ForeignKey('person.PersonID'), nullable=False, primary_key=False)
     LearnerID = db.Column(db.Integer, primary_key=True)
 
-    Learner = db.relationship('Person', primaryjoin='Learner.PersonID == Person.PersonID', backref='Learner')
+    Learner = db.relationship('person', primaryjoin='Learner.PersonID == Person.PersonID', backref='Learner')
     
     def json(self):
         return {'LearnerID': self.LearnerID, 'PersonID':self.PersonID}
