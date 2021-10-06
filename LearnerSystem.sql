@@ -84,8 +84,8 @@ CREATE TABLE IF NOT EXISTS ClassDescription (
   CourseID integer,
   ClassSize integer,
   StartTime timestamp,
-  Duration integer,
   StartDate timestamp,
+  EndTime timestamp,
   EndDate timestamp,
   constraint ClassDescription_pk primary key(ClassID, CourseID),
   constraint ClassDescription_fk foreign key(CourseID) references CourseOverview(CourseID)
