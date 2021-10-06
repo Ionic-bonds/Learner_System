@@ -8,7 +8,7 @@ import json
 from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/payment'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/person'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
@@ -58,6 +58,22 @@ class Learner(Person):
     
     def json(self):
         return {'LearnerID': self.LearnerID, 'PersonID':self.PersonID}
+
+class LearnerRecord(db.Model):
+    __tableName__ = 'LearnerRecord'
+    __mapper_args__ = {'polymorphic_identity': 'LearnerRecord'}
+    LearnerID = db.Column(db.Foreignkey('trainer.LearnerID'), nullable=False, primary_key = True)
+    LearnerRecordID = db.Column(db.Integer,nullable=False, primary_key=True)
+    enrolledCourse = db.Column(db.String(100), nullable=False)
+    enrolledClass = db.Column(db.String(100), nullable=False)
+    FinalQuizResult = db.Column(db.String(100), nullable=False)
+    courseStatus = db.Column(db.Boolean, nullable=False)
+    SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+
+    LearnerRecord = db.relationship('learner', primaryjoin='learnerrecord.LearnerID == learner.LearnerID', backref='LearnerRecord')
+
+
+
 
 @app.route('/trainer/<string:email>')
 def trainer_by_email(email):
