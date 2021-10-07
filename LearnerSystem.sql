@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS ClassDescription (
 --
 
 CREATE TABLE IF NOT EXISTS CourseRecord (
-  CourseRecordID integer AUTO_INCREMENT NOT NULL
+  CourseRecordID integer AUTO_INCREMENT NOT NULL,
   CourseID integer,
   TrainerScheduleID integer NOT NULL,
   LearnerID integer NOT NULL,
