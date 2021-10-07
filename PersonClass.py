@@ -156,7 +156,7 @@ class TrainerSchedule(db.Model):
 class ClassDescription(db.Model):
     __tableName__ = 'ClassDescription'
     __mapper_args__ = {'polymorphic_identity': 'ClassDescription'}
-    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_Key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     ClassID = db.Column(db.Integer,nullable=False, primary_key=True)
     ClassSize = db.Column(db.Integer, nullable=False)
     StartTime = db.Column(db.DateTime, nullable=False)
@@ -176,9 +176,9 @@ class CourseRecord(db.Model):
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False)
     #added Courserecord ID here
     CourseRecordID = db.Column(db.Integer,nullable=False, primary_key=True)
-    TrainerScheduleID = db.Column(db.ForeignKey('trainerschedule.TrainerScheduleID'), nullable=False, primary_Key=True)
-    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_Key=True)
-    ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_Key=True)
+    TrainerScheduleID = db.Column(db.ForeignKey('trainerschedule.TrainerScheduleID'), nullable=False, primary_key=True)
+    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
+    ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_key=True)
 
     #Here got issue => Need to use CourseRecord then join into TrainerSchedule table to Trainer & Trainschedule to courseoverview in 1 line
     CourseRecord = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
@@ -212,25 +212,48 @@ class QuizQn(db.Model):
 class LearnerQuizAnswer(db.Model):
     __tableName__ = 'LearnerQuizAnswer'
     __mapper_args__ = {'polymorphic_identity': 'LearnerQuizAnswer'}
-    QuizQnID = db.Column(db.ForeignKey('sectionovervie.QuizQnID'),nullable=False, primary_key=True)
+    QuizQnID = db.Column(db.ForeignKey('sectionoverview.QuizQnID'),nullable=False, primary_key=True)
     SectionQuizID = db.Column(db.ForeignKey('sectionoverview.SectionQuizID'), nullable=False, primary_key=True)
     SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False, primary_key=True)
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
     LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
-    quizAnswer = db.Column(db.varchar(100), nullable=False)
+    quizAnswer = db.Column(db.String(100), nullable=False)
+
+    LearnerQuizAnswer = db.relationship('courseoverview', primaryjoin='learnerquizanswer.CourseID == courseoverview.CourseID', backref='LearnerQuizAnswer')
+    LearnerQuizAnswer = db.relationship('sectionoverview', primaryjoin='learnerquizanswer.QuizQnID == sectionoverview.QuizQnID', backref='LearnerQuizAnswer')
+    LearnerQuizAnswer = db.relationship('sectionoverview', primaryjoin='learnerquizanswer.SectionQuizID == sectionoverview.SectionQuizID', backref='LearnerQuizAnswer')
+    LearnerQuizAnswer = db.relationship('sectionoverview', primaryjoin='learnerquizanswer.SectionID == sectionoverview.SectionID', backref='LearnerQuizAnswer')
+    LearnerQuizAnswer = db.relationship('learner', primaryjoin='learnerquizanswer.LearnerID == learner.LearnerID', backref='LearnerQuizAnswer')
+    LearnerQuizAnswer = db.relationship('sectionoverview', primaryjoin='learnerquizanswer.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='LearnerQuizAnswer')
+
+    def json(self):
+        return {'QuizQnID': self.QuizQnID, 'SectionQuizID':self.SectionQuizID, 'SectionMaterialsID':self.SectionMaterialsID, 'CourseID':self.CourseID
+                , 'SectionID':self.SectionID, 'LearnerID':self.LearnerID, 'quizAnswer':self.quizAnswer}
 
 
     
 class SolutionTable(db.Model):
     __tableName__ = 'LearnerQuizAnswer'
     __mapper_args__ = {'polymorphic_identity': 'LearnerQuizAnswer'}
-    QuizQnID = db.Column(db.ForeignKey('sectionovervie.QuizQnID'),nullable=False, primary_key=True)
+    QuizQnID = db.Column(db.ForeignKey('sectionoverview.QuizQnID'),nullable=False, primary_key=True)
     SectionQuizID = db.Column(db.ForeignKey('sectionoverview.SectionQuizID'), nullable=False, primary_key=True)
     SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False, primary_key=True)
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
-    quizSolution = db.Column(db.varchar(100), nullable=False)
+    quizSolution = db.Column(db.String(100), nullable=False)
+
+    SolutionTable = db.relationship('courseoverview', primaryjoin='solutiontable.CourseID == courseoverview.CourseID', backref='SolutionTable')
+    SolutionTable = db.relationship('sectionoverview', primaryjoin='solutiontable.QuizQnID == sectionoverview.QuizQnID', backref='SolutionTable')
+    SolutionTable = db.relationship('sectionoverview', primaryjoin='solutiontable.SectionQuizID == sectionoverview.SectionQuizID', backref='SolutionTable')
+    SolutionTable = db.relationship('sectionoverview', primaryjoin='solutiontable.SectionID == sectionoverview.SectionID', backref='SolutionTable')
+    SolutionTable = db.relationship('sectionoverview', primaryjoin='solutiontable.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='SolutionTable')
+
+
+    def json(self):
+        return {'QuizQnID': self.QuizQnID, 'SectionQuizID':self.SectionQuizID, 'SectionMaterialsID':self.SectionMaterialsID, 'CourseID':self.CourseID
+                , 'SectionID':self.SectionID, 'quizSolution':self.quizSolution}
+
 
     
 
