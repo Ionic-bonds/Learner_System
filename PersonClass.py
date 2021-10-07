@@ -8,7 +8,7 @@ import json
 from os import environ
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/person'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/payment'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
@@ -93,7 +93,7 @@ class SectionOverview(db.Model):
     __tableName__ = 'SectionOverview'
     __mapper_args__ = {'polymorphic_identity': 'SectionOverview'}
     SectionID = db.Column(db.Integer, primary_key=True)
-    CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionDescription = db.Column(db.String(100), nullable=False)
     SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
@@ -106,9 +106,9 @@ class SectionMaterials(db.Model):
     __tableName__ = 'SectionMaterials'
     __mapper_args__ = {'polymorphic_identity': 'SectionMaterials'}
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
-    SectionID = db.Column(db.Foreignkey('SectionOverview.SectionID'),nullable=False, primary_key=True)
+    SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
     SectionMaterials = db.Column(db.String(100), nullable=False)
-    CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     # SectionDescription = db.Column(db.String(100), nullable=False)
     # SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
@@ -118,12 +118,13 @@ class SectionMaterials(db.Model):
     def json(self):
         return {'SectionMaterialsID': self.SectionMaterialsID, 'SectionID':self.SectionID , 'SectionMaterials':self.SectionMaterials ,'CourseID':self.CourseID }
 
+
 class SectionQuiz(db.Model):
     __tableName__ = 'SectionQuiz'
     __mapper_args__ = {'polymorphic_identity': 'SectionQuiz'}
     SectionQuizID = db.Column(db.Integer, primary_key=True)
-    SectionID = db.Column(db.Foreignkey('SectionOverview.SectionID'),nullable=False, primary_key=True)
-    CourseID = db.Column(db.Foreignkey('CourseOverview.CourseID'), nullable=False, primary_key=True)
+    SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
     quizType = db.Column(db.String(1), nullable=False)
     quizResult = db.Column(db.Integer, primary_key=True)
@@ -137,11 +138,12 @@ class SectionQuiz(db.Model):
     def json(self):
         return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizType':self.quizType ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
 
+
 class TrainerSchedule(db.Model):
     __tableName__ = 'TrainerSchedule'
     __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
-    TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
-    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
+    TrainerID = db.Column(db.ForeignKey('trainer.TrainerID'), nullable=False, primary_key=False)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False)
     TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
 
     TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
@@ -150,10 +152,11 @@ class TrainerSchedule(db.Model):
     def json(self):
         return {'TrainerID': self.TrainerID, 'CourseID':self.CourseID , 'TrainerScheduleID':self.TrainerScheduleID}
 
+
 class ClassDescription(db.Model):
     __tableName__ = 'ClassDescription'
     __mapper_args__ = {'polymorphic_identity': 'ClassDescription'}
-    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_Key=True)
     ClassID = db.Column(db.Integer,nullable=False, primary_key=True)
     ClassSize = db.Column(db.Integer, nullable=False)
     StartTime = db.Column(db.DateTime, nullable=False)
@@ -170,11 +173,12 @@ class ClassDescription(db.Model):
 class CourseRecord(db.Model):
     __tableName__ = 'CourseRecord'
     __mapper_args__ = {'polymorphic_identity': 'CourseRecord'}
-    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
-    TrainerScheduleID = db.Column(db.ForeignKey('trainerschedule.TrainerScheduleID'),nullable=False, primary_key=True)
-    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
-    ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False)
+    TrainerScheduleID = db.Column(db.ForeignKey('trainerschedule.TrainerScheduleID'), nullable=False, primary_Key=True)
+    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_Key=True)
+    ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_Key=True)
 
+    #Here got issue => Need to use CourseRecord then join into TrainerSchedule table to Trainer & Trainschedule to courseoverview in 1 line
     CourseRecord = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
     CourseRecord = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
 
@@ -182,15 +186,15 @@ class CourseRecord(db.Model):
         return {'CourseID': self.CourseID, 'TrainerScheduleID':self.TrainerScheduleID , 'LearnerID':self.LearnerID, 'ClassID':self.ClassID}
 
 
-
+#Here probably have the same issue as the codes above
 class QuizQn(db.Model):
     __tableName__ = 'QuizQn'
     __mapper_args__ = {'polymorphic_identity': 'QuizQn'}
     QuizQnID = db.Column(db.Integer,nullable=False, primary_key=True)
-    CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
-    SectionMaterialsID = db.Column(db.Foreignkey('sectionoverview.SectionMaterialsID'),nullable=False)
-    SectionQuizID = db.Column(db.Foreignkey('sectionoverview.SectionQuizID'), nullable=False)
-    SectionID = db.Column(db.Foreignkey('sectionoverview.SectionID'), nullable=False)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False)
+    SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False)
+    SectionQuizID = db.Column(db.ForeignKey('sectionoverview.SectionQuizID'), nullable=False)
+    SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False)
     QuizQuestion = db.Column(db.varchar(1000), nullable=False)
     QuizOptionNo = db.Column(db.integer, nullable=False)
     QuizOption = db.Column(db.varchar(100), nullable=False)
@@ -199,26 +203,6 @@ class QuizQn(db.Model):
     QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='QuizQn')
     QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionQuizID == sectionoverview.SectionQuizID', backref='QuizQn')
     QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionID == sectionoverview.SectionID', backref='QuizQn')
-
-# class LearnerQuizAnswer(db.Model):
-#     __tableName__ = 'TrainerSchedule'
-#     __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
-#     TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
-#     CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
-#     TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
-
-#     TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
-#     TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
-
-# class SolutionTable(db.Model):
-#     __tableName__ = 'TrainerSchedule'
-#     __mapper_args__ = {'polymorphic_identity': 'TrainerSchedule'}
-#     TrainerID = db.Column(db.Foreignkey('trainer.TrainerID'), nullable=False)
-#     CourseID = db.Column(db.Foreignkey('courseoverview.CourseID'), nullable=False)
-#     TrainerScheduleID = db.Column(db.Integer,nullable=False, primary_key=True)
-
-#     TrainerSchedule = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
-#     TrainerSchedule = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
 
 @app.route('/trainer/<string:email>')
 def trainer_by_email(email):
