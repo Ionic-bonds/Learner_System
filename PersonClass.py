@@ -206,6 +206,34 @@ class QuizQn(db.Model):
     QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionQuizID == sectionoverview.SectionQuizID', backref='QuizQn')
     QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionID == sectionoverview.SectionID', backref='QuizQn')
 
+    def json(self):
+        return {'CourseID': self.CourseID, 'SectionMaterialsID':self.SectionMaterialsID, 'SectionQuizID':self.SectionQuizID, 'SectionID':self.SectionID}
+
+class LearnerQuizAnswer(db.Model):
+    __tableName__ = 'LearnerQuizAnswer'
+    __mapper_args__ = {'polymorphic_identity': 'LearnerQuizAnswer'}
+    QuizQnID = db.Column(db.ForeignKey('sectionovervie.QuizQnID'),nullable=False, primary_key=True)
+    SectionQuizID = db.Column(db.ForeignKey('sectionoverview.SectionQuizID'), nullable=False, primary_key=True)
+    SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
+    SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
+    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
+    quizAnswer = db.Column(db.varchar(100), nullable=False)
+
+
+    
+class SolutionTable(db.Model):
+    __tableName__ = 'LearnerQuizAnswer'
+    __mapper_args__ = {'polymorphic_identity': 'LearnerQuizAnswer'}
+    QuizQnID = db.Column(db.ForeignKey('sectionovervie.QuizQnID'),nullable=False, primary_key=True)
+    SectionQuizID = db.Column(db.ForeignKey('sectionoverview.SectionQuizID'), nullable=False, primary_key=True)
+    SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
+    SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
+    quizSolution = db.Column(db.varchar(100), nullable=False)
+
+    
+
 @app.route('/trainer/<string:email>')
 def trainer_by_email(email):
     trainerDetails = Person.query.filter_by(email=email).first()
