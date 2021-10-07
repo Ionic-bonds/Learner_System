@@ -98,11 +98,12 @@ CREATE TABLE IF NOT EXISTS ClassDescription (
 --
 
 CREATE TABLE IF NOT EXISTS CourseRecord (
-  CourseID integer AUTO_INCREMENT NOT NULL,
+  CourseRecordID integer AUTO_INCREMENT NOT NULL
+  CourseID integer,
   TrainerScheduleID integer NOT NULL,
   LearnerID integer NOT NULL,
   ClassID integer NOT NULL,
-  constraint CourseRecord_pk primary key (CourseID, TrainerScheduleID, LearnerID, ClassID),
+  constraint CourseRecord_pk primary key (CourseRecordID, CourseID, TrainerScheduleID, LearnerID, ClassID),
   constraint CourseRecord_fk1 foreign key (CourseID) references CourseOverview(CourseID),
   constraint CourseRecord_fk2 foreign key (LearnerID) references Learner(LearnerID),
   constraint CourseRecord_fk3 foreign key (ClassID) references ClassDescription(ClassID)
