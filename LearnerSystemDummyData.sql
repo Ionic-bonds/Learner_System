@@ -1,78 +1,110 @@
 -- --------------------------------------------------------
 -- Dummy Data for table CourseOverview
 --
-insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(1, ' Xerox WorkCentre 7845', 'This is a course', TRUE);
-insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(2, 'Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
-insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(3, 'Software Theory G64', 'The ultimate theory and go to for software everything', TRUE);
-insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(4, 'Theoratical Theory R23', 'The theory of all theories and the answers to everything you been looking for', TRUE);
-insert into CourseOverview(CourseID, CourseName, CourseDescription, CourseStatus)
-values(5, 'Practical Practices W76', 'Practice makes perfect. Practice practicing.', TRUE);
+insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+values(' Xerox WorkCentre 7845', 'This is a course', TRUE);
+insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+values('Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
+insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+values('Software Theory G64', 'The ultimate theory and go to for software everything', TRUE);
+insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+values('Theoratical Theory R23', 'The theory of all theories and the answers to everything you been looking for', TRUE);
+insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+values('Practical Practices W76', 'Practice makes perfect. Practice practicing.', TRUE);
 
 -- --------------------------------------------------------
 -- Dummy Data for table Person
 --
-insert into Person(personID, name, nric, ContactNo, email)
-values(1, 'Jacky', 'S9624229H', 82011734, 'jacky@company.com');
+insert into Person(name, nric, ContactNo, email)
+values('Jacky', 'S9624229H', 82011734, 'jacky@company.com');
 
-insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'Leaky', 'S91234567A', 97011734, 'leeky@company.com');
+insert into Person(name, nric, ContactNo , email)
+values('Leaky', 'S91234567A', 97011734, 'leeky@company.com');
 
-insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'JaiQee', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
+insert into Person(name, nric, ContactNo , email)
+values('JaiQee', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
 
-insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'kingston', 'S91111111A', 91111111, 'imtheking@company.com');
+insert into Person(name, nric, ContactNo , email)
+values('kingston', 'S91111111A', 91111111, 'imtheking@company.com');
 
-insert into Person(personID, name, nric, ContactNo , email)
-values(2, 'leenord', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
+insert into Person(name, nric, ContactNo , email)
+values('Leenord', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('King', 'S9222222A', 82222222, 'ibuycoffeeidonlike2@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Leo', 'S9222222A', 82222222, 'ibuycoffeeidonlike3@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Leonard', 'S9222222A', 82222222, 'ibuycoffeeidonlike4@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Timmy', 'S9222222A', 82222222, 'ibuycoffeeidonlike5@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Elvis', 'S9222222A', 82222222, 'ibuycoffeeidonlike6@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Aloy', 'S9222222A', 82222222, 'ibuycoffeeidonlike7@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Aloysious', 'S9222222A', 82222222, 'ibuycoffeeidonlike8@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Tan', 'S9222222A', 82222222, 'ibuycoffeeidonlike9@company.com');
 
 -- --------------------------------------------------------
 -- Dummy Data for table Trainer
 --
-insert into Trainer(TrainerID, personid) values(1,1);
-insert into Trainer(TrainerID, personid) values(2,2);
+insert into Trainer(personid) values(1);
+insert into Trainer(personid) values(2);
 
 -- --------------------------------------------------------
 -- Dummy Data for table Learner
 --
-insert into Learner(LearnerID, personid) values(1,3);
-insert into Learner(LearnerID, personid) values(2,4);
-insert into Learner(LearnerID, personid) values(3,5);
+insert into Learner(personid) values(3);
+insert into Learner(personid) values(4);
+insert into Learner(personid) values(5);
+insert into Learner(personid) values(6);
+insert into Learner(personid) values(7);
+insert into Learner(personid) values(8);
+insert into Learner(personid) values(9);
+insert into Learner(personid) values(10);
+insert into Learner(personid) values(11);
+insert into Learner(personid) values(12);
+insert into Learner(personid) values(13);
 
 -- --------------------------------------------------------
 -- Dummy Data for table TrainerSchedule
 --
-insert into TrainerSchedule(TrainerScheduleID, TrainerID, CourseID) values(1,1,1);
-insert into TrainerSchedule(TrainerScheduleID, TrainerID, CourseID) values(2,1,2);
-insert into TrainerSchedule(TrainerScheduleID, TrainerID, CourseID) values(3,2,3);
-insert into TrainerSchedule(TrainerScheduleID, TrainerID, CourseID) values(4,2,4);
+insert into TrainerSchedule(TrainerID, CourseID) values(1,1);
+insert into TrainerSchedule(TrainerID, CourseID) values(1,2);
+insert into TrainerSchedule(TrainerID, CourseID) values(2,3);
+insert into TrainerSchedule(TrainerID, CourseID) values(2,4);
 
 -- --------------------------------------------------------
 -- Dummy Data for table ClassDescription
 --
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(1,1,50,'12:30pm', '21 September 2021', '2:00pm', '21 December 2021');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(2,1,40,'13:30pm', '23 September 2021', '4:00pm', '23 December 2021');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(3,1,40,'12:00pm', '25 September 2021', '6:00pm', '25 December 2021');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(1,1,50,'12:30', '2021-09-21', '2:00', '2021-12-21');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(2,1,40,'13:30', '2021-09-23', '4:00', '2021-12-23');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(3,1,40,'12:00', '2021-09-25', '6:00', '2021-12-25');
 
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(4,2,50,'12:30pm', '21 October 2021', '2:00pm', '21 January 2022');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(5,2,40,'13:30pm', '23 October 2021', '4:00pm', '23 January 2022');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(6,2,40,'12:00pm', '25 October 2021', '6:00pm', '25 January 2022');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(4,2,50,'12:30', '2021-10-21', '2:00', '2022-01-21');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(5,2,40,'13:30', '2021-10-23', '4:00', '2022-01-23');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(6,2,40,'12:00', '2021-10-25', '6:00', '2022-01-25');
 
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(7,3,50,'12:30pm', '2 October 2021', '2:00pm', '2 January 2022');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(8,3,40,'13:30pm', '3 October 2021', '4:00pm', '3 January 2022');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(9,3,40,'12:00pm', '4 October 2021', '6:00pm', '4 January 2022');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(7,3,50,'12:30', '2021-10-2', '2:00', '2022-01-2');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(8,3,40,'13:30', '2021-10-3', '4:00', '2022-01-3');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(9,3,40,'12:00', '2021-10-4', '6:00', '2022-01-4');
 
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(10,4,50,'12:30pm', '2 September 2021', '2:00pm', '2 December 2021');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(11,4,40,'13:30pm', '3 September 2021', '4:00pm', '3 December 2021');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(12,4,40,'12:00pm', '4 September 2021', '6:00pm', '4 December 2021');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(10,4,50,'12:30', '2021-09-2', '2:00', '2021-12-2');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(11,4,40,'13:30', '2021-09-3', '4:00', '2021-12-3');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(12,4,40,'12:00', '2021-09-4', '6:00', '2021-12-4');
 
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(13,5,50,'12:30pm', '11 October 2021', '2:00pm', '11 January 2022');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(14,5,40,'13:30pm', '12 October 2021', '4:00pm', '12 January 2022');
-insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(15,5,40,'12:00pm', '13 October 2021', '6:00pm', '13 January 2022');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(13,5,50,'12:30', '2021-10-11', '2:00', '2022-01-11');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(14,5,40,'13:30', '2021-10-12', '4:00', '2022-01-12');
+insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate, EndTime, EndDate) values(15,5,40,'12:00', '2021-10-13', '6:00', '2022-01-13');
 
 -- --------------------------------------------------------
 -- Dummy Data for table CourseRecord
@@ -87,11 +119,11 @@ insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,8,1);
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,9,1);
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,10,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,11,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,12,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,13,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,14,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,15,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,11,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,12,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,13,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,14,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,15,1);
 
 -- --------------------------------------------------------
 -- Dummy Data for table LearnerRecord
@@ -125,26 +157,26 @@ insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMat
 values(2, 1, 2,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
 values(3, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(4, 2, 4,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(5, 2, 5,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(6, 2, 6,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(7, 3, 7,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(8, 3, 8,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
-insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(9, 3, 9,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+-- insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+-- values(4, 2, 4,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+-- insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+-- values(5, 2, 5,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+-- insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+-- values(6, 2, 6,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+-- insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+-- values(7, 3, 7,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+-- insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+-- values(8, 3, 8,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+-- insert into SectionMaterials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+-- values(9, 3, 9,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionQuiz
 --
 INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
-values(1,1,1,1,'MCQ','P',90,'12:30:00 pm');
+values(1,1,1,1,'MCQ','P',90,'12:30:00');
 INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
-values(2,1,1,1,'MCQ','G',90,'12:30:00 pm');
+values(2,1,1,1,'MCQ','G',90,'12:30:00');
 
 -- --------------------------------------------------------
 -- Dummy Data for table QuizQn
@@ -178,9 +210,9 @@ INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, Section
 values(3,1,1,1,1,'In any software package, which of the following version represents a major improvement on the earlier version?',4,'2.5');
 
 INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
-values(1,1,1,1,1,'PHP is an open source software',4,1,'True');
+values(4,1,1,1,1,'PHP is an open source software',1,'True');
 INSERT INTO QuizQn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
-values(1,1,1,1,1,'PHP is an open source software',4,2,'False');
+values(4,1,1,1,1,'PHP is an open source software',2,'False');
 -- --------------------------------------------------------
 -- Dummy Data for table LearnerQuizAnswer
 --
