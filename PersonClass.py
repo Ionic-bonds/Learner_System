@@ -94,7 +94,7 @@ class SectionOverview(db.Model):
     __mapper_args__ = {'polymorphic_identity': 'SectionOverview'}
     SectionID = db.Column(db.Integer, primary_key=True)
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
-    SectionDescription = db.Column(db.String(100), nullable=False)
+    SectionDescription = db.Column(db.String(10000), nullable=False)
     SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
     SectionOverview = db.relationship('courseoverview', primaryjoin='sectionoverview.CourseID == courseoverview.CourseID', backref='SectionOverview')
@@ -107,7 +107,7 @@ class SectionMaterials(db.Model):
     __mapper_args__ = {'polymorphic_identity': 'SectionMaterials'}
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
-    SectionMaterials = db.Column(db.String(100), nullable=False)
+    SectionMaterials = db.Column(db.String(10000), nullable=False)
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     # SectionDescription = db.Column(db.String(100), nullable=False)
     # SectionProgress = db.Column(db.Float(precision=2),nullable=False)
@@ -126,7 +126,6 @@ class SectionQuiz(db.Model):
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
-    quizType = db.Column(db.String(1), nullable=False)
     quizResult = db.Column(db.Integer, primary_key=True)
     duration = db.Column(db.Integer, primary_key=True)
     quizStartTime = db.Column(db.DateTime, nullable=False)
@@ -136,7 +135,7 @@ class SectionQuiz(db.Model):
     SectionMaterials = db.relationship('courseoverview', primaryjoin='sectionquiz.CourseID == courseoverview.CourseID', backref='SectionQuiz')
 
     def json(self):
-        return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizType':self.quizType ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
+        return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
 
 
 class TrainerSchedule(db.Model):
@@ -197,9 +196,9 @@ class QuizQn(db.Model):
     SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False)
     SectionQuizID = db.Column(db.ForeignKey('sectionoverview.SectionQuizID'), nullable=False)
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False)
-    QuizQuestion = db.Column(db.String(1000), nullable=False)
+    QuizQuestion = db.Column(db.String(10000), nullable=False)
     QuizOptionNo = db.Column(db.Integer, nullable=False)
-    QuizOption = db.Column(db.String(100), nullable=False)
+    QuizOption = db.Column(db.String(10000), nullable=False)
 
     QuizQn = db.relationship('courseoverview', primaryjoin='QuizQn.CourseID == courseoverview.CourseID', backref='QuizQn')
     QuizQn = db.relationship('sectionoverview', primaryjoin='QuizQn.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='QuizQn')
@@ -218,7 +217,7 @@ class LearnerQuizAnswer(db.Model):
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
     LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
-    quizAnswer = db.Column(db.String(100), nullable=False)
+    quizAnswer = db.Column(db.String(10000), nullable=False)
 
     LearnerQuizAnswer = db.relationship('courseoverview', primaryjoin='learnerquizanswer.CourseID == courseoverview.CourseID', backref='LearnerQuizAnswer')
     LearnerQuizAnswer = db.relationship('sectionoverview', primaryjoin='learnerquizanswer.QuizQnID == sectionoverview.QuizQnID', backref='LearnerQuizAnswer')
@@ -241,7 +240,7 @@ class SolutionTable(db.Model):
     SectionMaterialsID = db.Column(db.ForeignKey('sectionoverview.SectionMaterialsID'), nullable=False, primary_key=True)
     CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False, primary_key=True)
     SectionID = db.Column(db.ForeignKey('sectionoverview.SectionID'), nullable=False, primary_key=True)
-    quizSolution = db.Column(db.String(100), nullable=False)
+    quizSolution = db.Column(db.String(10000), nullable=False)
 
     SolutionTable = db.relationship('courseoverview', primaryjoin='solutiontable.CourseID == courseoverview.CourseID', backref='SolutionTable')
     SolutionTable = db.relationship('sectionoverview', primaryjoin='solutiontable.QuizQnID == sectionoverview.QuizQnID', backref='SolutionTable')

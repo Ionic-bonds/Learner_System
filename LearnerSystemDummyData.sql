@@ -173,10 +173,10 @@ values(3, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fun
 -- --------------------------------------------------------
 -- Dummy Data for table SectionQuiz
 --
-INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
-values(1,1,1,1,'MCQ','P',90,'12:30:00');
-INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizType,quizResult,duration,quizStartTime)
-values(2,1,1,1,'MCQ','G',90,'12:30:00');
+INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
+values(1,1,1,1,'P',90,'12:30:00');
+INSERT INTO SectionQuiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
+values(2,1,1,1,'G',90,'12:30:00');
 
 -- --------------------------------------------------------
 -- Dummy Data for table QuizQn

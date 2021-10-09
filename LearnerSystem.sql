@@ -174,7 +174,6 @@ CREATE TABLE IF NOT EXISTS SectionQuiz (
   SectionQuizID integer,
   SectionID integer,
   SectionMaterialsID integer,
-  quizType varchar(10),
   quizResult varchar(1),
   duration integer,
   quizStartTime time,
