@@ -18,11 +18,23 @@ CREATE TABLE IF NOT EXISTS CourseOverview (
   CourseID integer NOT NULL AUTO_INCREMENT,
   CourseName varchar(100),
   CourseDescription varchar(100),
-  CourseStatus boolean,
+  Prerequisite boolean,
   constraint CourseOverview_pk primary key(CourseID)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Table structure for table CoursePrerequisite
+--
+
+CREATE TABLE IF NOT EXISTS CoursePrerequisite (
+  MainCourseID integer NOT NULL,
+  PrerequisiteCourseID integer NOT NULL,
+  constraint CourseOverview_pk primary key(MainCourseID, PrerequisiteCourseID)
+  constraint CoursePrerequisite_fk foreign key (MainCourseID) references CourseOverview(CourseID)
+  constraint CoursePrerequisite_fk2 foreign key (PrerequisiteCourseID) references CourseOverview(CourseID)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table structure for table Person
 --
@@ -103,6 +115,9 @@ CREATE TABLE IF NOT EXISTS CourseRecord (
   TrainerScheduleID integer NOT NULL,
   LearnerID integer NOT NULL,
   ClassID integer NOT NULL,
+  CourseProgress Float
+  FinalQuizResult float,
+
   constraint CourseRecord_pk primary key (CourseRecordID, CourseID, TrainerScheduleID, LearnerID, ClassID),
   constraint CourseRecord_fk1 foreign key (CourseID) references CourseOverview(CourseID),
   constraint CourseRecord_fk2 foreign key (LearnerID) references Learner(LearnerID),
@@ -113,19 +128,20 @@ CREATE TABLE IF NOT EXISTS CourseRecord (
 -- -------
 
 -- --------------------------------------------------------
--- Table structure for table LearnerRecord
+-- Table structure for table Enrollment
 --
-CREATE TABLE IF NOT EXISTS LearnerRecord (
+CREATE TABLE IF NOT EXISTS Enrollment (
   LearnerID integer,
-  LearnerRecordID integer,
-  EnrolledCourses varchar(100) NOT NULL,
-  EnrolledClass varchar(100),
-  FinalQuizResult varchar(10),
-  CourseStatus boolean NOT NULL,
-  SectionProgress Float(24,2),
+  EnrollmentID AUTO_INCREMENT NOT NULL,
+  CourseID integer NOT NULL,
+  ClassID integer NOT NULL,
+  Approved boolean NOT NULL,
+  passPrerequisite boolean NOT NULL,
 -- Here to change for section progress to decimal
-    constraint LearnerRecord_pk primary key(LearnerID,LearnerRecordID),
-    constraint LearnerRecord_fk foreign key(LearnerID) references Learner(LearnerID)
+    constraint Enrollment_pk primary key(EnrollmentID),
+    constraint Enrollment_fk1 foreign key(LearnerID) references Learner(LearnerID),
+    constraint Enrollment_fk2 foreign key(CourseID) references CourseOverview(CourseID),
+    constraint Enrollment_fk3 foreign key(ClassID) references ClassDescription(ClassID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
