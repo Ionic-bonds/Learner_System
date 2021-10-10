@@ -1,16 +1,26 @@
 -- --------------------------------------------------------
 -- Dummy Data for table CourseOverview
 --
-insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
-values(' Xerox WorkCentre 7845', 'This is a course', TRUE);
-insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+insert into CourseOverview(CourseName, CourseDescription, Prerequisite)
+values('Xerox WorkCentre 7845', 'This is a course', FALSE);
+insert into CourseOverview(CourseName, CourseDescription, Prerequisite)
 values('Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
-insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
-values('Software Theory G64', 'The ultimate theory and go to for software everything', TRUE);
-insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
-values('Theoratical Theory R23', 'The theory of all theories and the answers to everything you been looking for', TRUE);
-insert into CourseOverview(CourseName, CourseDescription, CourseStatus)
+insert into CourseOverview(CourseName, CourseDescription, Prerequisite)
+values('Software Theory G64', 'The ultimate theory and go to for software everything', FALSE);
+insert into CourseOverview(CourseName, CourseDescription, Prerequisite)
+values('Theoratical Theory R23', 'The theory of all theories and the answers to everything you been looking for', FALSE);
+insert into CourseOverview(CourseName, CourseDescription, Prerequisite)
 values('Practical Practices W76', 'Practice makes perfect. Practice practicing.', TRUE);
+
+-- --------------------------------------------------------
+-- Dummy Data for table CoursePrerequisite
+--
+insert into CoursePrerequisite(MainCourseID, PrerequisiteCourseID)
+values(2, 1);
+insert into CoursePrerequisite(MainCourseID, PrerequisiteCourseID)
+values(5, 3);
+insert into CoursePrerequisite(MainCourseID, PrerequisiteCourseID)
+values(5, 4);
 
 -- --------------------------------------------------------
 -- Dummy Data for table Person
@@ -54,6 +64,21 @@ values('Aloysious', 'S9222222A', 82222222, 'ibuycoffeeidonlike8@company.com');
 insert into Person(name, nric, ContactNo , email)
 values('Tan', 'S9222222A', 82222222, 'ibuycoffeeidonlike9@company.com');
 
+insert into Person(name, nric, ContactNo , email)
+values('Yuhao', 'S9222222A', 82222222, 'yuhao@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Ling', 'S9222222A', 82222222, 'ling@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Thomas', 'S9222222A', 82222222, 'Thomas@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Sam', 'S9222222A', 82222222, 'sam@company.com');
+
+insert into Person(name, nric, ContactNo , email)
+values('Sammy', 'S9222222A', 82222222, 'Sammy@company.com');
+
 -- --------------------------------------------------------
 -- Dummy Data for table Trainer
 --
@@ -75,6 +100,12 @@ insert into Learner(personid) values(11);
 insert into Learner(personid) values(12);
 insert into Learner(personid) values(13);
 
+insert into Learner(personid) values(14);
+insert into Learner(personid) values(15);
+insert into Learner(personid) values(16);
+insert into Learner(personid) values(17);
+insert into Learner(personid) values(18);
+
 -- --------------------------------------------------------
 -- Dummy Data for table TrainerSchedule
 --
@@ -82,6 +113,7 @@ insert into TrainerSchedule(TrainerID, CourseID) values(1,1);
 insert into TrainerSchedule(TrainerID, CourseID) values(1,2);
 insert into TrainerSchedule(TrainerID, CourseID) values(2,3);
 insert into TrainerSchedule(TrainerID, CourseID) values(2,4);
+insert into TrainerSchedule(TrainerID, CourseID) values(2,5);
 
 -- --------------------------------------------------------
 -- Dummy Data for table ClassDescription
@@ -109,34 +141,47 @@ insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate,
 -- --------------------------------------------------------
 -- Dummy Data for table CourseRecord
 --
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,1,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,2,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,3,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,4,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,5,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,6,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,7,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,8,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,9,1);
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,10,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,11,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,12,1);
+-- need to edit 
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,1,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,2,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,3,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,4,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,5,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,6,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,7,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,8,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,9,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,10,1);
+
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(2,2,11,4);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(2,2,12,4);
 -- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,13,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,14,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,15,1);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(3,3,14,10);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(4,4,14,13);
+-- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(4,4,15,13);
 
 -- --------------------------------------------------------
 -- Dummy Data for table LearnerRecord
 --
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,1,'Software Engineering X123', 1, 'Pass', TRUE, 20.5);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,2,'Software Practices Q43', 2, 'Pass', TRUE, 17.5);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(1,3,'Practical Practices W76', 5, 'Pass', TRUE, 15.5);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(2,4,'Software Engineering X123', 1, 'Pass', TRUE, 19.5);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(2,5,'Software Practices Q43', 2, 'Pass', TRUE, 18);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(2,6,'Practical Practices W76', 5, 'Pass', TRUE, 15);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(3,7,'Theoratical Theory R23', 4, 'Pass', TRUE, 14.5);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(3,8,'Software Theory G64', 3, 'Pass', TRUE, 16.5);
-insert into LearnerRecord(LearnerID, LearnerRecordID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, SectionProgress) values(3,9,'Software Engineering X123', 1, 'Pass', TRUE, 18);
+-- need to edit 
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(1,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 20.5);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(2,'Xerox WorkCentre 7845', 2, 'NA', TRUE, 17.5);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(3,'Xerox WorkCentre 7845', 5, 'NA', TRUE, 15.5);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(4,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 19.5);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(5,'Xerox WorkCentre 7845', 2, 'NA', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(6,'Xerox WorkCentre 7845', 5, 'NA', TRUE, 15);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(7,'Xerox WorkCentre 7845', 4, 'NA', TRUE, 14.5);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(8,'Xerox WorkCentre 7845', 3, 'NA', TRUE, 16.5);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(9,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(10,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 18);
+
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(11,'Programming for Xerox WorkCentre with CardAccess and Integration', 1, 'PASS', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(12,'Programming for Xerox WorkCentre with CardAccess and Integration', 1, 'PASS', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(13,'Xerox WorkCentre 7845', 1, 'PASS', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(14,'Software Theory G64', 1, 'PASS', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(14,'Theoratical Theory R23', 1, 'PASS', TRUE, 18);
+-- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(15,'Theoratical Theory R23', 1, 'PASS', TRUE, 18);
+
 
 -- --------------------------------------------------------
 -- Dummy Data for table SectionOverview

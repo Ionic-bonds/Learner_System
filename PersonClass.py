@@ -59,22 +59,23 @@ class Learner(Person):
     def json(self):
         return {'LearnerID': self.LearnerID, 'PersonID':self.PersonID}
 
-class LearnerRecord(db.Model):
-    __tableName__ = 'LearnerRecord'
-    __mapper_args__ = {'polymorphic_identity': 'LearnerRecord'}
-    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
-    LearnerRecordID = db.Column(db.Integer,nullable=False, primary_key=True)
-    enrolledCourse = db.Column(db.String(100), nullable=False)
-    enrolledClass = db.Column(db.String(100), nullable=False)
-    FinalQuizResult = db.Column(db.String(100), nullable=False)
-    courseStatus = db.Column(db.Boolean, nullable=False)
-    SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+class Enrollment(db.Model):
+    __tableName__ = 'Enrollment'
+    __mapper_args__ = {'polymorphic_identity': 'Enrollment'}
+    LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False)
+    EnrollmentID = db.Column(db.Integer,nullable=False, primary_key=True)
+    CourseID = db.Column(db.ForeignKey('courseoverview.CourseID'), nullable=False)
+    ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False)
+    Approved = db.Column(db.Boolean, nullable=False)
+    passPrerequisite = db.Column(db.Boolean, nullable=False)
 
-    LearnerRecord = db.relationship('learner', primaryjoin='learnerrecord.LearnerID == learner.LearnerID', backref='LearnerRecord')
+    Enrollment = db.relationship('learner', primaryjoin='enrollment.LearnerID == learner.LearnerID', backref='Enrollment')
+    Enrollment = db.relationship('courseoverview', primaryjoin='enrollment.CourseID == courseoverview.CourseID', backref='Enrollment')
+    Enrollment = db.relationship('classdescription', primaryjoin='enrollment.ClassID == classdescription.ClassID', backref='Enrollment')
 
     def json(self):
-        return {'LearnerID': self.LearnerID, 'LearnerRecordID': self.LearnerRecordID, 'enrolledCourse': self.enrolledCourse, 'enrolledClass': self.enrolledClass,
-        'FinalQuizResult' :self.FinalQuizResult, 'courseStatus': self.courseStatus, 'SectionProgress': self.SectionProgress}
+        return {'LearnerID': self.LearnerID, 'LearnerRecordID': self.LearnerRecordID, 'CourseID': self.CourseID, 'ClassID': self.ClassID,
+        'Approved' :self.Approved, 'passPrerequisite': self.passPrerequisite}
 
 
 
@@ -88,6 +89,20 @@ class CourseOverview(db.Model):
 
     def json(self):
         return {'CourseID': self.CourseID, 'CourseName':self.CourseName , 'CourseDescription':self.CourseDescription ,'CourseStatus':self.CourseStatus }
+
+class CoursePrerequisite(db.Model):
+    __tableName__ = 'CoursePrerequisite'
+    __mapper_args__ = {'polymorphic_identity': 'CoursePrerequisite'}
+    MainCourseID = db.Column(db.Integer, nullable=False, primary_key=True)
+    PrerequisiteCourseID = db.Column(db.Integer, nullable=False, primary_key=True)
+    
+    CoursePrerequisite = db.relationship('courseoverview', primaryjoin='courseprerequisite.MainCourseID == courseoverview.CourseID', backref='CoursePrerequisite')
+    CoursePrerequisite = db.relationship('courseoverview', primaryjoin='courseprerequisite.PrerequisiteCourseID == courseoverview.CourseID', backref='CoursePrerequisite')
+
+
+    def json(self):
+        return {'MainCourseID': self.MainCourseID, 'PrerequisiteCourseID':self.PrerequisiteCourseID }
+
 
 class SectionOverview(db.Model):
     __tableName__ = 'SectionOverview'
@@ -178,13 +193,16 @@ class CourseRecord(db.Model):
     TrainerScheduleID = db.Column(db.ForeignKey('trainerschedule.TrainerScheduleID'), nullable=False, primary_key=True)
     LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
     ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_key=True)
+    CourseProgress = db.Column(db.Float)
+    FinalQuizResult = db.Column(db.Float)
 
     #Here got issue => Need to use CourseRecord then join into TrainerSchedule table to Trainer & Trainschedule to courseoverview in 1 line
     CourseRecord = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
     CourseRecord = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
 
     def json(self):
-        return {'CourseID': self.CourseID, 'CourseRecordID': self.CourseRecordID, 'TrainerScheduleID':self.TrainerScheduleID , 'LearnerID':self.LearnerID, 'ClassID':self.ClassID}
+        return {'CourseID': self.CourseID, 'CourseRecordID': self.CourseRecordID, 'TrainerScheduleID':self.TrainerScheduleID , 'LearnerID':self.LearnerID, 
+        'ClassID':self.ClassID,'CourseProgress':self.CourseProgress,'FinalQuizResult':self.FinalQuizResult }
 
 
 #Here probably have the same issue as the codes above
