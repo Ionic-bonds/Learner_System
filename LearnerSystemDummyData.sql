@@ -144,26 +144,26 @@ insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate,
 -- need to edit 
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,1,1, 80.0 , 'NA');
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,2,1, 100.0 , 'Pass');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,3,1 20.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,4,1 10.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,5,1 80.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,6,1 80.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,7,1 60.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,8,1 30.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,9,1 80.0 , 'NA');
-insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,10,1 100.0 , 'Pass');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,3,1, 20.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,4,1, 10.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,5,1, 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,6,1, 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,7,1, 60.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,8,1, 30.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,9,1, 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,10,1, 100.0 , 'Pass');
 
 -- --------------------------------------------------------
 -- Dummy Data for table Enrollment
 --
 -- need to edit 
 
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, 'PASS', TRUE, 18);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, 'PASS', TRUE, 18);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, 'PASS', TRUE, 18);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,3, 10, 'PASS', TRUE, 18);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,4, 13, 'PASS', TRUE, 18);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,4, 13, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, 'PASS', TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, 'PASS', TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, 'PASS', TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,3, 10, 'PASS', TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,4, 13, 'PASS', TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,4, 13, 'PASS', TRUE);
 
 
 -- --------------------------------------------------------
