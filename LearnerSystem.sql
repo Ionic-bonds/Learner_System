@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS CourseOverview (
 CREATE TABLE IF NOT EXISTS CoursePrerequisite (
   MainCourseID integer NOT NULL,
   PrerequisiteCourseID integer NOT NULL,
-  constraint CourseOverview_pk primary key(MainCourseID, PrerequisiteCourseID)
-  constraint CoursePrerequisite_fk foreign key (MainCourseID) references CourseOverview(CourseID)
+  constraint CourseOverview_pk primary key(MainCourseID, PrerequisiteCourseID),
+  constraint CoursePrerequisite_fk foreign key (MainCourseID) references CourseOverview(CourseID),
   constraint CoursePrerequisite_fk2 foreign key (PrerequisiteCourseID) references CourseOverview(CourseID)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -132,7 +132,7 @@ CREATE TABLE IF NOT EXISTS CourseRecord (
 --
 CREATE TABLE IF NOT EXISTS Enrollment (
   LearnerID integer,
-  EnrollmentID AUTO_INCREMENT NOT NULL,
+  EnrollmentID integer AUTO_INCREMENT NOT NULL,
   CourseID integer NOT NULL,
   ClassID integer NOT NULL,
   Approved boolean NOT NULL,
