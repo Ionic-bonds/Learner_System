@@ -142,45 +142,28 @@ insert into ClassDescription(ClassID, CourseID, ClassSize, StartTime, StartDate,
 -- Dummy Data for table CourseRecord
 --
 -- need to edit 
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,1,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,2,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,3,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,4,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,5,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,6,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,7,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,8,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,9,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,10,1);
-
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(2,2,11,4);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(2,2,12,4);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(1,1,13,1);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(3,3,14,10);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(4,4,14,13);
--- insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID) values(4,4,15,13);
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,1,1, 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,2,1, 100.0 , 'Pass');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,3,1 20.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,4,1 10.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,5,1 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,6,1 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,7,1 60.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,8,1 30.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,9,1 80.0 , 'NA');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,10,1 100.0 , 'Pass');
 
 -- --------------------------------------------------------
--- Dummy Data for table LearnerRecord
+-- Dummy Data for table Enrollment
 --
 -- need to edit 
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(1,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 20.5);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(2,'Xerox WorkCentre 7845', 2, 'NA', TRUE, 17.5);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(3,'Xerox WorkCentre 7845', 5, 'NA', TRUE, 15.5);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(4,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 19.5);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(5,'Xerox WorkCentre 7845', 2, 'NA', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(6,'Xerox WorkCentre 7845', 5, 'NA', TRUE, 15);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(7,'Xerox WorkCentre 7845', 4, 'NA', TRUE, 14.5);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(8,'Xerox WorkCentre 7845', 3, 'NA', TRUE, 16.5);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(9,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(10,'Xerox WorkCentre 7845', 1, 'NA', TRUE, 18);
 
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(11,'Programming for Xerox WorkCentre with CardAccess and Integration', 1, 'PASS', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(12,'Programming for Xerox WorkCentre with CardAccess and Integration', 1, 'PASS', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(13,'Xerox WorkCentre 7845', 1, 'PASS', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(14,'Software Theory G64', 1, 'PASS', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(14,'Theoratical Theory R23', 1, 'PASS', TRUE, 18);
--- insert into LearnerRecord(LearnerID,EnrolledCourses, EnrolledClass, FinalQuizResult, CourseStatus, CourseProgress) values(15,'Theoratical Theory R23', 1, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,3, 10, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,4, 13, 'PASS', TRUE, 18);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,4, 13, 'PASS', TRUE, 18);
 
 
 -- --------------------------------------------------------

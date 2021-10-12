@@ -194,7 +194,7 @@ class CourseRecord(db.Model):
     LearnerID = db.Column(db.ForeignKey('learner.LearnerID'), nullable=False, primary_key=True)
     ClassID = db.Column(db.ForeignKey('classdescription.ClassID'), nullable=False, primary_key=True)
     CourseProgress = db.Column(db.Float)
-    FinalQuizResult = db.Column(db.Float)
+    FinalQuizResult = db.Column(db.String(100))
 
     #Here got issue => Need to use CourseRecord then join into TrainerSchedule table to Trainer & Trainschedule to courseoverview in 1 line
     CourseRecord = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')

@@ -115,8 +115,8 @@ CREATE TABLE IF NOT EXISTS CourseRecord (
   TrainerScheduleID integer NOT NULL,
   LearnerID integer NOT NULL,
   ClassID integer NOT NULL,
-  CourseProgress Float
-  FinalQuizResult float,
+  CourseProgress float,
+  FinalQuizResult varchar(100),
 
   constraint CourseRecord_pk primary key (CourseRecordID, CourseID, TrainerScheduleID, LearnerID, ClassID),
   constraint CourseRecord_fk1 foreign key (CourseID) references CourseOverview(CourseID),
