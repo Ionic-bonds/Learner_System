@@ -153,17 +153,20 @@ insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseP
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,9,1, 80.0 , 'NA');
 insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,10,1, 100.0 , 'Pass');
 
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,11,1, 100.0 , 'Pass');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(3,3,14,7, 100.0 , 'Pass');
+insert into CourseRecord(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(4,4,14,10, 100.0 , 'Pass');
 -- --------------------------------------------------------
 -- Dummy Data for table Enrollment
 --
 -- need to edit 
 
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, 'PASS', TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, 'PASS', TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, 'PASS', TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,3, 10, 'PASS', TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,4, 13, 'PASS', TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,4, 13, 'PASS', TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, FALSE, TRUE); 
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, FALSE, FALSE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, FALSE, TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,5, 13, FALSE, TRUE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,2, 4, FALSE, FALSE);
+insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,5, 13, TRUE, FALSE);
 
 
 -- --------------------------------------------------------
