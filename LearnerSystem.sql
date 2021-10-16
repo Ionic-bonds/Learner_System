@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS CourseOverview (
 --
 
 CREATE TABLE IF NOT EXISTS Person (
-  personID integer AUTO_INCREMENT NOT NULL,
+  PersonID integer AUTO_INCREMENT NOT NULL,
   name varchar(100) DEFAULT NULL,
   NRIC varchar(15) DEFAULT NULL,
   ContactNo int(11) DEFAULT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS Person (
 
 CREATE TABLE IF NOT EXISTS Trainer (
   TrainerID integer AUTO_INCREMENT NOT NULL,
-  personid integer NOT NULL,
+  PersonID integer NOT NULL,
   constraint Trainer_pk primary key (TrainerID),
   constraint Trainer_fk foreign key (personid) references Person(personID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS Trainer (
 
 CREATE TABLE IF NOT EXISTS Learner (
   LearnerID integer AUTO_INCREMENT NOT NULL,
-  personid integer,
+  PersonID integer,
   constraint Learner_pk primary key (LearnerID),
   constraint Learner_fk foreign key (personid) references Person(personID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
