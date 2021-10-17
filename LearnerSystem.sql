@@ -18,23 +18,11 @@ CREATE TABLE IF NOT EXISTS CourseOverview (
   CourseID integer NOT NULL AUTO_INCREMENT,
   CourseName varchar(100),
   CourseDescription varchar(100),
-  Prerequisite boolean,
+  CourseStatus boolean,
   constraint CourseOverview_pk primary key(CourseID)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Table structure for table CoursePrerequisite
---
-
-CREATE TABLE IF NOT EXISTS CoursePrerequisite (
-  MainCourseID integer NOT NULL,
-  PrerequisiteCourseID integer NOT NULL,
-  constraint CourseOverview_pk primary key(MainCourseID, PrerequisiteCourseID),
-  constraint CoursePrerequisite_fk foreign key (MainCourseID) references CourseOverview(CourseID),
-  constraint CoursePrerequisite_fk2 foreign key (PrerequisiteCourseID) references CourseOverview(CourseID)
-
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table structure for table Person
 --
@@ -95,10 +83,10 @@ CREATE TABLE IF NOT EXISTS ClassDescription (
   ClassID integer,
   CourseID integer,
   ClassSize integer,
-  StartTime time,
-  StartDate Date,
-  EndTime time,
-  EndDate Date,
+  StartTime timestamp,
+  StartDate timestamp,
+  EndTime timestamp,
+  EndDate timestamp,
   constraint ClassDescription_pk primary key(ClassID, CourseID),
   constraint ClassDescription_fk foreign key(CourseID) references CourseOverview(CourseID)
   
@@ -115,9 +103,6 @@ CREATE TABLE IF NOT EXISTS CourseRecord (
   TrainerScheduleID integer NOT NULL,
   LearnerID integer NOT NULL,
   ClassID integer NOT NULL,
-  CourseProgress float,
-  FinalQuizResult varchar(100),
-
   constraint CourseRecord_pk primary key (CourseRecordID, CourseID, TrainerScheduleID, LearnerID, ClassID),
   constraint CourseRecord_fk1 foreign key (CourseID) references CourseOverview(CourseID),
   constraint CourseRecord_fk2 foreign key (LearnerID) references Learner(LearnerID),
@@ -128,20 +113,19 @@ CREATE TABLE IF NOT EXISTS CourseRecord (
 -- -------
 
 -- --------------------------------------------------------
--- Table structure for table Enrollment
+-- Table structure for table LearnerRecord
 --
-CREATE TABLE IF NOT EXISTS Enrollment (
+CREATE TABLE IF NOT EXISTS LearnerRecord (
   LearnerID integer,
-  EnrollmentID integer AUTO_INCREMENT NOT NULL,
-  CourseID integer NOT NULL,
-  ClassID integer NOT NULL,
-  Approved boolean NOT NULL,
-  passPrerequisite boolean NOT NULL,
+  LearnerRecordID integer,
+  EnrolledCourses varchar(100) NOT NULL,
+  EnrolledClass varchar(100),
+  FinalQuizResult varchar(10),
+  CourseStatus boolean NOT NULL,
+  SectionProgress Float(24,2),
 -- Here to change for section progress to decimal
-    constraint Enrollment_pk primary key(EnrollmentID),
-    constraint Enrollment_fk1 foreign key(LearnerID) references Learner(LearnerID),
-    constraint Enrollment_fk2 foreign key(CourseID) references CourseOverview(CourseID),
-    constraint Enrollment_fk3 foreign key(ClassID) references ClassDescription(ClassID)
+    constraint LearnerRecord_pk primary key(LearnerID,LearnerRecordID),
+    constraint LearnerRecord_fk foreign key(LearnerID) references Learner(LearnerID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -154,7 +138,7 @@ CREATE TABLE IF NOT EXISTS Enrollment (
 CREATE TABLE IF NOT EXISTS SectionOverview (
   SectionID integer,
   CourseID integer,
-  SectionDescription varchar(10000),
+  SectionDescription varchar(100),
   SectionProgress float(24,2),
   constraint SectionOverview_pk primary key(CourseID, SectionID),
   constraint SectionOverview_fk foreign key(CourseID) references CourseOverview(CourseID)
@@ -173,7 +157,7 @@ CREATE TABLE IF NOT EXISTS SectionMaterials (
   SectionMaterialsID integer,
   CourseID integer,
   SectionID integer,
-  SectionMaterials varchar(10000),
+  SectionMaterials varchar(1000),
   constraint SectionMaterials_pk primary key(SectionMaterialsID, CourseID, SectionID),
   constraint SectionMaterials_fk2 foreign key(CourseID,SectionID) references sectionoverview(CourseID,SectionID)
 
@@ -190,9 +174,10 @@ CREATE TABLE IF NOT EXISTS SectionQuiz (
   SectionQuizID integer,
   SectionID integer,
   SectionMaterialsID integer,
+  quizType varchar(10),
   quizResult varchar(1),
   duration integer,
-  quizStartTime time,
+  quizStartTime timestamp,
   CourseID integer,
   constraint SectionQuiz_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID),
   constraint SectionMaterials_f12 foreign key(SectionMaterialsID, CourseID, SectionID) references SectionMaterials(SectionMaterialsID, CourseID, SectionID)
@@ -211,9 +196,9 @@ CREATE TABLE IF NOT EXISTS QuizQn(
     SectionMaterialsID integer,
     SectionQuizID integer,
     SectionID integer,
-    QuizQuestion varchar(10000),
+    QuizQuestion varchar(1000),
     QuizOptionNo integer,
-    QuizOption varchar(10000),
+    QuizOption varchar(100),
     constraint QuizQn_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID, QuizOptionNo),
     constraint QuizQn_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID) references SectionQuiz(SectionID,SectionMaterialsID, SectionQuizID, CourseID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -229,7 +214,7 @@ CREATE TABLE IF NOT EXISTS LearnerQuizAnswer (
   CourseID integer,
   SectionID integer,
   LearnerID integer,
-  quizAnswer varchar(10000),
+  quizAnswer varchar(100),
   constraint LearnerQuizAnswer_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID, LearnerID),
   constraint LearnerQuizAnswer_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID) references QuizQn(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
   constraint LearnerQuizAnswer_fk1 foreign key(LearnerID) references Learner(LearnerID)
@@ -246,7 +231,7 @@ CREATE TABLE IF NOT EXISTS SolutionTable (
   SectionMaterialsID integer,
   CourseID integer,
   SectionID integer,
-  quizSolution varchar(10000),
+  quizSolution varchar(100),
   constraint SolutionTable_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID),
   constraint SolutionTable_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID) references QuizQn(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID)
     
