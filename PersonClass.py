@@ -346,48 +346,84 @@ class SolutionTable(db.Model):
 
 
     
-
-@app.route('/person/<int:PersonID>')
-def trainer_by_email(PersonID):
-    trainerDetails = Person.query.filter_by(PersonID=PersonID).first()
-    if len(trainerDetails):
-        return jsonify(
-            {
-                "code": 200,
-                "data": {
-                    "Trainer": "works"
-                }
-            }
-        )
-    return jsonify(
-        {
-            "code": 404,
-            "message": "Trainer Details not found."
-        }
-    ), 404
-
-
-@app.route('/enrollment', methods=['GET'])
-def enrollment():
-    enrollmentRecords = Enrollment.query.all()
-    if len(enrollmentRecords):
-        return jsonify(
-            {
-                "code": 200,
-                "data": {
-                    "Enrollment": "works"
-                }
-            }
-        )
-    return jsonify(
-        {
-            "code": 404,
-            "message": "Enrollment details not found."
-        }
-    ), 404
-
-
-
-if __name__ == '__main__':
-    print("This is flask for " + os.path.basename(__file__) + ": retrieve Details ...")
+@app.route('/person') 
+def trainer_by_email(): 
+    trainerDetails = Person.query.all() 
+    if trainerDetails: 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "Trainer": "works" 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Trainer Details not found." 
+        } 
+    ), 404 
+ 
+ 
+@app.route('/enrollment', methods=['GET']) 
+def enrollment(): 
+    enrollmentRecords = Enrollment.query.all() 
+    if len(enrollmentRecords): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "Enrollment": "works" 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Enrollment details not found." 
+        } 
+    ), 404 
+ 
+@app.route('/class') 
+def classes(): 
+    courseList = ClassDescription.query.all() 
+    if len(courseList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                   "courses": [courses.json() for courses in courseList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Enrollment details not found." 
+        } 
+    ), 404 
+ 
+ 
+@app.route("/courseoverview") 
+def retrieveCourseName(): 
+    CourseList = CourseOverview.query.all() 
+    if len(CourseList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in CourseList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404 
+    
+if __name__ == '__main__': 
+    print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
     app.run(host='0.0.0.0', port=5016, debug=True)
