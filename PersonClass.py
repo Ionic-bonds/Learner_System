@@ -67,7 +67,7 @@ class Learner(Person):
     __mapper_args__ = {'polymorphic_identity': 'learner'}
     PersonID = db.Column(db.ForeignKey(Person.PersonID), nullable=False, primary_key=False)
     LearnerID = db.Column(db.Integer, primary_key=True)
-    
+  
     def __init__(self, PersonID, LearnerID):
         self.PersonID = PersonID
         self.LearnerID = LearnerID
@@ -95,7 +95,6 @@ class CourseOverview(db.Model):
 
     def json(self):
         return {'CourseID': self.CourseID, 'CourseName':self.CourseName , 'CourseDescription':self.CourseDescription ,'CourseStatus':self.CourseStatus }
-
 
 class CoursePrerequisite(db.Model):
     __tableName__ = 'CoursePrerequisite'
@@ -157,7 +156,6 @@ class SectionQuiz(db.Model):
     SectionID = db.Column(db.ForeignKey(SectionOverview.SectionID), nullable=False, primary_key=True)
     CourseID = db.Column(db.ForeignKey(CourseOverview.CourseID), nullable=False, primary_key=True)
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
-    quizType = db.Column(db.String(1), nullable=False)
     quizResult = db.Column(db.Integer, primary_key=True)
     duration = db.Column(db.Integer, primary_key=True)
     quizStartTime = db.Column(db.DateTime, nullable=False)
@@ -170,7 +168,7 @@ class SectionQuiz(db.Model):
     CourseOverview = db.relationship('CourseOverview', primaryjoin='SectionQuiz.CourseID == CourseOverview.CourseID', backref='SectionQuiz')
 
     def json(self):
-        return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizType':self.quizType ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
+        return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
 
 
 class TrainerSchedule(db.Model):
@@ -232,7 +230,8 @@ class CourseRecord(db.Model):
     ClassDescription = db.relationship('ClassDescription', primaryjoin='CourseRecord.ClassID == ClassDescription.ClassID', backref='CourseRecord')
 
     def json(self):
-        return {'CourseID': self.CourseID, 'CourseRecordID': self.CourseRecordID, 'TrainerScheduleID':self.TrainerScheduleID , 'LearnerID':self.LearnerID, 'ClassID':self.ClassID}
+        return {'CourseID': self.CourseID, 'CourseRecordID': self.CourseRecordID, 'TrainerScheduleID':self.TrainerScheduleID , 'LearnerID':self.LearnerID, 
+        'ClassID':self.ClassID,'CourseProgress':self.CourseProgress,'FinalQuizResult':self.FinalQuizResult }
 
 
 
@@ -272,7 +271,7 @@ class QuizQn(db.Model):
     SectionID = db.Column(db.ForeignKey(SectionOverview.SectionID), nullable=False)
     QuizQuestion = db.Column(db.String(10000), nullable=False)
     QuizOptionNo = db.Column(db.Integer, nullable=False)
-    QuizOption = db.Column(db.String(100), nullable=False)
+    QuizOption = db.Column(db.String(10000), nullable=False)
 
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.CourseID == courseoverview.CourseID', backref='courseoverview')
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='sectionoverview')
@@ -312,7 +311,6 @@ class LearnerQuizAnswer(db.Model):
     SectionOverview = db.relationship('SectionOverview', primaryjoin='LearnerQuizAnswer.SectionID == SectionOverview.SectionID', backref='LearnerQuizAnswer')
     Learner = db.relationship('Learner', primaryjoin='LearnerQuizAnswer.LearnerID == Learner.LearnerID', backref='LearnerQuizAnswer')
 
-
     def json(self):
         return {'QuizQnID': self.QuizQnID, 'SectionQuizID':self.SectionQuizID, 'SectionMaterialsID':self.SectionMaterialsID, 'CourseID':self.CourseID
                 , 'SectionID':self.SectionID, 'LearnerID':self.LearnerID, 'quizAnswer':self.quizAnswer}
@@ -340,6 +338,7 @@ class SolutionTable(db.Model):
     SectionMaterials = db.relationship('SectionMaterials', primaryjoin='SolutionTable.SectionMaterialsID == SectionMaterials.SectionMaterialsID', backref='SolutionTable')
     SectionQuiz = db.relationship('SectionQuiz', primaryjoin='SolutionTable.SectionQuizID == SectionQuiz.SectionQuizID', backref='SolutionTable')
     SectionOverview = db.relationship('SectionOverview', primaryjoin='SolutionTable.SectionID == SectionOverview.SectionID', backref='SolutionTable')
+
 
     def json(self):
         return {'QuizQnID': self.QuizQnID, 'SectionQuizID':self.SectionQuizID, 'SectionMaterialsID':self.SectionMaterialsID, 'CourseID':self.CourseID
