@@ -18,12 +18,13 @@ CORS(app)
 
 class Person(db.Model):
     __tableName__ = 'person'
+    __mapper_args__ = {'polymorphic_identity': 'person'}
     PersonID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     NRIC = db.Column(db.String(100), nullable=False)
     ContactNo = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(100),nullable=False)
-    __mapper_args__ = {'polymorphic_on': PersonID}
+    #__mapper_args__ = {'polymorphic_on': PersonID}
 
     def __init__(self, PersonID, name, NRIC,ContactNo,email):
         self.PersonID = PersonID
@@ -35,17 +36,17 @@ class Person(db.Model):
     # def json(self):
     #     return {'PersonID': self.PersonID,'name': self.name,'NRIC': self.NRIC,'ContactNo': self.ContactNo,'email': self.ContactNo}
     def json(self):
-        dataTable = {
+        return{
             'PersonID': self.PersonID,
             'name': self.name,
             'NRIC': self.NRIC,
             'ContactNo': self.ContactNo,
             'Email': self.email
         }
-        dataTable['TrainerList'] = []
-        for element in self.TrainerList:
-            dataTable['TrainerList'].append(element.json())
-        return dataTable
+        # dataTable['TrainerList'] = []
+        # for element in self.TrainerList:
+        #     dataTable['TrainerList'].append(element.json())
+        # return dataTable
 
 class Trainer(Person):
     __tableName__ = 'Trainer'
@@ -364,7 +365,45 @@ def trainer_by_email():
             "message": "Trainer Details not found." 
         } 
     ), 404 
+
+@app.route('/person/<int:PersonID>') 
+def person_by_id(PersonID): 
+    PersonDetails = Person.query.filter_by(PersonID=PersonID).all() 
+    if PersonDetails: 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "Person":  [persons.json() for persons in PersonDetails]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Trainer Details not found." 
+        } 
+    ), 404 
  
+
+@app.route('/learner/<int:LearnerID>') 
+def learner_by_id(LearnerID): 
+    learnerDetails = Learner.query.filter_by(LearnerID=LearnerID).all() 
+    if learnerDetails: 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "Learner":  [learners.json() for learners in learnerDetails]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Trainer Details not found." 
+        } 
+    ), 404 
  
 @app.route('/enrollment', methods=['GET']) 
 def enrollment(): 
