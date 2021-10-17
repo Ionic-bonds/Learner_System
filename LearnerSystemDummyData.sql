@@ -82,29 +82,29 @@ values('Sammy', 'S9222222A', 82222222, 'Sammy@company.com');
 -- --------------------------------------------------------
 -- Dummy Data for table Trainer
 --
-insert into Trainer(personid) values(1);
-insert into Trainer(personid) values(2);
+insert into Trainer(PersonID) values(1);
+insert into Trainer(PersonID) values(2);
 
 -- --------------------------------------------------------
 -- Dummy Data for table Learner
 --
-insert into Learner(personid) values(3);
-insert into Learner(personid) values(4);
-insert into Learner(personid) values(5);
-insert into Learner(personid) values(6);
-insert into Learner(personid) values(7);
-insert into Learner(personid) values(8);
-insert into Learner(personid) values(9);
-insert into Learner(personid) values(10);
-insert into Learner(personid) values(11);
-insert into Learner(personid) values(12);
-insert into Learner(personid) values(13);
+insert into Learner(PersonID) values(3);
+insert into Learner(PersonID) values(4);
+insert into Learner(PersonID) values(5);
+insert into Learner(PersonID) values(6);
+insert into Learner(PersonID) values(7);
+insert into Learner(PersonID) values(8);
+insert into Learner(PersonID) values(9);
+insert into Learner(PersonID) values(10);
+insert into Learner(PersonID) values(11);
+insert into Learner(PersonID) values(12);
+insert into Learner(PersonID) values(13);
 
-insert into Learner(personid) values(14);
-insert into Learner(personid) values(15);
-insert into Learner(personid) values(16);
-insert into Learner(personid) values(17);
-insert into Learner(personid) values(18);
+insert into Learner(PersonID) values(14);
+insert into Learner(PersonID) values(15);
+insert into Learner(PersonID) values(16);
+insert into Learner(PersonID) values(17);
+insert into Learner(PersonID) values(18);
 
 -- --------------------------------------------------------
 -- Dummy Data for table TrainerSchedule
