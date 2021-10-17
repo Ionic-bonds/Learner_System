@@ -255,7 +255,7 @@ class Enrollment(db.Model):
 
 
     def json(self):
-        return {'LearnerID': self.LearnerID, 'LearnerRecordID': self.LearnerRecordID, 'CourseID': self.CourseID, 'ClassID': self.ClassID,
+        return {'LearnerID': self.LearnerID, 'EnrollmentID': self.EnrollmentID, 'CourseID': self.CourseID, 'ClassID': self.ClassID,
         'Approved' :self.Approved, 'passPrerequisite': self.passPrerequisite}
 
 
@@ -374,7 +374,7 @@ def enrollment():
             { 
                 "code": 200, 
                 "data": { 
-                    "Enrollment": "works" 
+                    "Enrollment":  [courses.json() for courses in enrollmentRecords]  
                 } 
             } 
         ) 
