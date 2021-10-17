@@ -462,7 +462,26 @@ def retrieveCourseName():
             "message": "No enrollment available for selected student." 
         } 
     ), 404 
-    
+
+@app.route("/courseoverview/<int:CourseID>") 
+def retrieveCourseOverview(CourseID): 
+    CourseList = CourseOverview.query.filter_by(CourseID=CourseID).all() 
+    if len(CourseList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in CourseList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404
+   
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
     app.run(host='0.0.0.0', port=5016, debug=True)
