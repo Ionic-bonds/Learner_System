@@ -50,14 +50,14 @@ class Person(db.Model):
 class Trainer(Person):
     __tableName__ = 'Trainer'
     __mapper_args__ = {'polymorphic_identity': 'trainer'}
-    PersonID = db.Column(db.ForeignKey('person.PersonID'), nullable=False)
+    PersonID = db.Column(db.ForeignKey(Person.PersonID), nullable=False)
     TrainerID = db.Column(db.Integer, primary_key=True)
 
     def __init__(self, PersonID, TrainerID):
         self.PersonID = PersonID
         self.TrainerID = TrainerID
     #Trainer = db.relationship('Person', primaryjoin='trainer.PersonID == person.PersonID', backref='person')
-    person = db.relationship(Person, backref='trainer')
+    Person = db.relationship(Person, backref='trainer')
         
     def json(self):
         return {'TrainerID': self.TrainerID,'PersonID': self.PersonID}
@@ -65,7 +65,7 @@ class Trainer(Person):
 class Learner(Person):
     __tableName__ = 'Learner'
     __mapper_args__ = {'polymorphic_identity': 'learner'}
-    PersonID = db.Column(db.ForeignKey('person.PersonID'), nullable=False, primary_key=False)
+    PersonID = db.Column(db.ForeignKey(Person.PersonID), nullable=False, primary_key=False)
     LearnerID = db.Column(db.Integer, primary_key=True)
     
     def __init__(self, PersonID, LearnerID):
@@ -73,7 +73,7 @@ class Learner(Person):
         self.LearnerID = LearnerID
 
     #Learner = db.relationship('Learner', primaryjoin='learner.PersonID == person.PersonID', backref='person')
-    person = db.relationship(Person, backref='learner')
+    Person = db.relationship(Person, backref='learner')
 
     def json(self):
         return {'LearnerID': self.LearnerID, 'PersonID':self.PersonID}
