@@ -85,16 +85,16 @@ class CourseOverview(db.Model):
     CourseID = db.Column(db.Integer, primary_key=True)
     CourseName = db.Column(db.String(100), nullable=False)
     CourseDescription = db.Column(db.String(100), nullable=False)
-    CourseStatus = db.Column(db.Boolean, nullable=False)
+    Prerequisite = db.Column(db.Boolean, nullable=False)
 
-    def __init__(self, CourseID, CourseName,CourseDescription,CourseStatus ):
+    def __init__(self, CourseID, CourseName,CourseDescription,Prerequisite ):
         self.CourseID = CourseID
         self.CourseName = CourseName
         self.CourseDescription = CourseDescription
-        self.CourseStatus = CourseStatus
+        self.Prerequisite = Prerequisite
 
     def json(self):
-        return {'CourseID': self.CourseID, 'CourseName':self.CourseName , 'CourseDescription':self.CourseDescription ,'CourseStatus':self.CourseStatus }
+        return {'CourseID': self.CourseID, 'CourseName':self.CourseName , 'CourseDescription':self.CourseDescription ,'Prerequisite':self.Prerequisite }
 
 class CoursePrerequisite(db.Model):
     __tableName__ = 'CoursePrerequisite'
