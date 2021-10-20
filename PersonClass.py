@@ -632,6 +632,45 @@ def retrieveSectionQuiz():
 
 
 
+@app.route("/quizquestions") 
+def retrieveQuizQn(): 
+    QuizQnList = QuizQn.query.all()
+    if len(QuizQnList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "quizquestions": [quizquestions.json() for quizquestions in QuizQnList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No sectionquiz available." 
+        } 
+    ), 404 
+
+
+@app.route("/solutiontable") 
+def retrieveSolutionTable(): 
+    SolutionTableList = SolutionTable.query.all()
+    if len(SolutionTableList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "solutions": [solutions.json() for solutions in SolutionTableList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No sectionquiz available." 
+        } 
+    ), 404 
+
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
