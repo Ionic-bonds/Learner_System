@@ -573,7 +573,6 @@ def retrieveCourseOverview(CourseID):
         } 
     ), 404
 
-<<<<<<< HEAD
 
 @app.route("/learnerDetails/<int:LearnerID>") 
 def retrievelearnerDetails(LearnerID): 
@@ -603,6 +602,9 @@ def updateEnrollment(LearnerID):
         return jsonify(
             {
                 "code": 200,
+                "data": {
+                    "LearnerID": LearnerID
+                },
                 "message": "Update Successfull"
             }
         ), 200
@@ -618,7 +620,6 @@ def updateEnrollment(LearnerID):
             }
         ), 500
 
-=======
 @app.route("/sectionoverview") 
 def retrieveSectionOverview(): 
     SectionList = SectionOverview.query.all() 
@@ -718,7 +719,6 @@ def retrieveSolutionTable():
     ), 404 
 
    
->>>>>>> 965d31c567fa2a02a0055ff965c205bf4816af44
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
     app.run(host='0.0.0.0', port=5016, debug=True)
