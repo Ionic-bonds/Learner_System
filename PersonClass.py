@@ -6,6 +6,7 @@ from sqlalchemy.sql import expression
 from datetime import datetime
 import json
 from os import environ
+from datetime import date, datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LearnerSystem'
@@ -168,8 +169,18 @@ class SectionQuiz(db.Model):
     SectionOverview = db.relationship('SectionOverview', primaryjoin='SectionQuiz.SectionID == SectionOverview.SectionID', backref='SectionQuiz')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='SectionQuiz.CourseID == CourseOverview.CourseID', backref='SectionQuiz')
 
+    def __init__(self, SectionQuizID, SectionID, CourseID, SectionMaterialsID,quizResult,duration,quizStartTime):
+        self.SectionQuizID = SectionQuizID
+        self.SectionID = SectionID
+        self.CourseID = CourseID
+        self.SectionMaterialsID = SectionMaterialsID
+        self.quizResult = quizResult
+        self.duration = duration
+        self.quizStartTime = quizStartTime
+
     def json(self):
         return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
+
 
 
 class TrainerSchedule(db.Model):
@@ -481,6 +492,31 @@ def retrieveCourseOverview(CourseID):
             "message": "No enrollment available for selected student." 
         } 
     ), 404
+
+@app.route("/sectionoverview") 
+def retrieveSectionOverview(): 
+    SectionList = SectionOverview.query.all() 
+    if len(SectionList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [sections.json() for sections in SectionList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404 
+
+
+
+
+
+
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
