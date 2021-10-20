@@ -592,6 +592,24 @@ def retrieveSectionOverview():
         } 
     ), 404 
 
+@app.route("/sectionmaterials") 
+def retrieveSectionMaterials(): 
+    SectionList = SectionMaterials.query.all() 
+    if len(SectionList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [sections.json() for sections in SectionList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No section materials available for selected student." 
+        } 
+    ), 404 
 
 @app.route("/sectionquiz") 
 def retrieveSectionQuiz(): 
