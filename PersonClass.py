@@ -3,9 +3,10 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy.sql import expression
-from datetime import datetime
+from datetime import timedelta
 import json
 from os import environ
+from datetime import date, datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LearnerSystem'
@@ -53,6 +54,7 @@ class Trainer(Person):
     __mapper_args__ = {'polymorphic_identity': 'trainer'}
     PersonID = db.Column(db.ForeignKey(Person.PersonID), nullable=False)
     TrainerID = db.Column(db.Integer, primary_key=True)
+
 
     def __init__(self, PersonID, TrainerID):
         self.PersonID = PersonID
@@ -124,6 +126,13 @@ class SectionOverview(db.Model):
     SectionDescription = db.Column(db.String(10000), nullable=False)
     SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
+    #included at 20/10
+    def __init__(self, SectionID, CourseID,SectionDescription,SectionProgress):
+        self.SectionID = SectionID
+        self.CourseID = CourseID
+        self.SectionDescription = SectionDescription
+        self.SectionProgress = SectionProgress
+
     #SectionOverview = db.relationship('SectionOverview', primaryjoin='sectionoverview.CourseID == courseoverview.CourseID', backref='courseoverview')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='SectionOverview.CourseID == CourseOverview.CourseID', backref='SectionOverview')
 
@@ -139,6 +148,13 @@ class SectionMaterials(db.Model):
     CourseID = db.Column(db.ForeignKey(CourseOverview.CourseID), nullable=False, primary_key=True)
     # SectionDescription = db.Column(db.String(100), nullable=False)
     # SectionProgress = db.Column(db.Float(precision=2),nullable=False)
+
+    #included at 20/10
+    def __init__(self, SectionMaterialsID, SectionID,SectionMaterials,CourseID):
+        self.SectionMaterialsID = SectionMaterialsID
+        self.SectionID = SectionID
+        self.SectionMaterials = SectionMaterials
+        self.CourseID = CourseID
 
     #SectionMaterials = db.relationship('SectionMaterials', primaryjoin='sectionmaterial.SectionID == sectionoverview.SectionID', backref='sectionoverview')
     #SectionMaterials = db.relationship('SectionMaterials', primaryjoin='sectionmaterial.CourseID == courseoverview.CourseID', backref='courseoverview')
@@ -168,6 +184,15 @@ class SectionQuiz(db.Model):
     SectionOverview = db.relationship('SectionOverview', primaryjoin='SectionQuiz.SectionID == SectionOverview.SectionID', backref='SectionQuiz')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='SectionQuiz.CourseID == CourseOverview.CourseID', backref='SectionQuiz')
 
+    #included at 20/10
+    def __init__(self, SectionQuizID, SectionID, CourseID, SectionMaterialsID,quizResult,duration,quizStartTime):
+        self.SectionQuizID = SectionQuizID
+        self.SectionID = SectionID
+        self.CourseID = CourseID
+        self.SectionMaterialsID = SectionMaterialsID
+        self.quizResult = quizResult
+        self.duration = duration
+        self.quizStartTime = quizStartTime
     def json(self):
         return {'SectionQuizID': self.SectionQuizID, 'SectionID':self.SectionID , 'CourseID':self.CourseID ,'SectionMaterialsID':self.SectionMaterialsID ,'quizResult':self.quizResult ,'duration':self.duration ,'quizStartTime':self.quizStartTime }
 
@@ -181,6 +206,12 @@ class TrainerSchedule(db.Model):
 
     #TrainerSchedule = db.relationship('TrainerSchedule', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='trainer')
     #TrainerSchedule = db.relationship('TrainerSchedule', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='courseoverview')
+    
+    #included at 20/10
+    def __init__(self, TrainerID, CourseID,TrainerScheduleID):
+        self.TrainerID = TrainerID
+        self.CourseID = CourseID
+        self.TrainerScheduleID = TrainerScheduleID
 
     Trainer = db.relationship('Trainer', primaryjoin='TrainerSchedule.TrainerID == Trainer.TrainerID', backref='TrainerSchedule')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='TrainerSchedule.CourseID == CourseOverview.CourseID', backref='TrainerSchedule')
@@ -200,6 +231,16 @@ class ClassDescription(db.Model):
     StartDate = db.Column(db.DateTime, nullable=False)
     EndTime = db.Column(db.DateTime, nullable=False)
     EndDate = db.Column(db.DateTime, nullable=False)
+
+    #included at 20/10
+    def __init__(self, CourseID, ClassID,ClassSize,StartTime,StartDate,EndTime,EndDate):
+        self.CourseID = CourseID
+        self.ClassID = ClassID
+        self.ClassSize = ClassSize
+        self.StartTime = StartTime
+        self.StartDate = StartDate
+        self.EndTime = EndTime
+        self.EndDate = EndDate
 
     #ClassDescription = db.relationship('ClassDescription', primaryjoin='classdescription.CourseID == courseoverview.CourseID', backref='courseoverview')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='ClassDescription.CourseID == CourseOverview.CourseID', backref='ClassDescription')
@@ -221,6 +262,15 @@ class CourseRecord(db.Model):
     CourseProgress = db.Column(db.Float)
     FinalQuizResult = db.Column(db.String(100))
 
+    #included at 20/10
+    def __init__(self, CourseID, CourseRecordID,TrainerScheduleID,LearnerID,ClassID,CourseProgress,FinalQuizResult):
+        self.CourseID = CourseID
+        self.CourseRecordID = CourseRecordID
+        self.TrainerScheduleID = TrainerScheduleID
+        self.LearnerID = LearnerID
+        self.ClassID = ClassID
+        self.CourseProgress = CourseProgress
+        self.FinalQuizResult = FinalQuizResult
     #Here got issue => Need to use CourseRecord then join into TrainerSchedule table to Trainer & Trainschedule to courseoverview in 1 line
     #CourseRecord = db.relationship('trainer', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='TrainerSchedule')
     #CourseRecord = db.relationship('courseoverview', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='TrainerSchedule')
@@ -249,6 +299,16 @@ class Enrollment(db.Model):
     #Enrollment = db.relationship('Enrollment', primaryjoin='enrollment.LearnerID == learner.LearnerID', backref='learner')
     #Enrollment = db.relationship('Enrollment', primaryjoin='enrollment.CourseID == courseoverview.CourseID', backref='courseoverview')
     #Enrollment = db.relationship('Enrollment', primaryjoin='enrollment.ClassID == classdescription.ClassID', backref='classdescription')
+    
+    #included at 20/10
+    def __init__(self, LearnerID, EnrollmentID,CourseID,ClassID,Approved,passPrerequisite):
+        self.LearnerID = LearnerID
+        self.EnrollmentID = EnrollmentID
+        self.CourseID = CourseID
+        self.LearnerID = LearnerID
+        self.ClassID = ClassID
+        self.Approved = Approved
+        self.passPrerequisite = passPrerequisite
 
     CourseOverview = db.relationship('CourseOverview', primaryjoin='Enrollment.CourseID == CourseOverview.CourseID', backref='Enrollment')
     Learner = db.relationship('Learner', primaryjoin='Enrollment.LearnerID == Learner.LearnerID', backref='Enrollment')
@@ -278,6 +338,18 @@ class QuizQn(db.Model):
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='sectionoverview')
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.SectionQuizID == sectionoverview.SectionQuizID', backref='sectionoverview')
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.SectionID == sectionoverview.SectionID', backref='sectionoverview')
+    
+    #included at 20/10
+    def __init__(self, QuizQnID, CourseID,SectionMaterialsID,SectionQuizID,SectionID,QuizQuestion,QuizOptionNo,QuizOption):
+        self.QuizQnID = QuizQnID
+        self.CourseID = CourseID
+        self.SectionMaterialsID = SectionMaterialsID
+        self.SectionQuizID = SectionQuizID
+        self.SectionID = SectionID
+        self.QuizQuestion = QuizQuestion
+        self.QuizOptionNo = QuizOptionNo
+        self.QuizOption = QuizOption
+
 
     CourseOverview = db.relationship('CourseOverview', primaryjoin='QuizQn.CourseID == CourseOverview.CourseID', backref='QuizQn')
     SectionMaterials = db.relationship('SectionMaterials', primaryjoin='QuizQn.SectionMaterialsID == SectionMaterials.SectionMaterialsID', backref='QuizQn')
@@ -304,6 +376,16 @@ class LearnerQuizAnswer(db.Model):
     #LearnerQuizAnswer = db.relationship('LearnerQuizAnswer', primaryjoin='learnerquizanswer.SectionID == sectionoverview.SectionID', backref='sectionoverview')
     #LearnerQuizAnswer = db.relationship('LearnerQuizAnswer', primaryjoin='learnerquizanswer.LearnerID == learner.LearnerID', backref='learner')
     #LearnerQuizAnswer = db.relationship('LearnerQuizAnswer', primaryjoin='learnerquizanswer.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='sectionoverview')
+    
+    #included at 20/10
+    def __init__(self, QuizQnID, SectionQuizID,SectionMaterialsID,CourseID,SectionID,LearnerID,quizAnswer):
+        self.QuizQnID = QuizQnID
+        self.SectionQuizID = SectionQuizID
+        self.SectionMaterialsID = SectionMaterialsID
+        self.CourseID = CourseID
+        self.SectionID = SectionID
+        self.LearnerID = LearnerID
+        self.quizAnswer = quizAnswer
 
     QuizQn = db.relationship('QuizQn', primaryjoin='LearnerQuizAnswer.QuizQnID == QuizQn.QuizQnID', backref='LearnerQuizAnswer')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='LearnerQuizAnswer.CourseID == CourseOverview.CourseID', backref='LearnerQuizAnswer')
@@ -333,6 +415,15 @@ class SolutionTable(db.Model):
     #SolutionTable = db.relationship('SolutionTable', primaryjoin='solutiontable.SectionQuizID == sectionoverview.SectionQuizID', backref='sectionoverview')
     #SolutionTable = db.relationship('SolutionTable', primaryjoin='solutiontable.SectionID == sectionoverview.SectionID', backref='sectionoverview')
     #SolutionTable = db.relationship('SolutionTable', primaryjoin='solutiontable.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='sectionoverview')
+
+    #included at 20/10
+    def __init__(self, QuizQnID, SectionQuizID,SectionMaterialsID,CourseID,SectionID,quizSolution):
+        self.QuizQnID = QuizQnID
+        self.SectionQuizID = SectionQuizID
+        self.SectionMaterialsID = SectionMaterialsID
+        self.CourseID = CourseID
+        self.SectionID = SectionID
+        self.quizSolution = quizSolution
 
     QuizQn = db.relationship('QuizQn', primaryjoin='SolutionTable.QuizQnID == QuizQn.QuizQnID', backref='SolutionTable')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='SolutionTable.CourseID == CourseOverview.CourseID', backref='SolutionTable')
@@ -482,6 +573,7 @@ def retrieveCourseOverview(CourseID):
         } 
     ), 404
 
+<<<<<<< HEAD
 
 @app.route("/learnerDetails/<int:LearnerID>") 
 def retrievelearnerDetails(LearnerID): 
@@ -526,6 +618,107 @@ def updateEnrollment(LearnerID):
             }
         ), 500
 
+=======
+@app.route("/sectionoverview") 
+def retrieveSectionOverview(): 
+    SectionList = SectionOverview.query.all() 
+    if len(SectionList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [sections.json() for sections in SectionList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404 
+
+@app.route("/sectionmaterials") 
+def retrieveSectionMaterials(): 
+    SectionList = SectionMaterials.query.all() 
+    if len(SectionList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [sections.json() for sections in SectionList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No section materials available for selected student." 
+        } 
+    ), 404 
+
+@app.route("/sectionquiz") 
+def retrieveSectionQuiz(): 
+    SectionQuizList = SectionQuiz.query.all()
+    if len(SectionQuizList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "sectionquiz": [sectionquiz.json() for sectionquiz in SectionQuizList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No sectionquiz available." 
+        } 
+    ), 404 
+
+
+
+@app.route("/quizquestions") 
+def retrieveQuizQn(): 
+    QuizQnList = QuizQn.query.all()
+    if len(QuizQnList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "quizquestions": [quizquestions.json() for quizquestions in QuizQnList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No sectionquiz available." 
+        } 
+    ), 404 
+
+
+@app.route("/solutiontable") 
+def retrieveSolutionTable(): 
+    SolutionTableList = SolutionTable.query.all()
+    if len(SolutionTableList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "solutions": [solutions.json() for solutions in SolutionTableList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No sectionquiz available." 
+        } 
+    ), 404 
+
+   
+>>>>>>> 965d31c567fa2a02a0055ff965c205bf4816af44
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
     app.run(host='0.0.0.0', port=5016, debug=True)

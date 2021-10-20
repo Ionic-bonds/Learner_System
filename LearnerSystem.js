@@ -1,7 +1,0 @@
-function onLoad(){
-
-}
-
-function retrieveLearnerData(){
-    
-}
