@@ -481,7 +481,51 @@ def retrieveCourseOverview(CourseID):
             "message": "No enrollment available for selected student." 
         } 
     ), 404
-   
+
+
+@app.route("/learnerDetails/<int:LearnerID>") 
+def retrievelearnerDetails(LearnerID): 
+    data = db.session.query(Person, Learner)\
+    .filter(
+    (Learner.LearnerID == LearnerID)
+    & (Learner.PersonID==Person.PersonID)
+    & (Person.PersonID==Learner.PersonID)
+    ).first()
+
+    if (data): 
+        return jsonify({
+            "code": 200, 
+            "data": {
+                 **data.Person.json()
+            }
+                }
+            )
+
+@app.route("/updateEnrollment/<int:LearnerID>") 
+def updateEnrollment(LearnerID):
+    try: 
+        enroll = Enrollment.query.filter_by(LearnerID=LearnerID).first()
+        enroll.Approved = True
+        db.session.commit()
+
+        return jsonify(
+            {
+                "code": 200,
+                "message": "Update Successfull"
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "data": {
+                    "LearnerID": LearnerID
+                },
+                "message": "An error occurred while updating the payment. " + str(e)
+            }
+        ), 500
+
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
     app.run(host='0.0.0.0', port=5016, debug=True)
