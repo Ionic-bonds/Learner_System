@@ -792,6 +792,65 @@ def retrieveSolutionTable():
         } 
     ), 404 
 
+@app.route("/learnerquizanswer") 
+def publishlearneranswer(): 
+    SectionQuizList = SectionQuiz.query.all()
+    if len(SectionQuizList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "sectionquiz": [sectionquiz.json() for sectionquiz in SectionQuizList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No sectionquiz available." 
+        } 
+    ), 404 
+
+@app.route("/learnerquizanswer", methods=['POST'])
+def publish_learnerquizanswer():
+    QuizQnID = request.get_json()["QuizQnID"]
+    SectionMaterialsID = request.get_json()["SectionMaterialsID"]
+    CourseID = request.get_json()["CourseID"]
+    SectionID = request.get_json()["SectionID"]
+    LearnerID = request.get_json()["LearnerID"]
+
+    
+    if (LearnerQuizAnswer.query.filter_by(QuizQnID=QuizQnID,SectionMaterialsID=SectionMaterialsID,CourseID=CourseID,SectionID=SectionID,LearnerID=LearnerID).first()):
+        return jsonify(
+            {
+                "code": 400,
+                "message": "learnerquizanswer already posted."
+            }
+        ), 400
+    
+    quizAnswer = request.get_json()["quizAnswer"]
+
+    learnerquiz = LearnerQuizAnswer(QuizQnID=None,SectionMaterialsID=None,CourseID=None,SectionID=None,LearnerID=None, quizAnswer=quizAnswer)
+ 
+    try:
+        db.session.add(learnerquiz)
+        db.session.commit()
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred while learner submit the answers for quiz. "
+            }
+        ), 500
+
+    print(json.dumps(learnerquiz.json(), default=str)) 
+    print()
+    return jsonify(
+        {
+            "code": 201,
+            "data": learnerquiz.json()
+        }
+    ), 201
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
