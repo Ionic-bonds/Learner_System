@@ -5,9 +5,7 @@ function onLoad(){
     var email = sessionStorage.getItem('Email')
     displayEnrolledCourses(id)
 }
-function retrievePrequisiteCourses(Email){
 
-}
 function displaySectionDescription(LearnerID){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -15,7 +13,7 @@ function displaySectionDescription(LearnerID){
             retrieveSectionOverview(this);
         }
     }
-    request.open("GET", (`SectionOverview/${emailAddr}`), false);
+    request.open("GET", (`SectionOverview/${SectionID}`), false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -29,7 +27,7 @@ function retrieveAllCourses(obj){
     tableHtml += `<div>Course Name</div>`;
     for(element of enrolledList){
         //the code line below is to for loop to retrieve courseName using another function because right now only have courseID
-        var retrieveCourseNameJURL = `http://localhost:5016/sectionoverview/${element['CourseID']}`;
+        var retrieveCourseNameURL = `http://localhost:5016/sectionoverview/${element['CourseID']}`;
     }
 
 }

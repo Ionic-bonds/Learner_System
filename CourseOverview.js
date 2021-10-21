@@ -28,7 +28,7 @@ function retrieveAllCourses(obj){
     tableHtml += `<div>Course Name</div>`;
     for(element of enrolledList){
         //the code line below is to for loop to retrieve courseName using another function because right now only have courseID
-        var retrieveCourseNameJURL = `http://localhost:5016/courseoverview/${element['CourseID']}`;
+        var retrieveCourseNameURL = `http://localhost:5016/courseoverview/${element['CourseID']}`;
     }
 
 }
