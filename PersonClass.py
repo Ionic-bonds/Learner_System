@@ -677,6 +677,24 @@ def retrieveSectionQuiz():
         } 
     ), 404 
 
+
+@app.route("/sectionquiz/<string:SectionQuizID>")
+def find_by_SectionQuizID(SectionQuizID):
+    sectionquiz = SectionQuiz.query.filter_by(SectionQuizID=SectionQuizID).first()
+    if sectionquiz:
+        return jsonify(
+            {
+                "code": 200,
+                "data": sectionquiz.json()
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "Sectionquiz not found."
+        }
+    ), 404
+
 #will have to test
 @app.route("/sectionquiz", methods=['POST'])
 def create_sectionquiz():
@@ -738,6 +756,22 @@ def retrieveQuizQn():
         } 
     ), 404 
 
+@app.route("/quizquestions/<string:QuizQnID>")
+def find_by_QuizQuestions(QuizQnID):
+    quizquestions = QuizQn.query.filter_by(QuizQnID=QuizQnID).first()
+    if quizquestions:
+        return jsonify(
+            {
+                "code": 200,
+                "data": quizquestions.json()
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "quizquestions not found."
+        }
+    ), 404
 
 @app.route("/solutiontable") 
 def retrieveSolutionTable(): 
