@@ -677,7 +677,47 @@ def retrieveSectionQuiz():
         } 
     ), 404 
 
+#will have to test
+@app.route("/sectionquiz", methods=['POST'])
+def create_sectionquiz():
+    SectionID = request.get_json()["SectionID"]
+    SectionMaterialsID = request.get_json()["SectionMaterialsID"]
+    SectionQuizID = request.get_json()["SectionQuizID"]
+    CourseID = request.get_json()["CourseID"]
+    
+    if (SectionQuiz.query.filter_by(SectionID=SectionID, SectionMaterialsID=SectionMaterialsID,SectionQuizID=SectionQuizID,CourseID=CourseID).first()):
+        return jsonify(
+            {
+                "code": 400,
+                "message": "SectionQuiz already created."
+            }
+        ), 400
+    
+    quizResult = request.get_json()["quizResult"]
+    duration = request.get_json()["duration"]
+    quizStartTime = request.get_json()["quizStartTime"]
 
+    Sectionquiz = SectionQuiz(SectionID=None,SectionMaterialsID=None,SectionQuizID=None,CourseID=None,quizResult=quizResult, duration=duration, quizStartTime=quizStartTime)
+ 
+    try:
+        db.session.add(Sectionquiz)
+        db.session.commit()
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred while creating the quiz. "
+            }
+        ), 500
+
+    print(json.dumps(Sectionquiz.json(), default=str)) 
+    print()
+    return jsonify(
+        {
+            "code": 201,
+            "data": Sectionquiz.json()
+        }
+    ), 201
 
 @app.route("/quizquestions") 
 def retrieveQuizQn(): 
