@@ -2,7 +2,7 @@
 -- Dummy Data for table Course_Overview
 --
 insert into Course_Overview(CourseName, CourseDescription, Prerequisite)
-values('Xerox WorkCentre 7845', 'This is a course', FALSE);
+values('Fundamentals of Xerox WorkCentre 7845', 'This is a course', FALSE);
 insert into Course_Overview(CourseName, CourseDescription, Prerequisite)
 values('Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
 insert into Course_Overview(CourseName, CourseDescription, Prerequisite)
