@@ -28,5 +28,5 @@ function retrieveSectionOverview(obj){
         //the code line below is to for loop to retrieve courseName using another function because right now only have courseID
         var retrieveCourseNameURL = `http://localhost:5016/sectionoverview/${element['CourseID']}`;
     }
-    document.getElementById
+    document.getElementById("CourseName").innerText = "";
 }
