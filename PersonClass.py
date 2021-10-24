@@ -773,31 +773,27 @@ def find_by_SectionQuizID(SectionQuizID):
         }
     ), 404
 
-#will have to test
-@app.route("/sectionquiz", methods=['POST'])
+
+@app.route("/createsectionquiz", methods=['GET','POST'])
 def create_sectionquiz():
     SectionID = request.get_json()["SectionID"]
     SectionMaterialsID = request.get_json()["SectionMaterialsID"]
-    SectionQuizID = request.get_json()["SectionQuizID"]
     CourseID = request.get_json()["CourseID"]
-    
-    if (SectionQuiz.query.filter_by(SectionID=SectionID, SectionMaterialsID=SectionMaterialsID,SectionQuizID=SectionQuizID,CourseID=CourseID).first()):
-        return jsonify(
-            {
-                "code": 400,
-                "message": "SectionQuiz already created."
-            }
-        ), 400
-    
     quizResult = request.get_json()["quizResult"]
     duration = request.get_json()["duration"]
     quizStartTime = request.get_json()["quizStartTime"]
 
-    Sectionquiz = SectionQuiz(SectionID=None,SectionMaterialsID=None,SectionQuizID=None,CourseID=None,quizResult=quizResult, duration=duration, quizStartTime=quizStartTime)
+    Sectionquiz = SectionQuiz(SectionQuizID=None, SectionID=SectionID,SectionMaterialsID=SectionMaterialsID,CourseID=CourseID,quizResult=quizResult, duration=duration, quizStartTime=quizStartTime)
  
     try:
         db.session.add(Sectionquiz)
         db.session.commit()
+        return jsonify(
+            {
+                "code": 200,
+                "message": "Creation of quiz success. "
+            }
+        ), 500
     except Exception as e:
         return jsonify(
             {
@@ -805,15 +801,6 @@ def create_sectionquiz():
                 "message": "An error occurred while creating the quiz. "
             }
         ), 500
-
-    print(json.dumps(Sectionquiz.json(), default=str)) 
-    print()
-    return jsonify(
-        {
-            "code": 201,
-            "data": Sectionquiz.json()
-        }
-    ), 201
 
 @app.route("/quizquestions") 
 def retrieveQuizQn(): 
@@ -892,27 +879,26 @@ def publishlearneranswer():
 @app.route("/learnerquizanswer", methods=['POST'])
 def publish_learnerquizanswer():
     QuizQnID = request.get_json()["QuizQnID"]
+    SectionQuizID = request.get_json()["SectionQuizID"]
     SectionMaterialsID = request.get_json()["SectionMaterialsID"]
     CourseID = request.get_json()["CourseID"]
     SectionID = request.get_json()["SectionID"]
     LearnerID = request.get_json()["LearnerID"]
-
-    
-    if (LearnerQuizAnswer.query.filter_by(QuizQnID=QuizQnID,SectionMaterialsID=SectionMaterialsID,CourseID=CourseID,SectionID=SectionID,LearnerID=LearnerID).first()):
-        return jsonify(
-            {
-                "code": 400,
-                "message": "learnerquizanswer already posted."
-            }
-        ), 400
-    
     quizAnswer = request.get_json()["quizAnswer"]
 
-    learnerquiz = LearnerQuizAnswer(QuizQnID=None,SectionMaterialsID=None,CourseID=None,SectionID=None,LearnerID=None, quizAnswer=quizAnswer)
+    learnerquiz = LearnerQuizAnswer(QuizQnID=QuizQnID,SectionQuizID=SectionQuizID, SectionMaterialsID=SectionMaterialsID,CourseID=CourseID,SectionID=SectionID,LearnerID=LearnerID, quizAnswer=quizAnswer)
  
     try:
         db.session.add(learnerquiz)
         db.session.commit()
+
+        return jsonify(
+            {
+                "code": 200,
+                "message": "Learner quiz answer successful"
+            }
+        ), 200
+
     except Exception as e:
         return jsonify(
             {
@@ -921,14 +907,6 @@ def publish_learnerquizanswer():
             }
         ), 500
 
-    print(json.dumps(learnerquiz.json(), default=str)) 
-    print()
-    return jsonify(
-        {
-            "code": 201,
-            "data": learnerquiz.json()
-        }
-    ), 201
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
