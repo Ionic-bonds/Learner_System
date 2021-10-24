@@ -95,10 +95,10 @@ CREATE TABLE IF NOT EXISTS Class_Description (
   ClassID integer,
   CourseID integer,
   ClassSize integer,
-  StartTime time,
-  StartDate Date,
-  EndTime time,
-  EndDate Date,
+  StartTime varchar(100),
+  StartDate varchar(100),
+  EndTime varchar(100),
+  EndDate varchar(100),
   constraint ClassDescription_pk primary key(ClassID, CourseID),
   constraint ClassDescription_fk foreign key(CourseID) references Course_Overview(CourseID)
   
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS Section_Quiz (
   SectionMaterialsID integer,
   quizResult varchar(1),
   duration integer,
-  quizStartTime time,
+  quizStartTime varchar(100),
   CourseID integer,
   constraint SectionQuiz_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID),
   constraint SectionMaterials_f12 foreign key(SectionMaterialsID, CourseID, SectionID) references Section_Materials(SectionMaterialsID, CourseID, SectionID)
