@@ -144,7 +144,7 @@ function RetrieveEnrollmentbyID(enrollmentID) {
 
 }
  
-function InsertCourseRecord(obj){
+async function InsertCourseRecord(obj){
     var response_json = JSON.parse(obj.responseText);
     var data = response_json['data']['Enrollment'][0];
     var CourseID = data['CourseID'];
@@ -156,6 +156,35 @@ function InsertCourseRecord(obj){
 
     console.log("in InsertCourseRecord");
     console.log(CourseID,LearnerID,ClassID,TrainerScheduleID );
+
+    var data = { 
+        "CourseID": CourseID, 
+        "TrainerScheduleID": TrainerScheduleID, 
+        "LearnerID": LearnerID, 
+        "ClassID": ClassID, 
+        "CourseProgress": 0, 
+        "FinalQuizResult": "NA"
+      };
+        // Change serviceURL to your own
+        var serviceURL = "http://localhost:5016/insertCourseRecord";
+        
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { 
+                        method: 'POST',
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
+                        body: JSON.stringify(data) 
+                    }
+                );
+                const result = await response.json();
+                console.log(result);
+                
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            console.log("Cannot connect!");
+        } // error
 }
 
 function getTrainerSchedule(CourseID) {
