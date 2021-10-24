@@ -543,34 +543,35 @@ def insertCourseRecord():
     CourseProgress = request.get_json()["CourseProgress"]
     FinalQuizResult = request.get_json()["FinalQuizResult"]
     
-    if (CourseRecord.query.filter_by(CourseID=CourseID, TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID).first()):
-        return jsonify(
-            {
-                "code": 400,
-                "message": "CourseRecord already created."
-            }
-        ), 400
-    else :
-
-        Courserecord = CourseRecord(CourseRecordID=None, CourseID=CourseID,TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID,ClassID=ClassID,CourseProgress=CourseProgress,FinalQuizResult=FinalQuizResult)
+    # if (CourseRecord.query.filter_by(CourseID=CourseID, TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID).first()):
+    #     return jsonify(
+    #         {
+    #             "code": 400,
+    #             "message": "CourseRecord already created."
+    #         }
+    #     ), 400
+    # else :
+    #Courserecord = CourseRecord()
+    Courserecord = CourseRecord(CourseRecordID=None, CourseID=CourseID,TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID,ClassID=ClassID,CourseProgress=CourseProgress,FinalQuizResult=FinalQuizResult)
  
-        try:
-            db.session.add(Courserecord)
-            db.session.commit()
-        except Exception as e:
-            return jsonify(
-                {
-                    "code": 500,
-                    "message": "An error occurred while creating the quiz. "
-                }
-            ), 500
+    try:
+        db.session.add(Courserecord)
+        db.session.commit()
+
         return jsonify(
             {
-                "code": 201,
-                "data": CourseRecord.json()
+                "code": 200,
+                "message": "Insertion Successful"
             }
-        ), 201
+        ), 200
 
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred while creating the quiz. "
+            }
+        ), 500
 
  
 @app.route('/class') 
