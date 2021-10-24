@@ -514,65 +514,7 @@ def enrollment():
             "message": "Enrollment details not found." 
         } 
     ), 404 
-
-@app.route('/trainerSchedule/<int:CourseID>', methods=['GET']) 
-def trainerSchedule(CourseID): 
-    trainerRecords = TrainerSchedule.query.filter_by(CourseID=CourseID).all() 
-    if len(trainerRecords): 
-        return jsonify( 
-            { 
-                "code": 200, 
-                "data": { 
-                    "Enrollment":  [courses.json() for courses in trainerRecords]  
-                } 
-            } 
-        ) 
-    return jsonify( 
-        { 
-            "code": 404, 
-            "message": "Trainer schedule details not found." 
-        } 
-    ), 404 
-
-@app.route('/insertCourseRecord', methods=['GET','POST']) 
-def insertCourseRecord(): 
-    CourseID = request.get_json()["CourseID"]
-    TrainerScheduleID = request.get_json()["TrainerScheduleID"]
-    LearnerID = request.get_json()["LearnerID"]
-    CourseProgress = request.get_json()["CourseProgress"]
-    FinalQuizResult = request.get_json()["FinalQuizResult"]
-    
-    if (CourseRecord.query.filter_by(CourseID=CourseID, TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID).first()):
-        return jsonify(
-            {
-                "code": 400,
-                "message": "CourseRecord already created."
-            }
-        ), 400
-   
-    CourseRecord = CourseRecord(CourseID=CourseID,TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID,CourseProgress=CourseProgress,FinalQuizResult=FinalQuizResult)
  
-    try:
-        db.session.add(CourseRecord)
-        db.session.commit()
-    except Exception as e:
-        return jsonify(
-            {
-                "code": 500,
-                "message": "An error occurred while creating the quiz. "
-            }
-        ), 500
-
-    print(json.dumps(CourseRecord.json(), default=str)) 
-    print()
-    return jsonify(
-        {
-            "code": 201,
-            "data": CourseRecord.json()
-        }
-    ), 201
-
-
 @app.route('/class') 
 def classes(): 
     courseList = ClassDescription.query.all() 
