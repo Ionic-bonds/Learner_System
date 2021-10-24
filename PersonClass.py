@@ -3,10 +3,10 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy.sql import expression
-from datetime import timedelta
+from String(100) import timedelta
 import json
 from os import environ
-from datetime import date, datetime
+from String(100) import date, String(100)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LearnerSystem'
@@ -175,7 +175,7 @@ class SectionQuiz(db.Model):
     SectionMaterialsID = db.Column(db.Integer, primary_key=True)
     quizResult = db.Column(db.Integer, primary_key=True)
     duration = db.Column(db.Integer, primary_key=True)
-    quizStartTime = db.Column(db.DateTime, nullable=False)
+    quizStartTime = db.Column(db.String(100), nullable=False)
 
     #SectionMaterials = db.relationship('SectionQuiz', primaryjoin='sectionquiz.SectionMaterialsID == sectionmaterials.SectionMaterialsID', backref='sectionmaterials')
     #SectionMaterials = db.relationship('SectionQuiz', primaryjoin='sectionquiz.SectionID == sectionoverview.SectionID', backref='sectionoverview')
@@ -227,10 +227,10 @@ class ClassDescription(db.Model):
     CourseID = db.Column(db.ForeignKey(CourseOverview.CourseID), nullable=False, primary_key=True)
     ClassID = db.Column(db.Integer,nullable=False, primary_key=True)
     ClassSize = db.Column(db.Integer, nullable=False)
-    StartTime = db.Column(db.DateTime, nullable=False)
-    StartDate = db.Column(db.DateTime, nullable=False)
-    EndTime = db.Column(db.DateTime, nullable=False)
-    EndDate = db.Column(db.DateTime, nullable=False)
+    StartTime = db.Column(db.String(100), nullable=False)
+    StartDate = db.Column(db.String(100), nullable=False)
+    EndTime = db.Column(db.String(100), nullable=False)
+    EndDate = db.Column(db.String(100), nullable=False)
 
     #included at 20/10
     def __init__(self, CourseID, ClassID,ClassSize,StartTime,StartDate,EndTime,EndDate):
