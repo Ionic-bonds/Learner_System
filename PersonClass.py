@@ -515,6 +515,25 @@ def enrollment():
         } 
     ), 404 
 
+@app.route('/getEnrollment/<int:EnrollmentID>', methods=['GET']) 
+def getEnrollment(EnrollmentID): 
+    enrollmentRecords = Enrollment.query.filter_by(EnrollmentID=EnrollmentID).all() 
+    if len(enrollmentRecords): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "Enrollment":  [courses.json() for courses in enrollmentRecords]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Enrollment details not found." 
+        } 
+    ), 404 
+
 @app.route('/trainerSchedule/<int:CourseID>', methods=['GET']) 
 def trainerSchedule(CourseID): 
     trainerRecords = TrainerSchedule.query.filter_by(CourseID=CourseID).all() 
@@ -651,10 +670,10 @@ def retrievelearnerDetails(LearnerID):
                 }
             )
 
-@app.route("/updateEnrollment/<int:LearnerID>") 
-def updateEnrollment(LearnerID):
+@app.route("/updateEnrollment/<int:enrollmentID>") 
+def updateEnrollment(enrollmentID):
     try: 
-        enroll = Enrollment.query.filter_by(LearnerID=LearnerID).first()
+        enroll = Enrollment.query.filter_by(EnrollmentID=enrollmentID).first()
         enroll.Approved = True
         db.session.commit()
 
@@ -662,9 +681,9 @@ def updateEnrollment(LearnerID):
             {
                 "code": 200,
                 "data": {
-                    "LearnerID": LearnerID
+                    "EnrollmentID": enrollmentID
                 },
-                "message": "Update Successfull"
+                "message": "Update Successful"
             }
         ), 200
 
@@ -673,7 +692,7 @@ def updateEnrollment(LearnerID):
             {
                 "code": 500,
                 "data": {
-                    "LearnerID": LearnerID
+                    "EnrollmentID": enrollmentID
                 },
                 "message": "An error occurred while updating the payment. " + str(e)
             }
