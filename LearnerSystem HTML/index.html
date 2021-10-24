@@ -10,8 +10,9 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <script src='../Courses.js'></script>
     </head>
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onload='onLoad()'>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">Welcome to eLearn</a>
@@ -101,42 +102,8 @@
                         </ol>
                         <div class = "container-fluid"></div>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Fundamentals of Xerox WorkCentre 7845</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="course-overview.html">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Programming for Xerox WorkCentre with Card Access and Integration</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="course-overview.html">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">ABC Software</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Machine Learning</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div id='insertion'></div>
+                            
                         </div>
 
                         <br>
@@ -148,33 +115,9 @@
                         
                         <div class = "col-container">
                             <div class="row">
-                                    <div class="col-xl-6 col-md-6 d-flex">
-                                        <div class="card bg-primary text-white mb-4">
-                                            <img src="./Courses_images/software engineering.jfif" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                            <h5 class="card-title">Programming for Xerox WorkCentre with Card Access and Integration</h5>
-                                            <h6 class="card-subtitle mb-2 text-muted">Xerox</h6>
-                                            <p class="card-text">Software engineering is the systematic application of engineering approaches to the development of software.</p>
-                                            <div class="Medium text-white">
-                                                <a class="small text-white stretched-link" href="course-overview.html">View Details</a>
-                                                <i class="fas fa-angle-right"></i>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-md-6 d-flex">
-                                        <div class="card bg-warning text-white mb-4">
-                                            <img src="./Courses_images/Fundamentals.jfif" class="card-img-top" alt="...">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Fundamentals of Xerox WorkCentre 7845</h5>
-                                                <h6 class="card-subtitle mb-2 text-muted">Xerox</h6>
-                                                <p class="card-text">Fundamentals of Xerox Work Software engineering is the systematic application of engineering </p>
-                                                <div class="Medium text-white">
-                                                    <a class="small text-white stretched-link" href="course-overview.html">View Details</a>
-                                                    <i class="fas fa-angle-right"></i>
-                                                </div>
-                                            </div>
-                                    </div>
+                                <div id='prereq'></div>
+                                    
+                                   
                                 </div>
                                 
                             </div>
