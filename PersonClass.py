@@ -572,6 +572,7 @@ def insertCourseRecord():
         ), 201
 
 
+ 
 @app.route('/class') 
 def classes(): 
     courseList = ClassDescription.query.all() 
