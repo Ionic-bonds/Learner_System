@@ -5,7 +5,7 @@ function onLoad(){
     displaySectionOverview(id)
 }
 
-function displaySectionOverview(SectionID){
+function retrieveSectionOverview(SectionID){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -29,4 +29,15 @@ function retrieveSectionOverview(obj){
         var retrieveCourseNameURL = `http://localhost:5016/sectionoverview/${element['CourseID']}`;
     }
     document.getElementById("CourseName").innerText = "";
+}
+
+function retrieveCourseNameOnly(obj, CourseID, CourseProgress){
+    var response_json = JSON.parse(obj.responseText);
+    var incomplete_courses = response_json["data"]["courses"]
+    var incompleteTable = ``;
+    for (element of incomplete_courses){
+        incompleteTable += `<div> ${element['CourseName']}
+        ${CourseProgress} <button id='CourseName' onClick='ViewCourse()'> View Course </div>`;
+    }
+    document.getElementById('status').innerHTML = incompleteTable;
 }
