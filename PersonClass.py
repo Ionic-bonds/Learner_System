@@ -539,6 +539,7 @@ def insertCourseRecord():
     CourseID = request.get_json()["CourseID"]
     TrainerScheduleID = request.get_json()["TrainerScheduleID"]
     LearnerID = request.get_json()["LearnerID"]
+    ClassID= request.get_json()["ClassID"]
     CourseProgress = request.get_json()["CourseProgress"]
     FinalQuizResult = request.get_json()["FinalQuizResult"]
     
@@ -549,28 +550,26 @@ def insertCourseRecord():
                 "message": "CourseRecord already created."
             }
         ), 400
-   
-    CourseRecord = CourseRecord(CourseID=CourseID,TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID,CourseProgress=CourseProgress,FinalQuizResult=FinalQuizResult)
+    else :
+
+        Courserecord = CourseRecord(CourseRecordID=None, CourseID=CourseID,TrainerScheduleID=TrainerScheduleID,LearnerID=LearnerID,ClassID=ClassID,CourseProgress=CourseProgress,FinalQuizResult=FinalQuizResult)
  
-    try:
-        db.session.add(CourseRecord)
-        db.session.commit()
-    except Exception as e:
+        try:
+            db.session.add(Courserecord)
+            db.session.commit()
+        except Exception as e:
+            return jsonify(
+                {
+                    "code": 500,
+                    "message": "An error occurred while creating the quiz. "
+                }
+            ), 500
         return jsonify(
             {
-                "code": 500,
-                "message": "An error occurred while creating the quiz. "
+                "code": 201,
+                "data": CourseRecord.json()
             }
-        ), 500
-
-    print(json.dumps(CourseRecord.json(), default=str)) 
-    print()
-    return jsonify(
-        {
-            "code": 201,
-            "data": CourseRecord.json()
-        }
-    ), 201
+        ), 201
 
 
 @app.route('/class') 
@@ -909,63 +908,6 @@ def publish_learnerquizanswer():
             "data": learnerquiz.json()
         }
     ), 201
-
-@app.route("/trainerschedule/<int:CourseID>") 
-def retrieveTrainerSchedule(CourseID): 
-    schedule = TrainerSchedule.query.filter_by(CourseID=CourseID).all() 
-    if len(schedule): 
-        return jsonify( 
-            { 
-                "code": 200, 
-                "data": { 
-                    "trainerschedules": [x.json() for x in schedule] 
-                } 
-            } 
-        ) 
-    return jsonify( 
-        { 
-            "code": 404, 
-            "message": "No schedule available for selected course." 
-        } 
-    ), 404
-
-@app.route("/trainer/<int:TrainerID>") 
-def retrieveTrainer(TrainerID): 
-    trainer = Trainer.query.filter_by(TrainerID=TrainerID).all() 
-    if len(trainer): 
-        return jsonify( 
-            { 
-                "code": 200, 
-                "data": { 
-                    "trainers": [x.json() for x in trainer] 
-                } 
-            } 
-        ) 
-    return jsonify( 
-        { 
-            "code": 404, 
-            "message": "No trainer available for selected trainer ID." 
-        } 
-    ), 404
-
-@app.route("/prerequisite/<int:CourseID>") 
-def retrievePrerequisite(CourseID): 
-    prerequisite = CoursePrerequisite.query.filter_by(MainCourseID=CourseID).all() 
-    if len(prerequisite): 
-        return jsonify( 
-            { 
-                "code": 200, 
-                "data": { 
-                    "trainers": [x.json() for x in prerequisite] 
-                } 
-            } 
-        ) 
-    return jsonify( 
-        { 
-            "code": 404, 
-            "message": "No prerequisite available for selected course ID." 
-        } 
-    ), 404
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
