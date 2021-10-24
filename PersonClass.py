@@ -3,10 +3,10 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy.sql import expression
-from String(100) import timedelta
+from datetime import timedelta
 import json
 from os import environ
-from String(100) import date, String(100)
+from datetime import date, datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LearnerSystem'
