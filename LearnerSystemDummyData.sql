@@ -143,7 +143,7 @@ insert into Class_Description(ClassID, CourseID, ClassSize, StartTime, StartDate
 --
 -- need to edit 
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,1,1, 80.0 , 'NA');
-insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,2,1, 100.0 , 'Pass');
+insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,2,1, 100.0 , '90');
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,3,1, 20.0 , 'NA');
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,4,1, 10.0 , 'NA');
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,5,1, 80.0 , 'NA');
@@ -151,11 +151,11 @@ insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, Course
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,7,1, 60.0 , 'NA');
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,8,1, 30.0 , 'NA');
 insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,9,1, 80.0 , 'NA');
-insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,10,1, 100.0 , 'Pass');
+insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,10,1, 100.0 , '100');
 
-insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,11,1, 100.0 , 'Pass');
-insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(3,3,14,7, 100.0 , 'Pass');
-insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(4,4,14,10, 100.0 , 'Pass');
+insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(1,1,11,1, 100.0 , '87.9');
+insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(3,3,14,7, 100.0 , '85');
+insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, CourseProgress, FinalQuizResult) values(4,4,14,10, 100.0 , '93.4');
 -- --------------------------------------------------------
 -- Dummy Data for table Enrollment
 --
