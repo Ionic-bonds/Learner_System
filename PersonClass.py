@@ -126,7 +126,6 @@ class SectionOverview(db.Model):
     SectionDescription = db.Column(db.String(10000), nullable=False)
     SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
-    #included at 20/10
     def __init__(self, SectionID, CourseID,SectionDescription,SectionProgress):
         self.SectionID = SectionID
         self.CourseID = CourseID
@@ -149,7 +148,6 @@ class SectionMaterials(db.Model):
     # SectionDescription = db.Column(db.String(100), nullable=False)
     # SectionProgress = db.Column(db.Float(precision=2),nullable=False)
 
-    #included at 20/10
     def __init__(self, SectionMaterialsID, SectionID,SectionMaterials,CourseID):
         self.SectionMaterialsID = SectionMaterialsID
         self.SectionID = SectionID
@@ -184,7 +182,6 @@ class SectionQuiz(db.Model):
     SectionOverview = db.relationship('SectionOverview', primaryjoin='SectionQuiz.SectionID == SectionOverview.SectionID', backref='SectionQuiz')
     CourseOverview = db.relationship('CourseOverview', primaryjoin='SectionQuiz.CourseID == CourseOverview.CourseID', backref='SectionQuiz')
 
-    #included at 20/10
     def __init__(self, SectionQuizID, SectionID, CourseID, SectionMaterialsID,quizResult,duration,quizStartTime):
         self.SectionQuizID = SectionQuizID
         self.SectionID = SectionID
@@ -207,7 +204,6 @@ class TrainerSchedule(db.Model):
     #TrainerSchedule = db.relationship('TrainerSchedule', primaryjoin='trainerschedule.TrainerID == trainer.TrainerID', backref='trainer')
     #TrainerSchedule = db.relationship('TrainerSchedule', primaryjoin='trainerschedule.CourseID == courseoverview.CourseID', backref='courseoverview')
     
-    #included at 20/10
     def __init__(self, TrainerID, CourseID,TrainerScheduleID):
         self.TrainerID = TrainerID
         self.CourseID = CourseID
@@ -232,7 +228,6 @@ class ClassDescription(db.Model):
     EndTime = db.Column(db.String(100), nullable=False)
     EndDate = db.Column(db.String(100), nullable=False)
 
-    #included at 20/10
     def __init__(self, CourseID, ClassID,ClassSize,StartTime,StartDate,EndTime,EndDate):
         self.CourseID = CourseID
         self.ClassID = ClassID
@@ -262,7 +257,6 @@ class CourseRecord(db.Model):
     CourseProgress = db.Column(db.Float)
     FinalQuizResult = db.Column(db.String(100))
 
-    #included at 20/10
     def __init__(self, CourseID, CourseRecordID,TrainerScheduleID,LearnerID,ClassID,CourseProgress,FinalQuizResult):
         self.CourseID = CourseID
         self.CourseRecordID = CourseRecordID
@@ -300,7 +294,6 @@ class Enrollment(db.Model):
     #Enrollment = db.relationship('Enrollment', primaryjoin='enrollment.CourseID == courseoverview.CourseID', backref='courseoverview')
     #Enrollment = db.relationship('Enrollment', primaryjoin='enrollment.ClassID == classdescription.ClassID', backref='classdescription')
     
-    #included at 20/10
     def __init__(self, LearnerID, EnrollmentID,CourseID,ClassID,Approved,passPrerequisite):
         self.LearnerID = LearnerID
         self.EnrollmentID = EnrollmentID
@@ -339,7 +332,6 @@ class QuizQn(db.Model):
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.SectionQuizID == sectionoverview.SectionQuizID', backref='sectionoverview')
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.SectionID == sectionoverview.SectionID', backref='sectionoverview')
     
-    #included at 20/10
     def __init__(self, QuizQnID, CourseID,SectionMaterialsID,SectionQuizID,SectionID,QuizQuestion,QuizOptionNo,QuizOption):
         self.QuizQnID = QuizQnID
         self.CourseID = CourseID
@@ -357,7 +349,7 @@ class QuizQn(db.Model):
     SectionOverview = db.relationship('SectionOverview', primaryjoin='QuizQn.SectionID == SectionOverview.SectionID', backref='QuizQn')
 
     def json(self):
-        return {'CourseID': self.CourseID, 'SectionMaterialsID':self.SectionMaterialsID, 'SectionQuizID':self.SectionQuizID, 'SectionID':self.SectionID}
+        return {'CourseID': self.CourseID, 'SectionMaterialsID':self.SectionMaterialsID, 'SectionQuizID':self.SectionQuizID, 'SectionID':self.SectionID, 'QuizQuestion': self.QuizQuestion, 'QuizOptionNo': self.QuizOptionNo, 'QuizOption': self.QuizOption }
 
 class LearnerQuizAnswer(db.Model):
     __tableName__ = 'LearnerQuizAnswer'
@@ -377,7 +369,6 @@ class LearnerQuizAnswer(db.Model):
     #LearnerQuizAnswer = db.relationship('LearnerQuizAnswer', primaryjoin='learnerquizanswer.LearnerID == learner.LearnerID', backref='learner')
     #LearnerQuizAnswer = db.relationship('LearnerQuizAnswer', primaryjoin='learnerquizanswer.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='sectionoverview')
     
-    #included at 20/10
     def __init__(self, QuizQnID, SectionQuizID,SectionMaterialsID,CourseID,SectionID,LearnerID,quizAnswer):
         self.QuizQnID = QuizQnID
         self.SectionQuizID = SectionQuizID
@@ -416,7 +407,6 @@ class SolutionTable(db.Model):
     #SolutionTable = db.relationship('SolutionTable', primaryjoin='solutiontable.SectionID == sectionoverview.SectionID', backref='sectionoverview')
     #SolutionTable = db.relationship('SolutionTable', primaryjoin='solutiontable.SectionMaterialsID == sectionoverview.SectionMaterialsID', backref='sectionoverview')
 
-    #included at 20/10
     def __init__(self, QuizQnID, SectionQuizID,SectionMaterialsID,CourseID,SectionID,quizSolution):
         self.QuizQnID = QuizQnID
         self.SectionQuizID = SectionQuizID
