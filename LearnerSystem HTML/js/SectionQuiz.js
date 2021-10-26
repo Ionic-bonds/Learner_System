@@ -12,7 +12,19 @@ function displaySectionQuiz(SectionQuizID){
             retrieveSectionQuiz(this);
         }
     }
-    request.open("GET", (`SectionQuiz/${SectionQuizID}`), false);
+    request.open("GET", (`http://localhost:5016/sectionquiz/${SectionQuizID}`), false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+
+function displayQuizQns(QuizQnID){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            retrieveQuizQns(this);
+        }
+    }
+    request.open("GET", (`http://localhost:5016/quizquestions/${QuizQnID}`), false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -20,61 +32,56 @@ function displaySectionQuiz(SectionQuizID){
 function retrieveSectionQuiz(obj){
     
     var response_json = JSON.parse(obj.responseText);
-    var tableHtml = ``;
+    var section_quizHtml = ``;
     var sectionList = response_json["data"]["sectionquiz"];
-    console.log("===== Print section quiz =====")
     console.log(sectionList)
     sessionStorage.setItem('sectionList', sectionList)
-    tableHtml += `
-    <div id="layoutSidenav_content">
+
+    section_quizHtml += `
     <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Section 1 Quiz</h1>
+            <h1 class="mt-4">Section ${SectionQuizID} Quiz</h1>`
 
+    for(var i=0; i< sectionList.length; i++)
+	{
+    section_quizHtml += `
             <br><br>
             <div class="card mb-4">
-                <div><h4 class="container-fluid px-4">${sectionList[QuizQnID-1]}</h4></div>
+                <div><h4 class="container-fluid px-4">Question ${QuizQnID}</h4></div>
+                   
                 <div class="card-body">
                     <div id = "question1">
                         <p class="mb-0">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis ornare magna. 
-                            Vestibulum neque sem, semper in mi sed, mattis laoreet justo. Praesent dictum bibendum neque in tempus. 
-                            Phasellus bibendum tincidunt sem, a porttitor ligula tincidunt gravida. Nulla ac arcu erat. 
-                            Quisque semper quis sem et eleifend. Etiam mollis vulputate sem. 
-                            Curabitur vitae molestie justo, ac viverra nisl. Etiam laoreet eros vel pulvinar facilisis. Aliquam commodo cursus dui, vitae congue ante luctus quis. Vivamus nec ornare est, non tempus metus. In scelerisque et leo quis mattis. Phasellus non ante dolor. Pellentesque ac eros eget ex ultrices tristique sit amet vitae mi.
+                            ${QuizQuestion}
                         </p>
                     </div>
-                        <br>
-                    <div class="form-check"; style= "position:relative; left:5%">
-                        <input class="form-check-input" type="radio" name="question1" id="question1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                        Answer 1
-                        </label>
-                    </div>
-                    <div class="form-check"; style= "position:relative; left:5%">
-                        <input class="form-check-input" type="radio" name="question1" id="question1" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Answer 2
-                        </label>
-                    </div>
-                    <div class="form-check"; style= "position:relative; left:5%">
-                        <input class="form-check-input" type="radio" name="question1" id="question1" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Answer 3
-                        </label>
-                    </div>
-                    <div class="form-check"; style= "position:relative; left:5%">
-                        <input class="form-check-input" type="radio" name="question1" id="question1" checked>
-                        <label class="form-check-label" for="flexRadioDefault2">
-                        Answer 4
-                        </label>
-                    </div>
-                </div>`;
-    for(element of enrolledList){
-        //the code line below is to for loop to retrieve courseName using another function because right now only have courseID
-        var retrieveCourseNameJURL = `http://localhost:5016/sectionoverview/${element['CourseID']}`;
+                </div> `
     }
-    document.getElementById("tablebody").innerHTML = html;
+   
+    
+    document.getElementById("SectionQuiz").innerHTML = section_quizHtml;
+}
+
+function retrieveQuizQns(obj){
+    
+    var response_json = JSON.parse(obj.responseText);
+    var quiz_qnsHtml = ``;
+    var Option = response_json["data"]["quizquestions"];
+    console.log(sectionList)
+    sessionStorage.setItem('quizquestions', quizList)
+
+    for(var i=0; i< quizList.length; i++)
+	{
+        quiz_qnsHtml += `
+        <div class="form-check"; style= "position:relative; left:5%">
+        <input class="form-check-input" type="radio" name="question1" id="question1">
+        <label class="form-check-label" for="flexRadioDefault1">
+        ${i} : ${Option}
+        </label>
+    </div>`
+    } 
+    
+    document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
 }
 
 
