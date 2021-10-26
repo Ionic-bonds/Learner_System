@@ -1,8 +1,9 @@
-function onLoad(){
+window.onload=function(){
     var id = sessionStorage.setItem('SectionQuizID', 1)
     var id = 1
     var serviceURL = `http://localhost:5016/sectionquiz/${id}`
-    displayEnrolledCourses(serviceURL)
+    //displayEnrolledCourses(serviceURL)
+    console.log("success")
 }
 
 function displaySectionQuiz(SectionQuizID){
@@ -12,7 +13,7 @@ function displaySectionQuiz(SectionQuizID){
             retrieveSectionQuiz(this);
         }
     }
-    request.open("GET", (`http://localhost:5016/sectionquiz/${SectionQuizID}`), false);
+    request.open("GET", ('http://localhost:5016/sectionquiz/' + SectionQuizID), false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -24,7 +25,7 @@ function displayQuizQns(QuizQnID){
             retrieveQuizQns(this);
         }
     }
-    request.open("GET", (`http://localhost:5016/quizquestions/${QuizQnID}`), false);
+    request.open("GET", ('http://localhost:5016/quizquestions/' + QuizQnID), false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -34,12 +35,12 @@ function retrieveSectionQuiz(obj){
     var response_json = JSON.parse(obj.responseText);
     var section_quizHtml = ``;
     var sectionList = response_json["data"]["sectionquiz"];
+    var SectionQuizID = response_json["data"]["sectionquiz"]["SectionQuizID"]
+    console.log(SectionQuizID)
     console.log(sectionList)
     sessionStorage.setItem('sectionList', sectionList)
 
     section_quizHtml += `
-    <main>
-        <div class="container-fluid px-4">
             <h1 class="mt-4">Section ${SectionQuizID} Quiz</h1>`
 
     for(var i=0; i< sectionList.length; i++)
