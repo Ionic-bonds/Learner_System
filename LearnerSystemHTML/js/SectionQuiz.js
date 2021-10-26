@@ -1,8 +1,8 @@
-function onLoad(){
+window.onload=function(){
     var id = sessionStorage.setItem('SectionQuizID', 1)
     var id = 1
     var serviceURL = `http://localhost:5016/sectionquiz/${id}`
-    displayEnrolledCourses(serviceURL)
+    //displayEnrolledCourses(serviceURL)
     console.log("success")
 }
 
