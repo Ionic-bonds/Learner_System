@@ -1,86 +1,65 @@
 window.onload=function(){
-    var id = sessionStorage.setItem('SectionQuizID', 1)
-    var id = 1
-    var serviceURL = `http://localhost:5016/sectionquiz/${id}`
-    //displayEnrolledCourses(serviceURL)
-    console.log("success")
-}
-
-function displaySectionQuiz(SectionQuizID){
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            retrieveSectionQuiz(this);
-        }
-    }
-    request.open("GET", ('http://localhost:5016/sectionquiz/' + SectionQuizID), false);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send();
+    displayQuizQns()
+    console.log("Window on load success")
 }
 
 function displayQuizQns(QuizQnID){
+    var QuizQnID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             retrieveQuizQns(this);
+            console.log("retrieve of quiz qn success")
         }
     }
-    request.open("GET", ('http://localhost:5016/quizquestions/' + QuizQnID), false);
+    request.open("GET",'http://localhost:5016/quizquestions/' + QuizQnID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
 
-function retrieveSectionQuiz(obj){
-    
-    var response_json = JSON.parse(obj.responseText);
-    var section_quizHtml = ``;
-    var sectionList = response_json["data"]["sectionquiz"];
-    var SectionQuizID = response_json["data"]["sectionquiz"]["SectionQuizID"]
-    console.log(SectionQuizID)
-    console.log(sectionList)
-    sessionStorage.setItem('sectionList', sectionList)
-
-    section_quizHtml += `
-            <h1 class="mt-4">Section ${SectionQuizID} Quiz</h1>`
-
-    for(var i=0; i< sectionList.length; i++)
-	{
-    section_quizHtml += `
-            <br><br>
-            <div class="card mb-4">
-                <div><h4 class="container-fluid px-4">Question ${QuizQnID}</h4></div>
-                   
-                <div class="card-body">
-                    <div id = "question1">
-                        <p class="mb-0">
-                            ${QuizQuestion}
-                        </p>
-                    </div>
-                </div> `
-    }
-   
-    
-    document.getElementById("SectionQuiz").innerHTML = section_quizHtml;
-}
 
 function retrieveQuizQns(obj){
     
     var response_json = JSON.parse(obj.responseText);
+    console.log(response_json)
     var quiz_qnsHtml = ``;
-    var Option = response_json["data"]["quizquestions"];
-    console.log(sectionList)
-    sessionStorage.setItem('quizquestions', quizList)
 
-    for(var i=0; i< quizList.length; i++)
-	{
-        quiz_qnsHtml += `
-        <div class="form-check"; style= "position:relative; left:5%">
-        <input class="form-check-input" type="radio" name="question1" id="question1">
-        <label class="form-check-label" for="flexRadioDefault1">
-        ${i} : ${Option}
-        </label>
-    </div>`
-    } 
+    var quiz_questions = response_json["data"]["QuizQuestion"];
+    console.log(quiz_questions)
+
+    var quiz_option_no = response_json["data"]["QuizOptionNo"];
+    console.log(quiz_option_no)
+
+    var quiz_option = response_json["data"]["QuizOption"];
+    console.log(quiz_option)
+    p = 1
+    for (j = 0; j < 4 ; j++ ){
+        quiz_qnsHtml += `<h4>Question ${p}</h4>
+        <div class="card-body">
+            <p class="mb-0">
+                ${quiz_questions}
+            </p>
+        </div>`
+        for (i = 0; i < 4 ; i++ ){
+            quiz_qnsHtml += `
+            <div class="card-body">
+                <div class="form-check"; style= "position:relative; left:5%">
+                    <input class="form-check-input" type="radio" name="question${p}">
+                    <label class="form-check-label" for="flexRadioDefault${p}">
+                    ${quiz_option_no} : ${quiz_option}
+                    </label>
+                    </input>
+                </div>
+            </div>`
+        }
+        p += 1;
+    }
+    quiz_qnsHtml += `
+    <br>
+    <button type="button" class="btn btn-primary">Submit</button>`
+    
+
+    
     
     document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
 }
@@ -181,5 +160,3 @@ async function Create_learner_quiz_answer(obj){
             console.log("Cannot connect!");
         } // error
 }
-
-
