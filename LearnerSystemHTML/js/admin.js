@@ -1,6 +1,7 @@
 window.onload=function(){
     console.log("in onload");
     displayEnrollment();
+    console.log("testing jenkins");
 };
 
 function displayEnrollment(){
