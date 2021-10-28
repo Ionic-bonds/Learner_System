@@ -350,7 +350,7 @@ class QuizQn(db.Model):
     SectionOverview = db.relationship('SectionOverview', primaryjoin='QuizQn.SectionID == SectionOverview.SectionID', backref='QuizQn')
 
     def json(self):
-        return {'CourseID': self.CourseID, 'SectionMaterialsID':self.SectionMaterialsID, 'SectionQuizID':self.SectionQuizID, 'SectionID':self.SectionID, 'QuizQuestion': self.QuizQuestion, 'QuizOptionNo': self.QuizOptionNo, 'QuizOption': self.QuizOption }
+        return {'QuizQnID': self.QuizQnID,'CourseID': self.CourseID, 'SectionMaterialsID':self.SectionMaterialsID, 'SectionQuizID':self.SectionQuizID, 'SectionID':self.SectionID, 'QuizQuestion': self.QuizQuestion, 'QuizOptionNo': self.QuizOptionNo, 'QuizOption': self.QuizOption }
 
 class LearnerQuizAnswer(db.Model):
     __tableName__ = 'LearnerQuizAnswer'
@@ -734,6 +734,10 @@ def removeCourseRecords():
     #print(data)
     courseRecordID =  data['ID']
     try: 
+        # deleted_objects = CourseRecord.__table__.delete().where(CourseRecord.CourseID.in_(courseRecordID))
+        # db.session.execute(deleted_objects)
+        # db.session.commit()
+
         sql1 = delete(CourseRecord).where(CourseRecord.CourseRecordID.in_(courseRecordID))
 
         db.session.execute(sql1)
