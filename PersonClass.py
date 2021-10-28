@@ -505,6 +505,45 @@ def enrollment():
         } 
     ), 404 
 
+@app.route('/courserecord', methods=['GET']) 
+def courserecord(): 
+    courseRecords = CourseRecord.query.all() 
+    if len(courseRecords): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "CourseRecords":  [courses.json() for courses in courseRecords]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Enrollment details not found." 
+        } 
+    ), 4
+
+
+@app.route('/getCourseName/<int:CourseID>', methods=['GET']) 
+def getCourseName(CourseID): 
+    courseRecords = CourseOverview.query.filter_by(CourseID=CourseID).all() 
+    if len(courseRecords): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "CourseOverview":  [courses.json() for courses in courseRecords]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Enrollment details not found." 
+        } 
+    ), 4
+
 @app.route('/getEnrollment/<int:EnrollmentID>', methods=['GET']) 
 def getEnrollment(EnrollmentID): 
     enrollmentRecords = Enrollment.query.filter_by(EnrollmentID=EnrollmentID).all() 
