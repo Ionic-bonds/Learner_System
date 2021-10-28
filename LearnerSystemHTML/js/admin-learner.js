@@ -109,10 +109,37 @@ function getLearnerDetails(LearnerID) {
 function removeLearners(){
     console.log("remove learners");
     var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+    courseRecordID = [];
     for (var checkbox of markedCheckbox) {
         console.log(checkbox.value);
-        var courseRecordID = checkbox.value;
-        //removeRecord(courseRecordID)    
+        courseRecordID.push(checkbox.value);
+         
     }
+    removeRecord(courseRecordID);  
 }
 
+async function removeRecord(courseRecordID){
+    var data = {
+        "ID": courseRecordID
+    };
+    console.log(data);
+    var serviceURL = "http://localhost:5016/removeCourseRecords";
+        
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { 
+                        method: 'POST',
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://localhost:5016/removeCourseRecords"},
+                        body: JSON.stringify(data) 
+                    }
+                );
+                const result = await response.json();
+                console.log(result);
+                
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            console.log("Cannot connect!");
+        } // error
+}

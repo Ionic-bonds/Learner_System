@@ -730,12 +730,10 @@ def updateEnrollment(enrollmentID):
 
 @app.route("/removeCourseRecords", methods=['GET','POST']) 
 def removeCourseRecords():
+    data = request.get_json()
+    #print(data)
+    courseRecordID =  data['ID']
     try: 
-        courseRecordID =  request.get_json()['ID']
-        # deleted_objects = CourseRecord.__table__.delete().where(CourseRecord.CourseID.in_(courseRecordID))
-        # db.session.execute(deleted_objects)
-        # db.session.commit()
-
         sql1 = delete(CourseRecord).where(CourseRecord.CourseRecordID.in_(courseRecordID))
 
         db.session.execute(sql1)
