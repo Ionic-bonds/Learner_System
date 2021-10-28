@@ -11,7 +11,7 @@ function displayEnrollment(){
             retrieveAllEnrollment(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/enrollment', false);
+    request.open("GET", 'http://localhost:5016/courserecord', false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -19,36 +19,21 @@ function displayEnrollment(){
 async function retrieveAllEnrollment(obj){
     
     var response_json = JSON.parse(obj.responseText);
-    var enrollmentList = response_json["data"]["Enrollment"];
+    var enrollmentList = response_json["data"]["CourseRecords"];
     // sessionStorage.setItem('enrolledList', enrolledList)
     // tableHtml += `<div>Course Name</div>`;
     var html = ``;
     for(element of enrollmentList){
 
         var LearnerID = element['LearnerID'];
-        var enrollmentID = element['EnrollmentID'];
-
-        //console.log(element);
-        var approval = element['Approved'];
-        if (approval == false) {
-            var status = `<span class="waiting">Waiting</span>`;
-            var button = `<button type="button" class="btn btn-success btn-sm" style="display:block;" value="${enrollmentID}" onclick="Approve(this.value)" id="Btn${enrollmentID}">Approve</button>
-            </br>
-            <button type="button" class="btn btn-danger btn-sm" style="display:block;" value="${enrollmentID}">Remove</button>`;
-        } else {
-            var status = `<span class="active" >Approved</span>`;
-            var button = `
-						<button type="button" class="btn btn-danger btn-sm" style="display:block;" value="${enrollmentID}">Remove</button>`;
-        }
-
-        if (element['passPrerequisite'] == false) {
-            var passPrerequisite = "No";
-        } else {
-            var passPrerequisite = "Yes";
-        }
+        var CourseRecordID = element['CourseRecordID'];
         
         var details = getLearnerDetails(LearnerID);
-        console.log(details)
+        console.log(details);
+
+        var courseID = element['CourseID'];
+        var courseDetails = getCourseDetails(courseID);
+        var courseName = courseDetails['data']['CourseOverview'][0]['CourseName'];
 
         var name = details['data']['name'];
         var email = details['data']['Email'];
@@ -59,10 +44,10 @@ async function retrieveAllEnrollment(obj){
 
 
         html += `
-        <tr class="alert" role="alert" id="${enrollmentID}">
+        <tr class="alert" role="alert" id="${CourseRecordID}">
         <td>
         <label class="checkbox-wrap checkbox-primary">
-              <input type="checkbox" value="enrollmentID${enrollmentID}">
+              <input type="checkbox" value="enrollmentID${CourseRecordID}">
               <span class="checkmark"></span>
             </label>
         </td>
@@ -73,13 +58,9 @@ async function retrieveAllEnrollment(obj){
         </div>
         </td>
         <td>${element['ClassID']}</td>
-        <td>Course Name Loren Ipsum</td>
-        <td>${passPrerequisite}</td>
-        <td class="status" id="Status${enrollmentID}">${status}</td>
-        <td>
-            ${button}
-        </button>
-        </td>
+        <td>${courseName}</td>
+        <td>${element['CourseProgress']}</td>
+        <td>${element['FinalQuizResult']}</td>
         </tr>`;
 
         
@@ -88,6 +69,24 @@ async function retrieveAllEnrollment(obj){
 
 }
 
+
+function getCourseDetails(courseID) {
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:5016/getCourseName/${courseID}`, false);
+    xhr.send();
+
+    // stop the engine while xhr isn't done
+    for(; xhr.readyState !== 4;)
+
+    if (xhr.status === 200) {
+
+        console.log('SUCCESS', xhr.responseText);
+
+    } else console.warn('request_error');
+
+    return JSON.parse(xhr.responseText);
+}
 
 function getLearnerDetails(LearnerID) {
 
