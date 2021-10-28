@@ -321,11 +321,11 @@ class QuizQn(db.Model):
     __mapper_args__ = {'polymorphic_identity': 'QuizQn'}
     QuizQnID = db.Column(db.Integer,nullable=False, primary_key=True)
     CourseID = db.Column(db.ForeignKey(CourseOverview.CourseID), nullable=False)
-    SectionMaterialsID = db.Column(db.ForeignKey(SectionMaterials.SectionMaterialsID), nullable=False)
-    SectionQuizID = db.Column(db.ForeignKey(SectionQuiz.SectionQuizID), nullable=False)
-    SectionID = db.Column(db.ForeignKey(SectionOverview.SectionID), nullable=False)
+    SectionMaterialsID = db.Column(db.ForeignKey(SectionMaterials.SectionMaterialsID), nullable=False, primary_key=True)
+    SectionQuizID = db.Column(db.ForeignKey(SectionQuiz.SectionQuizID), nullable=False, primary_key=True)
+    SectionID = db.Column(db.ForeignKey(SectionOverview.SectionID), nullable=False, primary_key=True)
     QuizQuestion = db.Column(db.String(10000), nullable=False)
-    QuizOptionNo = db.Column(db.Integer, nullable=False)
+    QuizOptionNo = db.Column(db.Integer, nullable=False, primary_key=True)
     QuizOption = db.Column(db.String(10000), nullable=False)
 
     #QuizQn = db.relationship('QuizQn', primaryjoin='QuizQn.CourseID == courseoverview.CourseID', backref='courseoverview')
