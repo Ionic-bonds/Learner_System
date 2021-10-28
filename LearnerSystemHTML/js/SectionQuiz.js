@@ -3,8 +3,7 @@ window.onload=function(){
     console.log("Window on load success")
 }
 
-function displayQuizQns(QuizQnID){
-    var QuizQnID = 1;
+function displayQuizQns(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -12,7 +11,7 @@ function displayQuizQns(QuizQnID){
             console.log("retrieve of quiz qn success")
         }
     }
-    request.open("GET",'http://localhost:5016/quizquestions/' + QuizQnID, false);
+    request.open("GET",'http://localhost:5016/quizquestions', false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -24,42 +23,41 @@ function retrieveQuizQns(obj){
     console.log(response_json)
     var quiz_qnsHtml = ``;
 
-    var quiz_questions = response_json["data"]["QuizQuestion"];
+    var quiz_questions = response_json["data"]["quizquestions"];
     console.log(quiz_questions)
 
-    var quiz_option_no = response_json["data"]["QuizOptionNo"];
+    var quiz_option_no = response_json["data"]["quizquestions"]["QuizOptionNo"];
     console.log(quiz_option_no)
 
-    var quiz_option = response_json["data"]["QuizOption"];
+    var quiz_option = response_json["data"]["quizquestions"]["QuizOption"];
     console.log(quiz_option)
+
     p = 1
-    for (j = 0; j < 4 ; j++ ){
+    for(element of quiz_questions){
+        console.log(element);
         quiz_qnsHtml += `<h4>Question ${p}</h4>
-        <div class="card-body">
-            <p class="mb-0">
-                ${quiz_questions}
-            </p>
-        </div>`
+            <div class="card-body">
+                <p class="mb-0">
+                    ${element['QuizQuestion']}
+                </p>
+            </div>`
         for (i = 0; i < 4 ; i++ ){
             quiz_qnsHtml += `
             <div class="card-body">
                 <div class="form-check"; style= "position:relative; left:5%">
                     <input class="form-check-input" type="radio" name="question${p}">
                     <label class="form-check-label" for="flexRadioDefault${p}">
-                    ${quiz_option_no} : ${quiz_option}
+                    ${element['QuizOptionNo']} : ${element['QuizOption']}
                     </label>
                     </input>
                 </div>
             </div>`
         }
-        p += 1;
+      p += 1;
     }
     quiz_qnsHtml += `
     <br>
     <button type="button" class="btn btn-primary">Submit</button>`
-    
-
-    
     
     document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
 }
