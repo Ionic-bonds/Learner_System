@@ -47,7 +47,7 @@ async function retrieveAllEnrollment(obj){
         <tr class="alert" role="alert" id="${CourseRecordID}">
         <td>
         <label class="checkbox-wrap checkbox-primary">
-              <input type="checkbox" value="enrollmentID${CourseRecordID}">
+              <input type="checkbox" value="${CourseRecordID}">
               <span class="checkmark"></span>
             </label>
         </td>
@@ -106,101 +106,13 @@ function getLearnerDetails(LearnerID) {
     return JSON.parse(xhr.responseText);
 }
 
-function Approve(button) {
-    enrollmentID = button
-    console.log(enrollmentID);
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            UpdateTableApproval(enrollmentID);
-            //InsertCourseRecord();
-        }
+function removeLearners(){
+    console.log("remove learners");
+    var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+    for (var checkbox of markedCheckbox) {
+        console.log(checkbox.value);
+        var courseRecordID = checkbox.value;
+        //removeRecord(courseRecordID)    
     }
-    request.open("GET", `http://localhost:5016/updateEnrollment/${enrollmentID}`, false);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send();
 }
 
-function UpdateTableApproval(enrollmentID){
-    var myobj = document.getElementById(`Btn${enrollmentID}`);
-    myobj.remove();
-
-    document.getElementById(`Status${enrollmentID}`).innerHTML = `<span class="active">Approved</span>`;
-    RetrieveEnrollmentbyID(enrollmentID);
-}
-
-function RetrieveEnrollmentbyID(enrollmentID) {
-
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            InsertCourseRecord(this);
-            //InsertCourseRecord();
-        }
-    }
-    request.open("GET", `http://localhost:5016/getEnrollment/${enrollmentID}`, false);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send();
-
-}
- 
-async function InsertCourseRecord(obj){
-    var response_json = JSON.parse(obj.responseText);
-    var data = response_json['data']['Enrollment'][0];
-    var CourseID = data['CourseID'];
-    var LearnerID = data['LearnerID'];
-    var ClassID = data['ClassID'];
-
-    var trainerstuff = getTrainerSchedule(CourseID);
-    var TrainerScheduleID = trainerstuff['data']['Enrollment'][0]['TrainerScheduleID'];
-
-    console.log("in InsertCourseRecord");
-    console.log(CourseID,LearnerID,ClassID,TrainerScheduleID );
-
-    var data = { 
-        "CourseID": CourseID, 
-        "TrainerScheduleID": TrainerScheduleID, 
-        "LearnerID": LearnerID, 
-        "ClassID": ClassID, 
-        "CourseProgress": 0, 
-        "FinalQuizResult": "NA"
-      };
-        // Change serviceURL to your own
-        var serviceURL = "http://localhost:5016/insertCourseRecord";
-        
-        try {
-            const response =
-                await fetch(
-                    serviceURL, { 
-                        method: 'POST',
-                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
-                        body: JSON.stringify(data) 
-                    }
-                );
-                const result = await response.json();
-                console.log(result);
-                
-        } catch (error) {
-            // Errors when calling the service; such as network error, 
-            // service offline, etc
-            console.log("Cannot connect!");
-        } // error
-}
-
-function getTrainerSchedule(CourseID) {
-
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/trainerSchedule/${CourseID}`, false);
-    xhr.send();
-
-    // stop the engine while xhr isn't done
-    for(; xhr.readyState !== 4;)
-
-    if (xhr.status === 200) {
-
-        console.log('SUCCESS', xhr.responseText);
-
-    } else console.warn('request_error');
-
-    return JSON.parse(xhr.responseText);
-}

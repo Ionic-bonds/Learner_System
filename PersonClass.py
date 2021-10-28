@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from sqlalchemy import select, update, delete, values
 from sqlalchemy.sql import expression
 from datetime import timedelta
 import json
@@ -726,6 +727,41 @@ def updateEnrollment(enrollmentID):
                 "message": "An error occurred while updating the payment. " + str(e)
             }
         ), 500
+
+@app.route("/removeCourseRecords", methods=['GET','POST']) 
+def removeCourseRecords():
+    try: 
+        courseRecordID =  request.get_json()['ID']
+        # deleted_objects = CourseRecord.__table__.delete().where(CourseRecord.CourseID.in_(courseRecordID))
+        # db.session.execute(deleted_objects)
+        # db.session.commit()
+
+        sql1 = delete(CourseRecord).where(CourseRecord.CourseRecordID.in_(courseRecordID))
+
+        db.session.execute(sql1)
+        db.session.commit()
+
+        return jsonify(
+            {
+                "code": 200,
+                "data": {
+                    "courseRecordIDs": courseRecordID
+                },
+                "message": "Deletion Successful"
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "data": {
+                    "courseRecordIDs": courseRecordID
+                },
+                "message": "An error occurred while deleting the course records. " + str(e)
+            }
+        ), 500
+
 
 @app.route("/sectionoverview") 
 def retrieveSectionOverview(): 
