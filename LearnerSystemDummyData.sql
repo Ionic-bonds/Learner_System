@@ -212,6 +212,18 @@ values(2,1,1,1,'G',90,'12:30:00');
 -- --------------------------------------------------------
 -- Dummy Data for table Quiz_Qn
 --
+-- INSERT INTO Quiz_Qn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo1,QuizOption1,QuizOptionNo2,QuizOption2,QuizOptionNo3,QuizOption3,QuizOptionNo4,QuizOption4)
+-- values(1,1,1,1,1,'A display listing of program options which users can select, is called',1,'Icons'2,'Options',3,'Selection',4,'Menu');
+
+-- INSERT INTO Quiz_Qn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo1,QuizOption1,QuizOptionNo2,QuizOption2,QuizOptionNo3,QuizOption3,QuizOptionNo4,QuizOption4)
+-- values(2,1,1,1,1,'An inventory management program can assist with the',1,'Distribution of inventory',2,'Purchasing of inventory',3,'Planning of inventory',4,'All of these');
+
+
+-- INSERT INTO Quiz_Qn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo1,QuizOption1,QuizOptionNo2,QuizOption2,QuizOptionNo3,QuizOption3,QuizOptionNo4,QuizOption4)
+-- values(3,1,1,1,1,'In any software package, which of the following version represents a major improvement on the earlier version?',1,'1.1',2,'1.5',3,'2.0',4,'2.5');
+
+-- INSERT INTO Quiz_Qn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo1,QuizOption1,QuizOptionNo2,QuizOption2,QuizOptionNo3,QuizOption3,QuizOptionNo4,QuizOption4)
+-- values(4,1,1,1,1,'PHP is an open source software',1,'True',2,'False');
 
 INSERT INTO Quiz_Qn(QuizQnID, CourseID,SectionMaterialsID, SectionQuizID, SectionID,QuizQuestion, QuizOptionNo,QuizOption)
 values(1,1,1,1,1,'A display listing of program options which users can select, is called',1,'Icons');

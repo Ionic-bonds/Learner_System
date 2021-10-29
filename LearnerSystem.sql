@@ -205,6 +205,25 @@ CREATE TABLE IF NOT EXISTS Section_Quiz (
 -- Table structure for table QuizQn
 --
 
+-- CREATE TABLE IF NOT EXISTS Quiz_Qn(
+--     QuizQnID integer,
+--     CourseID integer,
+--     SectionMaterialsID integer,
+--     SectionQuizID integer,
+--     SectionID integer,
+--     QuizQuestion varchar(10000),
+--     QuizOptionNo1 integer,
+--     QuizOption1 varchar(10000),
+--     QuizOptionNo2 integer,
+--     QuizOption2 varchar(10000),    
+--     QuizOptionNo3 integer,
+--     QuizOption3 varchar(10000),    
+--     QuizOptionNo4 integer,
+--     QuizOption4 varchar(10000),
+--     constraint QuizQn_pk primary key(SectionID, SectionMaterialsID, SectionQuizID, CourseID, QuizQnID, QuizOptionNo),
+--     constraint QuizQn_fk foreign key(SectionID, SectionMaterialsID, SectionQuizID, CourseID) references Section_Quiz(SectionID,SectionMaterialsID, SectionQuizID, CourseID)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE IF NOT EXISTS Quiz_Qn(
     QuizQnID integer,
     CourseID integer,

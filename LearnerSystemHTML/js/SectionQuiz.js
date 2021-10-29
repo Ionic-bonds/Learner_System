@@ -7,7 +7,8 @@ function displayQuizQns(){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            retrieveQuizQns(this);
+            var json_obj = JSON.parse(request.responseText);
+            retrieveQuizQns(json_obj);
             console.log("retrieve of quiz qn success")
         }
     }
@@ -17,44 +18,72 @@ function displayQuizQns(){
 }
 
 
-function retrieveQuizQns(obj){
+function retrieveQuizQns(json_obj){
     
-    var response_json = JSON.parse(obj.responseText);
-    console.log(response_json)
+    console.log(json_obj)
     var quiz_qnsHtml = ``;
-
-    var quiz_questions = response_json["data"]["quizquestions"];
+    quiz_options = ``;
+    // this is same as response_json["data"]["quizquestions"]
+    var quiz_questions = json_obj.data.quizquestions;
     console.log(quiz_questions)
 
-    var quiz_option_no = response_json["data"]["quizquestions"]["QuizOptionNo"];
-    console.log(quiz_option_no)
+    questions = json_obj.data.quizquestions[0].QuizQnID;
+    console.log(questions);
+    
+    questions_list = []
+    for(i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
+        console.log("== looping ==")
+        questions_list.push(json_obj.data.quizquestions[i].QuizQuestion)
+    }
 
-    var quiz_option = response_json["data"]["quizquestions"]["QuizOption"];
-    console.log(quiz_option)
-
+    console.log(questions_list)
+    //===============================================
+    //unique function for qns
+    // you can leave this function here
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+      
+      var unique = questions_list.filter(onlyUnique);
+      
+      console.log(unique);
+    
     p = 1
-    for(element of quiz_questions){
-        console.log(element);
+    for(element of unique){
+        // console.log(element);
         quiz_qnsHtml += `<h4>Question ${p}</h4>
             <div class="card-body">
                 <p class="mb-0">
-                    ${element['QuizQuestion']}
+                    ${element}
                 </p>
             </div>`
-        for (i = 0; i < 4 ; i++ ){
-            quiz_qnsHtml += `
-            <div class="card-body">
-                <div class="form-check"; style= "position:relative; left:5%">
-                    <input class="form-check-input" type="radio" name="question${p}">
-                    <label class="form-check-label" for="flexRadioDefault${p}">
-                    ${element['QuizOptionNo']} : ${element['QuizOption']}
-                    </label>
-                    </input>
-                </div>
-            </div>`
+    p += 1;
+
+    // unique function for question
+    //================================================
+    
+    console.log(json_obj.data.quizquestions[0].QuizQnID)
+        j = 0
+        for (i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
+            if (json_obj.data.quizquestions[i].QuizQnID != j){
+                j += 1;
+            }
+            else{
+                    quiz_qnsHtml += `
+                        <div class="card-body">
+                            <div class="form-check"; style= "position:relative; left:5%">
+                                <input class="form-check-input" type="radio" name="question${p}">
+                                <label class="form-check-label" for="flexRadioDefault${p}">
+                                ${json_obj.data.quizquestions[j].QuizOptionNo} : ${json_obj.data.quizquestions[j].QuizOption}
+                                </label>
+                                </input>
+                            </div>
+                        </div>`
+            
+            }
         }
-      p += 1;
     }
+        
     quiz_qnsHtml += `
     <br>
     <button type="button" class="btn btn-primary">Submit</button>`
@@ -76,9 +105,6 @@ async function CreateSectionQuiz(obj){
     var quizStartTime = data['quizStartTime'];
     var CourseID = data['CourseID'];
 
-
-    // var trainerstuff = getTrainerSchedule(CourseID);
-    // var TrainerScheduleID = trainerstuff['data']['Enrollment'][0]['TrainerScheduleID'];
 
     console.log(SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime,CourseID );
 
