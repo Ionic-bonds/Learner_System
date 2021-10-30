@@ -757,7 +757,7 @@ def retrievelearnerDetails(LearnerID):
         return jsonify({
             "code": 200, 
             "data": {
-                 **data.Person.json()
+                **data.Person.json()
             }
                 }
             )
