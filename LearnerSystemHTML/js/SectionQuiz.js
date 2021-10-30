@@ -1,22 +1,136 @@
 window.onload=function(){
-    displayQuizQns()
+    //displayQuizQns()
     // displayUniqueQuizQns()
-    console.log("Window on load success")
-}
+    var SectionMaterialsID = 1;
+    displayQuestions(SectionMaterialsID);
+    console.log("Window on load success");
+};
 
-function displayQuizQns(){
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var json_obj = JSON.parse(request.responseText);
-            retrieveQuizQns(json_obj);
-            console.log("retrieve of quiz qn success")
+function displayQuestions(SectionMaterialsID){
+    console.log("in display qns");
+    var num = getNumOfQns(SectionMaterialsID);
+    var numOfQns = num['data'];
+    console.log(numOfQns);
+
+    var html = ``;
+
+    for(let i = 1; i <= numOfQns; i++){
+        var ele = getQuestions(i);
+        console.log(ele);
+        console.log('after ele');
+        var questions = ele['data'];
+        console.log(questions);
+        var qnsHtml = ``;
+        var optionsHtml = ``;
+
+        for (element of questions) {
+            if (element['SectionMaterialsID'] == SectionMaterialsID){
+            
+                if (qnsHtml == ``){
+                    quizQns = element['QuizQuestion'];
+                    qnsHtml += `<h4>Question ${i}</h4>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            ${quizQns}
+                        </p>
+                    </div>`;
+                }
+
+                optionsHtml += `<div class="card-body">
+                <div class="form-check"; style= "position:relative; left:5%">
+                    <input class="form-check-input" type="radio" name="question${i}">
+                    <label class="form-check-label" for="flexRadioDefault${i}">
+                    ${element['QuizOptionNo']} : ${element['QuizOption']}
+                    </label>
+                    </input>
+                </div>
+            </div>`
+
+            console.log(qnsHtml);
+            console.log(optionsHtml);
+            }
         }
+         
+        html += qnsHtml + optionsHtml;
+        console.log(html);
+
     }
-    request.open("GET",'http://localhost:5016/quizquestions', false);
-    request.setRequestHeader("Content-type", "application/json");
-    request.send();
-}
+
+    html += `
+    <br>
+    <button type="button" class="btn btn-primary">Submit</button>`
+    
+    document.getElementById("QuizQns").innerHTML = html;
+    
+};
+
+function getNumOfQns(SectionMaterialsID){
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:5016/quizquestionsNo/${SectionMaterialsID}`, false);
+    xhr.send();
+
+    // stop the engine while xhr isn't done
+    for(; xhr.readyState !== 4;)
+
+    if (xhr.status === 200) {
+
+        console.log('SUCCESS', xhr.responseText);
+
+    } else console.warn('request_error');
+
+    return JSON.parse(xhr.responseText);
+};
+
+function getQuestions(qnsNo){
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:5016/quizquestions/${qnsNo}`, false);
+    xhr.send();
+
+    // stop the engine while xhr isn't done
+    for(; xhr.readyState !== 4;)
+
+    if (xhr.status === 200) {
+
+        console.log('SUCCESS', xhr.responseText);
+
+    } else console.warn('request_error');
+
+    return JSON.parse(xhr.responseText);
+};
+
+// function displayQuizQns(){
+//     var request = new XMLHttpRequest();
+//     request.onreadystatechange = function() {
+//         if (this.readyState == 4 && this.status == 200) {
+//             var json_obj = JSON.parse(request.responseText);
+//             retrieveQuizQns(json_obj);
+//             console.log("retrieve of quiz qn success")
+//         }
+//     }
+//     request.open("GET",'http://localhost:5016/quizquestions', false);
+//     request.setRequestHeader("Content-type", "application/json");
+//     request.send();
+// }
+
+// function getdisplayUniqueQuizQns() {
+
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("GET",`http://localhost:5016/quizquestions/1`, false);
+//     xhr.send();
+
+//     // stop the engine while xhr isn't done
+//     for(; xhr.readyState !== 4;)
+
+//     if (xhr.status === 200) {
+
+//         console.log('SUCCESS', xhr.responseText);
+
+//     } else console.warn('request_error');
+
+//     return JSON.parse(xhr.responseText);
+// }
 
 // function displayUniqueQuizQns(){
 //     var id = 1
@@ -75,96 +189,96 @@ function displayQuizQns(){
 
 
 
-function retrieveQuizQns(json_obj){
+// function retrieveQuizQns(json_obj){
     
-    console.log(json_obj)
-    var quiz_qnsHtml = ``;
-    quiz_options = ``;
-    // this is same as response_json["data"]["quizquestions"]
-    var quiz_questions = json_obj.data.quizquestions;
-    console.log(quiz_questions)
+//     console.log(json_obj)
+//     var quiz_qnsHtml = ``;
+//     quiz_options = ``;
+//     // this is same as response_json["data"]["quizquestions"]
+//     var quiz_questions = json_obj.data.quizquestions;
+//     console.log(quiz_questions)
 
-    questions = json_obj.data.quizquestions[0].QuizQnID;
-    console.log(questions);
+//     questions = json_obj.data.quizquestions[0].QuizQnID;
+//     console.log(questions);
     
-    questions_list = []
-    for(i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
-        console.log("== looping ==")
-        questions_list.push(json_obj.data.quizquestions[i].QuizQuestion)
-    }
+//     questions_list = []
+//     for(i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
+//         console.log("== looping ==")
+//         questions_list.push(json_obj.data.quizquestions[i].QuizQuestion)
+//     }
 
-    console.log(questions_list)
-    //===============================================
-    //unique function for qns
-    // you can leave this function here
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-      }
+//     console.log(questions_list)
+//     //===============================================
+//     //unique function for qns
+//     // you can leave this function here
+//     function onlyUnique(value, index, self) {
+//         return self.indexOf(value) === index;
+//       }
       
-      var unique = questions_list.filter(onlyUnique);
+//       var unique = questions_list.filter(onlyUnique);
       
-      console.log( "=== start of unique question in db ===")
-      console.log(unique);
-      console.log( "=== end of unique question in db ===")
+//       console.log( "=== start of unique question in db ===")
+//       console.log(unique);
+//       console.log( "=== end of unique question in db ===")
     
-    p = 1
-    Qn_id = 1;
-    for(element of unique){
-        console.log(element);
-        quiz_qnsHtml += `<h4>Question ${p}</h4>
-            <div class="card-body">
-                <p class="mb-0">
-                    ${element}
-                </p>
-            </div>`
+//     p = 1
+//     Qn_id = 1;
+//     for(element of unique){
+//         console.log(element);
+//         quiz_qnsHtml += `<h4>Question ${p}</h4>
+//             <div class="card-body">
+//                 <p class="mb-0">
+//                     ${element}
+//                 </p>
+//             </div>`
     
         
-    p += 1;
-    // unique function for question
-    //================================================
+//     p += 1;
+//     // unique function for question
+//     //================================================
 
-        console.log("===Quiz ID ===")
-        console.log(Qn_id)  
-        i = 0;
-        // for (i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
-        for (element of quiz_questions ){
-            if (json_obj.data.quizquestions[i].QuizQnID == Qn_id){
-                // console.log("in options loop")
+//         console.log("===Quiz ID ===")
+//         console.log(Qn_id)  
+//         i = 0;
+//         // for (i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
+//         for (element of quiz_questions ){
+//             if (json_obj.data.quizquestions[i].QuizQnID == Qn_id){
+//                 // console.log("in options loop")
 
-                console.log(json_obj.data.quizquestions[i].QuizOptionNo)
-                quiz_qnsHtml += `
-                    <div class="card-body">
-                        <div class="form-check"; style= "position:relative; left:5%">
-                            <input class="form-check-input" type="radio" name="question${Qn_id}">
-                            <label class="form-check-label" for="flexRadioDefault${Qn_id}">
-                            ${json_obj.data.quizquestions[i].QuizOptionNo} : ${json_obj.data.quizquestions[i].QuizOption}
-                            </label>
-                            </input>
-                        </div>
-                    </div>`
-                    i += 1;
+//                 console.log(json_obj.data.quizquestions[i].QuizOptionNo)
+//                 quiz_qnsHtml += `
+//                     <div class="card-body">
+//                         <div class="form-check"; style= "position:relative; left:5%">
+//                             <input class="form-check-input" type="radio" name="question${Qn_id}">
+//                             <label class="form-check-label" for="flexRadioDefault${Qn_id}">
+//                             ${json_obj.data.quizquestions[i].QuizOptionNo} : ${json_obj.data.quizquestions[i].QuizOption}
+//                             </label>
+//                             </input>
+//                         </div>
+//                     </div>`
+//                     i += 1;
             
-            }
+//             }
                 
-            Qn_id += 1;   
-        }
-        console.log("out of 2nd loop")
+//             Qn_id += 1;   
+//         }
+//         console.log("out of 2nd loop")
 
             
-        // Qn_id += 1; 
+//         // Qn_id += 1; 
         
     
-    }
+//     }
     
-    quiz_qnsHtml += `
-    <br>
-    <button type="button" class="btn btn-primary">Submit</button>`
+//     quiz_qnsHtml += `
+//     <br>
+//     <button type="button" class="btn btn-primary">Submit</button>`
     
-    document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
-    console.log(quiz_options)
+//     document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
+//     console.log(quiz_options)
     
 
-}
+// }
 
 
 

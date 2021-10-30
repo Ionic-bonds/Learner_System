@@ -1033,14 +1033,14 @@ def retrieveQuizQn():
         } 
     ), 404 
 
-@app.route("/quizquestions/<string:QuizQnID>")
+@app.route("/quizquestions/<int:QuizQnID>")
 def find_by_QuizQuestions(QuizQnID):
-    quizquestions = QuizQn.query.filter_by(QuizQnID=QuizQnID).first()
+    quizquestions = QuizQn.query.filter_by(QuizQnID=QuizQnID).all()
     if quizquestions:
         return jsonify(
             {
                 "code": 200,
-                "data": quizquestions.json()
+                "data": [quizquestions.json() for quizquestions in quizquestions] 
             }
         )
     return jsonify(
@@ -1049,6 +1049,24 @@ def find_by_QuizQuestions(QuizQnID):
             "message": "quizquestions not found."
         }
     ), 404
+
+@app.route("/quizquestionsNo/<int:SectionMaterialsID>")
+def getNumOfQuestions(SectionMaterialsID):
+    sql = db.session.query(QuizQn.QuizQnID.distinct()).filter_by(SectionMaterialsID = SectionMaterialsID).count()
+    if sql:
+        return jsonify(
+            {
+                "code": 200,
+                "data": sql
+            }
+        )
+    return jsonify(
+        {
+            "code": 404,
+            "message": "quizquestions not found."
+        }
+    ), 404
+
 
 @app.route("/solutiontable") 
 def retrieveSolutionTable(): 
