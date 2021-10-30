@@ -22,10 +22,12 @@ async function retrieveAllEnrollment(obj){
     var enrollmentList = response_json["data"]["CourseRecords"];
     // sessionStorage.setItem('enrolledList', enrolledList)
     // tableHtml += `<div>Course Name</div>`;
+    var learnerIDs = [];
     var html = ``;
     for(element of enrollmentList){
 
         var LearnerID = element['LearnerID'];
+        learnerIDs.push(LearnerID);
         var CourseRecordID = element['CourseRecordID'];
         
         var details = getLearnerDetails(LearnerID);
@@ -66,9 +68,13 @@ async function retrieveAllEnrollment(obj){
         
     }
     document.getElementById("tablebody").innerHTML = html;
+    addLearners(learnerIDs);
 
 }
 
+function addLearners(learnerIDs){
+    pass
+};
 
 function getCourseDetails(courseID) {
 

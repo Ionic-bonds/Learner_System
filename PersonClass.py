@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-# from sqlalchemy import select, update, delete, values
+from sqlalchemy import select, update, delete, values
 from sqlalchemy.sql import expression
 from datetime import timedelta
 import json
@@ -808,6 +808,28 @@ def updateEnrollment(enrollmentID):
                 "message": "An error occurred while updating the payment. " + str(e)
             }
         ), 500
+
+@app.route("/getCourseRecords", methods=['GET','POST']) 
+def getCourseRecords():
+    data = request.get_json()
+    #print(data)
+    LearnerIDs =  data['ID']
+    LearnerList= db.session.query(Learner).filter(Learner.LearnerID.notin_(LearnerIDs)) 
+    if (LearnerList): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [learners.json() for learners in LearnerList] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404 
 
 @app.route("/removeCourseRecords", methods=['GET','POST']) 
 def removeCourseRecords():
