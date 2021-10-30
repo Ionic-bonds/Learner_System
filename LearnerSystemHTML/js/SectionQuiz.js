@@ -1,5 +1,6 @@
 window.onload=function(){
     displayQuizQns()
+    // displayUniqueQuizQns()
     console.log("Window on load success")
 }
 
@@ -16,6 +17,62 @@ function displayQuizQns(){
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
+
+// function displayUniqueQuizQns(){
+//     var id = 1
+//     var request = new XMLHttpRequest();
+//     request.onreadystatechange = function() {
+//         if (this.readyState == 4 && this.status == 200) {
+//             var json_obj = JSON.parse(request.responseText);
+//             retrieveUniqueQuizQns(json_obj);
+//             console.log("retrieve of Unique_quiz qn success")
+//         }
+//     }
+//     request.open("GET",'http://localhost:5016/sectionquizquestions/' + id, false);
+//     request.setRequestHeader("Content-type", "application/json");
+//     request.send();
+// }
+
+
+// function retrieveUniqueQuizQns(json_obj){
+//     console.log(json_obj)
+//     var quiz_qnsHtml = ``;
+//     var unique_quiz_questions = json_obj.data.quizquestionslist;
+//     console.log(unique_quiz_questions)
+//     p = 1
+//     for (i = 0 ; i < json_obj.data.quizquestionslist.length ; i++){
+//         quiz_qnsHtml += `<h4>Question ${p}</h4>
+//             <div class="card-body">
+//                 <p class="mb-0">
+//                     ${json_obj.data.quizquestionslist[i]}
+//                 </p>
+//             </div>`
+//     p += 1;
+//     }
+
+//     document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
+    
+// }
+
+
+// function getCourseDetails(courseID) {
+
+//     var xhr = new XMLHttpRequest();
+//     xhr.open("GET",http://localhost:5016/getCourseName/${courseID}, false);
+//     xhr.send();
+
+//     // stop the engine while xhr isn't done
+//     for(; xhr.readyState !== 4;)
+
+//     if (xhr.status === 200) {
+
+//         console.log('SUCCESS', xhr.responseText);
+
+//     } else console.warn('request_error');
+
+//     return JSON.parse(xhr.responseText);
+// }
+
 
 
 function retrieveQuizQns(json_obj){
@@ -46,141 +103,161 @@ function retrieveQuizQns(json_obj){
       
       var unique = questions_list.filter(onlyUnique);
       
+      console.log( "=== start of unique question in db ===")
       console.log(unique);
+      console.log( "=== end of unique question in db ===")
     
     p = 1
+    Qn_id = 1;
     for(element of unique){
-        // console.log(element);
+        console.log(element);
         quiz_qnsHtml += `<h4>Question ${p}</h4>
             <div class="card-body">
                 <p class="mb-0">
                     ${element}
                 </p>
             </div>`
+    
+        
     p += 1;
-
     // unique function for question
     //================================================
-    
-    console.log(json_obj.data.quizquestions[0].QuizQnID)
-        j = 0
-        for (i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
-            if (json_obj.data.quizquestions[i].QuizQnID != j){
-                j += 1;
-            }
-            else{
-                    quiz_qnsHtml += `
-                        <div class="card-body">
-                            <div class="form-check"; style= "position:relative; left:5%">
-                                <input class="form-check-input" type="radio" name="question${p}">
-                                <label class="form-check-label" for="flexRadioDefault${p}">
-                                ${json_obj.data.quizquestions[j].QuizOptionNo} : ${json_obj.data.quizquestions[j].QuizOption}
-                                </label>
-                                </input>
-                            </div>
-                        </div>`
+
+        console.log("===Quiz ID ===")
+        console.log(Qn_id)  
+        i = 0;
+        // for (i = 0 ; i < json_obj.data.quizquestions.length ; i ++){
+        for (element of quiz_questions ){
+            if (json_obj.data.quizquestions[i].QuizQnID == Qn_id){
+                // console.log("in options loop")
+
+                console.log(json_obj.data.quizquestions[i].QuizOptionNo)
+                quiz_qnsHtml += `
+                    <div class="card-body">
+                        <div class="form-check"; style= "position:relative; left:5%">
+                            <input class="form-check-input" type="radio" name="question${Qn_id}">
+                            <label class="form-check-label" for="flexRadioDefault${Qn_id}">
+                            ${json_obj.data.quizquestions[i].QuizOptionNo} : ${json_obj.data.quizquestions[i].QuizOption}
+                            </label>
+                            </input>
+                        </div>
+                    </div>`
+                    i += 1;
             
             }
+                
+            Qn_id += 1;   
         }
-    }
+        console.log("out of 2nd loop")
+
+            
+        // Qn_id += 1; 
         
+    
+    }
+    
     quiz_qnsHtml += `
     <br>
     <button type="button" class="btn btn-primary">Submit</button>`
     
     document.getElementById("QuizQns").innerHTML = quiz_qnsHtml;
+    console.log(quiz_options)
+    
+
 }
 
 
 
 
-async function CreateSectionQuiz(obj){
-    var response_json = JSON.parse(obj.responseText);
-    var data = response_json['data']['Enrollment'][0];
-    var SectionID = data['SectionID'];
-    var SectionMaterialsID = data['SectionMaterialsID'];
-    var CourseID = data['CourseID'];
-    var quizResult = data['quizResult'];
-    var duration = data['duration'];
-    var quizStartTime = data['quizStartTime'];
-    var CourseID = data['CourseID'];
+// async function CreateSectionQuiz(obj){
+//     var response_json = JSON.parse(obj.responseText);
+//     var data = response_json['data']['Enrollment'][0];
+//     var SectionID = data['SectionID'];
+//     var SectionMaterialsID = data['SectionMaterialsID'];
+//     var CourseID = data['CourseID'];
+//     var quizResult = data['quizResult'];
+//     var duration = data['duration'];
+//     var quizStartTime = data['quizStartTime'];
+//     var CourseID = data['CourseID'];
 
 
-    console.log(SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime,CourseID );
+//     console.log(SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime,CourseID );
 
-    var data = { 
-        "SectionID": SectionID, 
-        "SectionMaterialsID": SectionMaterialsID, 
-        "CourseID": CourseID, 
-        "quizResult": quizResult, 
-        "duration": duration, 
-        "quizStartTime": quizStartTime,
-        "CourseID": CourseID
-      };
-        // Change serviceURL to your own
-        var serviceURL = "http://localhost:5016/createsectionquiz";
+//     var data = { 
+//         "SectionID": SectionID, 
+//         "SectionMaterialsID": SectionMaterialsID, 
+//         "CourseID": CourseID, 
+//         "quizResult": quizResult, 
+//         "duration": duration, 
+//         "quizStartTime": quizStartTime,
+//         "CourseID": CourseID
+//       };
+//         // Change serviceURL to your own
+//         var serviceURL = "http://localhost:5016/createsectionquiz";
         
-        try {
-            const response =
-                await fetch(
-                    serviceURL, { 
-                        method: 'POST',
-                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
-                        body: JSON.stringify(data) 
-                    }
-                );
-                const result = await response.json();
-                console.log(result);
+//         try {
+//             const response =
+//                 await fetch(
+//                     serviceURL, { 
+//                         method: 'POST',
+//                         headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
+//                         body: JSON.stringify(data) 
+//                     }
+//                 );
+//                 const result = await response.json();
+//                 console.log(result);
                 
-        } catch (error) {
-            // Errors when calling the service; such as network error, 
-            // service offline, etc
-            console.log("Cannot connect!");
-        } // error
-}
+//         } catch (error) {
+//             // Errors when calling the service; such as network error, 
+//             // service offline, etc
+//             console.log("Cannot connect!");
+//         } // error
+// }
 
 
-async function Create_learner_quiz_answer(obj){
-    var response_json = JSON.parse(obj.responseText);
-    var data = response_json['data']['Enrollment'][0];
-    var QuizQnID = data['QuizQnID'];
-    var SectionQuizID = data['SectionQuizID'];
-    var SectionMaterialsID = data['SectionMaterialsID'];
-    var CourseID = data['CourseID'];
-    var SectionID = data['SectionID'];
-    var LearnerID = data['LearnerID'];
-    var quizAnswer = data['quizAnswer'];
+// async function Create_learner_quiz_answer(obj){
+//     var response_json = JSON.parse(obj.responseText);
+//     var data = response_json['data']['Enrollment'][0];
+//     var QuizQnID = data['QuizQnID'];
+//     var SectionQuizID = data['SectionQuizID'];
+//     var SectionMaterialsID = data['SectionMaterialsID'];
+//     var CourseID = data['CourseID'];
+//     var SectionID = data['SectionID'];
+//     var LearnerID = data['LearnerID'];
+//     var quizAnswer = data['quizAnswer'];
 
 
-    console.log(QuizQnID,SectionQuizID,SectionMaterialsID,CourseID,SectionID,LearnerID,quizAnswer );
+//     console.log(QuizQnID,SectionQuizID,SectionMaterialsID,CourseID,SectionID,LearnerID,quizAnswer );
 
-    var data = { 
-        "QuizQnID": QuizQnID, 
-        "SectionQuizID": SectionQuizID, 
-        "SectionMaterialsID": SectionMaterialsID, 
-        "CourseID": CourseID, 
-        "SectionID": SectionID, 
-        "LearnerID": LearnerID,
-        "quizAnswer": quizAnswer
-      };
-        // Change serviceURL to your own
-        var serviceURL = "http://localhost:5016/createsectionquiz";
+//     var data = { 
+//         "QuizQnID": QuizQnID, 
+//         "SectionQuizID": SectionQuizID, 
+//         "SectionMaterialsID": SectionMaterialsID, 
+//         "CourseID": CourseID, 
+//         "SectionID": SectionID, 
+//         "LearnerID": LearnerID,
+//         "quizAnswer": quizAnswer
+//       };
+//         // Change serviceURL to your own
+//         var serviceURL = "http://localhost:5016/createsectionquiz";
         
-        try {
-            const response =
-                await fetch(
-                    serviceURL, { 
-                        method: 'POST',
-                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
-                        body: JSON.stringify(data) 
-                    }
-                );
-                const result = await response.json();
-                console.log(result);
+//         try {
+//             const response =
+//                 await fetch(
+//                     serviceURL, { 
+//                         method: 'POST',
+//                         headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
+//                         body: JSON.stringify(data) 
+//                     }
+//                 );
+//                 const result = await response.json();
+//                 console.log(result);
                 
-        } catch (error) {
-            // Errors when calling the service; such as network error, 
-            // service offline, etc
-            console.log("Cannot connect!");
-        } // error
-}
+//         } catch (error) {
+//             // Errors when calling the service; such as network error, 
+//             // service offline, etc
+//             console.log("Cannot connect!");
+//         } // error
+//     }
+    
+
