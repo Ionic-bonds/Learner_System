@@ -1,14 +1,71 @@
 window.onload=function(){
     //displayQuizQns()
     // displayUniqueQuizQns()
-    var SectionMaterialsID = 1;
-    displayQuestions(SectionMaterialsID);
+    var SectionQuizID = 1;
+    displayQuestions(SectionQuizID);
+    getDuration();
     console.log("Window on load success");
+
+    //Quiz Timer
+    var quizTiming = getDuration(SectionQuizID);
+    let time_minutes = quizTiming['data']['duration']; // Value in minutes
+    let time_seconds = 0; // Value in seconds
+
+    let duration = time_minutes * 60 + time_seconds;
+
+    element = document.querySelector('#count-down-timer');
+    element.textContent = `${paddedFormat(time_minutes)}:${paddedFormat(time_seconds)}`;
+
+    startCountDown(--duration, element);
 };
 
-function displayQuestions(SectionMaterialsID){
+//Quiz Timer
+function getDuration(SectionQuizID){
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:5016/sectionquiz/${SectionQuizID}`, false);
+    xhr.send();
+
+    // stop the engine while xhr isn't done
+    for(; xhr.readyState !== 4;)
+
+    if (xhr.status === 200) {
+
+        console.log('SUCCESS', xhr.responseText);
+
+    } else console.warn('request_error');
+
+    return JSON.parse(xhr.responseText);
+};
+
+function paddedFormat(num) {
+    return num < 10 ? "0" + num : num; 
+}
+
+function startCountDown(duration, element) {
+
+    let secondsRemaining = duration;
+    let min = 0;
+    let sec = 0;
+
+    let countInterval = setInterval(function () {
+
+        min = parseInt(secondsRemaining / 60);
+        sec = parseInt(secondsRemaining % 60);
+
+        element.textContent = `${paddedFormat(min)}:${paddedFormat(sec)}`;
+
+        secondsRemaining = secondsRemaining - 1;
+        if (secondsRemaining < 0) { clearInterval(countInterval) };
+
+    }, 1000);
+}
+
+
+// Quiz display functions
+function displayQuestions(SectionQuizID){
     console.log("in display qns");
-    var num = getNumOfQns(SectionMaterialsID);
+    var num = getNumOfQns(SectionQuizID);
     var numOfQns = num['data'];
     console.log(numOfQns);
 
@@ -24,11 +81,11 @@ function displayQuestions(SectionMaterialsID){
         var optionsHtml = ``;
 
         for (element of questions) {
-            if (element['SectionMaterialsID'] == SectionMaterialsID){
+            if (element['SectionQuizID'] == SectionQuizID){
             
                 if (qnsHtml == ``){
                     quizQns = element['QuizQuestion'];
-                    qnsHtml += `<h4>Question ${i}</h4>
+                    qnsHtml += `<br><h4>Question ${i}</h4>
                     <div class="card-body">
                         <p class="mb-0">
                             ${quizQns}
@@ -51,7 +108,7 @@ function displayQuestions(SectionMaterialsID){
             }
         }
          
-        html += qnsHtml + optionsHtml;
+        html += qnsHtml + optionsHtml + '<br>';
         console.log(html);
 
     }
@@ -64,10 +121,10 @@ function displayQuestions(SectionMaterialsID){
     
 };
 
-function getNumOfQns(SectionMaterialsID){
+function getNumOfQns(SectionQuizID){
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/quizquestionsNo/${SectionMaterialsID}`, false);
+    xhr.open("GET",`http://localhost:5016/quizquestionsNo/${SectionQuizID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done

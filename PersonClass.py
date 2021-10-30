@@ -1050,9 +1050,9 @@ def find_by_QuizQuestions(QuizQnID):
         }
     ), 404
 
-@app.route("/quizquestionsNo/<int:SectionMaterialsID>")
-def getNumOfQuestions(SectionMaterialsID):
-    sql = db.session.query(QuizQn.QuizQnID.distinct()).filter_by(SectionMaterialsID = SectionMaterialsID).count()
+@app.route("/quizquestionsNo/<int:SectionQuizID>")
+def getNumOfQuestions(SectionQuizID):
+    sql = db.session.query(QuizQn.QuizQnID.distinct()).filter_by(SectionQuizID = SectionQuizID).count()
     if sql:
         return jsonify(
             {
