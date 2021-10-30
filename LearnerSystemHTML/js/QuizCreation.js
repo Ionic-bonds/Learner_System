@@ -43,7 +43,7 @@ function retrieveCourseNameOnly(obj){
     var sectionID = document.getElementById("Section").value
     var sectionMaterialsID = document.getElementById('Materials')
     console.log(sectionID)
-    var tableHtml3 = `<button id='View' onClick='CreateQuizzes(${sectionID}, ${sectionMaterialsID})'> Create Quizzes </button>`;
+    var tableHtml3 = `<button id='View' type="button" class="btn btn-info" onClick='CreateQuizzes(${sectionID}, ${sectionMaterialsID})'> Create Quizzes </button>`;
     document.getElementById('display3').innerHTML = tableHtml3;
 }
 function retrievesCourseNameOnly(obj){
