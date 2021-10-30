@@ -8,13 +8,19 @@ window.onload=function(){
 
     //Quiz Timer
     var quizTiming = getDuration(SectionQuizID);
-    let time_minutes = quizTiming['data']['duration']; // Value in minutes
+    var timing = quizTiming['data']['duration'];
+    if (timing > 60) {
+        var quotient = Math.floor(timing/60);
+        var remainder = timing % 60;
+    }
+    var time_hours = quotient;
+    let time_minutes = remainder; // Value in minutes
     let time_seconds = 0; // Value in seconds
 
-    let duration = time_minutes * 60 + time_seconds;
+    let duration = time_hours *3600 + time_minutes * 60 + time_seconds;
 
     element = document.querySelector('#count-down-timer');
-    element.textContent = `${paddedFormat(time_minutes)}:${paddedFormat(time_seconds)}`;
+    element.textContent = `${paddedFormat(time_hours)}:${paddedFormat(time_minutes)}:${paddedFormat(time_seconds)}`;
 
     startCountDown(--duration, element);
 };
@@ -45,15 +51,17 @@ function paddedFormat(num) {
 function startCountDown(duration, element) {
 
     let secondsRemaining = duration;
+    let hour = 0;
     let min = 0;
     let sec = 0;
 
     let countInterval = setInterval(function () {
 
-        min = parseInt(secondsRemaining / 60);
-        sec = parseInt(secondsRemaining % 60);
+        hour = parseInt(secondsRemaining / 3600);
+        min = parseInt((secondsRemaining%3600) / 60);
+        sec = parseInt((secondsRemaining%3600)  % 60);
 
-        element.textContent = `${paddedFormat(min)}:${paddedFormat(sec)}`;
+        element.textContent = `${paddedFormat(hour)}:${paddedFormat(min)}:${paddedFormat(sec)}`;
 
         secondsRemaining = secondsRemaining - 1;
         if (secondsRemaining < 0) { clearInterval(countInterval) };
