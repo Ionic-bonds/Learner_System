@@ -545,6 +545,25 @@ def courserecord():
         } 
     ), 4
 
+@app.route('/courserecord/<int:CourseID>', methods=['GET']) 
+def getCourserecordbyID(CourseID): 
+    courseRecords = CourseRecord.query.filter_by(CourseID=CourseID).all() 
+    if len(courseRecords): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "CourseRecords":  [courses.json() for courses in courseRecords]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No course records with given ID" 
+        } 
+    ), 4
+
 
 @app.route('/getCourseName/<int:CourseID>', methods=['GET']) 
 def getCourseName(CourseID): 
