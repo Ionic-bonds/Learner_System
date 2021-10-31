@@ -1,5 +1,7 @@
 window.onload=function(){
     console.log("in onload");
+    sessionStorage.setItem('CourseID',1);
+    sessionStorage.setItem('ClassID',1);
     displayEnrollment();
     console.log("testing jenkins");
 };
@@ -25,13 +27,13 @@ async function retrieveAllEnrollment(obj){
     var learnerIDs = [];
     var html = ``;
     for(element of enrollmentList){
-
+        if (element['ClassID'] == sessionStorage.getItem('ClassID')) {
         var LearnerID = element['LearnerID'];
         learnerIDs.push(LearnerID);
         var CourseRecordID = element['CourseRecordID'];
         
         var details = getLearnerDetails(LearnerID);
-        console.log(details);
+        //console.log(details);
 
         var courseID = element['CourseID'];
         var courseDetails = getCourseDetails(courseID);
@@ -39,11 +41,6 @@ async function retrieveAllEnrollment(obj){
 
         var name = details['data']['name'];
         var email = details['data']['Email'];
-
-        // Action
-        // sendRequest(LearnerID, function(result){
-        // console.log(result['data']);
-
 
         html += `
         <tr class="alert" role="alert" id="${CourseRecordID}">
@@ -64,6 +61,7 @@ async function retrieveAllEnrollment(obj){
         <td>${element['CourseProgress']}</td>
         <td>${element['FinalQuizResult']}</td>
         </tr>`;
+        }
 
         
     }
@@ -72,9 +70,139 @@ async function retrieveAllEnrollment(obj){
 
 }
 
-function addLearners(learnerIDs){
-    pass
+async function addLearners(learnerIDs){
+    var data = {
+        "ID": learnerIDs
+    };
+    console.log(data);
+    var serviceURL = "http://localhost:5016/getCourseRecords";
+        
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { 
+                        method: 'POST',
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://localhost:5016/getCourseRecords"},
+                        body: JSON.stringify(data) 
+                    }
+                );
+                const result = await response.json();
+                console.log("addLearners function");
+                console.log(result);
+                displayLearners(result);
+                
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            console.log("Cannot connect!");
+        } // error
 };
+
+function displayLearners(result){
+    learners = result['data']['Learners']; 
+    var html = ``;
+    for (learner of learners){
+        learnerID = learner['LearnerID'];
+        personID = learner['PersonID'];
+        var details = getPersonDetails(personID);
+        console.log(details);
+        var name = details['data']['Person'][0]['name'];
+        var email = details['data']['Person'][0]['Email'];
+        html += `<tr class="alert" role="alert" id="${learnerID}">
+        <td>
+        <label class="checkbox-wrap checkbox-primary">
+              <input type="checkbox" value="${learnerID}">
+              <span class="checkmark"></span>
+        </label>
+        </td>
+        <td>
+        <div class="pl-3 email" id="details">
+          <span>${name}</span>
+          <span>${email}</span>
+        </div>
+        </td>
+        <td><button type="button" class="btn btn-primary" data-dismiss="modal" value="${learnerID}" onclick="addLearner(this.value)">Add</button></td>
+    </tr>`
+        
+    }
+
+    document.getElementById('learnerTable').innerHTML = html;
+}
+
+async function addLearner(learnerID) {
+    courseID = sessionStorage.getItem('CourseID');
+    classID = sessionStorage.getItem('ClassID');
+    var trainerstuff = getTrainerSchedule(courseID);
+    var TrainerScheduleID = trainerstuff['data']['Enrollment'][0]['TrainerScheduleID'];
+
+    var data = { 
+        "CourseID": courseID, 
+        "TrainerScheduleID": TrainerScheduleID, 
+        "LearnerID": learnerID, 
+        "ClassID": classID, 
+        "CourseProgress": 0, 
+        "FinalQuizResult": "NA"
+      };
+        // Change serviceURL to your own
+        var serviceURL = "http://localhost:5016/insertCourseRecord";
+        
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { 
+                        method: 'POST',
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
+                        body: JSON.stringify(data) 
+                    }
+                );
+                const result = await response.json();
+                console.log(result);
+                window.location.reload();
+                        
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            console.log("Cannot connect!");
+        } // error
+    
+};
+
+function getTrainerSchedule(CourseID) {
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:5016/trainerSchedule/${CourseID}`, false);
+    xhr.send();
+
+    // stop the engine while xhr isn't done
+    for(; xhr.readyState !== 4;)
+
+    if (xhr.status === 200) {
+
+        console.log('SUCCESS', xhr.responseText);
+
+    } else console.warn('request_error');
+
+    return JSON.parse(xhr.responseText);
+}
+
+
+function getPersonDetails(personID) {
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET",`http://localhost:5016/person/${personID}`, false);
+    xhr.send();
+
+    // stop the engine while xhr isn't done
+    for(; xhr.readyState !== 4;)
+
+    if (xhr.status === 200) {
+
+        console.log('SUCCESS', xhr.responseText);
+
+    } else console.warn('request_error');
+
+    return JSON.parse(xhr.responseText);
+}
 
 function getCourseDetails(courseID) {
 
@@ -112,40 +240,40 @@ function getLearnerDetails(LearnerID) {
     return JSON.parse(xhr.responseText);
 }
 
-function removeLearners(){
-    console.log("remove learners");
-    var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
-    courseRecordID = [];
-    for (var checkbox of markedCheckbox) {
-        console.log(checkbox.value);
-        courseRecordID.push(checkbox.value);
+// function removeLearners(){
+//     console.log("remove learners");
+//     var markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+//     courseRecordID = [];
+//     for (var checkbox of markedCheckbox) {
+//         console.log(checkbox.value);
+//         courseRecordID.push(checkbox.value);
          
-    }
-    removeRecord(courseRecordID);  
-}
+//     }
+//     removeRecord(courseRecordID);  
+// }
 
-async function removeRecord(courseRecordID){
-    var data = {
-        "ID": courseRecordID
-    };
-    console.log(data);
-    var serviceURL = "http://localhost:5016/removeCourseRecords";
+// async function removeRecord(courseRecordID){
+//     var data = {
+//         "ID": courseRecordID
+//     };
+//     console.log(data);
+//     var serviceURL = "http://localhost:5016/removeCourseRecords";
         
-        try {
-            const response =
-                await fetch(
-                    serviceURL, { 
-                        method: 'POST',
-                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://localhost:5016/removeCourseRecords"},
-                        body: JSON.stringify(data) 
-                    }
-                );
-                const result = await response.json();
-                console.log(result);
+//         try {
+//             const response =
+//                 await fetch(
+//                     serviceURL, { 
+//                         method: 'POST',
+//                         headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://localhost:5016/removeCourseRecords"},
+//                         body: JSON.stringify(data) 
+//                     }
+//                 );
+//                 const result = await response.json();
+//                 console.log(result);
                 
-        } catch (error) {
-            // Errors when calling the service; such as network error, 
-            // service offline, etc
-            console.log("Cannot connect!");
-        } // error
-}
+//         } catch (error) {
+//             // Errors when calling the service; such as network error, 
+//             // service offline, etc
+//             console.log("Cannot connect!");
+//         } // error
+// }

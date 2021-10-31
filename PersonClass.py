@@ -622,7 +622,7 @@ def trainerSchedule(CourseID):
         } 
     ), 404 
 
-@app.route('/insertCourseRecord', methods=['GET']) 
+@app.route('/insertCourseRecord', methods=['GET','POST']) 
 def insertCourseRecord(): 
     CourseID = request.get_json()["CourseID"]
     TrainerScheduleID = request.get_json()["TrainerScheduleID"]
@@ -820,7 +820,7 @@ def getCourseRecords():
             { 
                 "code": 200, 
                 "data": { 
-                    "courses": [learners.json() for learners in LearnerList] 
+                    "Learners": [learners.json() for learners in LearnerList] 
                 } 
             } 
         ) 
