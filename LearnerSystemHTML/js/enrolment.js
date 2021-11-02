@@ -8,7 +8,6 @@ window.onload=function(){
 };
 
 function displayCourseDescription(){
-    console.log("test1");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -44,7 +43,6 @@ async function retrieveCourseDescription(obj){
 
 
 function getTrainerID(){
-    console.log("test2");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -62,11 +60,9 @@ async function retrieveTrainerID(obj){
     var trainerID = response_json["data"]["trainerschedules"][0]["TrainerID"]
     // console.log(trainerID);
     getPersonID(trainerID);
-    console.log("test2.5");
 }
 
 function getPersonID(trainerID){
-    console.log("test3");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -86,7 +82,6 @@ async function retrievePersonID(obj){
 }
 
 function getPersonName(personID){
-    console.log("test4");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -114,7 +109,6 @@ async function retrievePersonName(obj){
 
 
 function getPrerequisiteID(){
-    console.log("test5");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -133,12 +127,10 @@ function getPrerequisiteID(){
 async function retrievePrerequisiteID(obj){
     var response_json = JSON.parse(obj.responseText);
     var prerequisiteID = response_json["data"]["trainers"][0]["PrerequisiteCourseID"]
-    // console.log(prerequisiteID)
     getPrerequisiteName(prerequisiteID)
 }
 
 function getPrerequisiteName(prerequisiteID){
-    console.log("test6");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -163,7 +155,6 @@ async function retrievePrerequisiteName(obj){
 
 
 function getEnrolment(){
-    console.log("test7");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -197,7 +188,6 @@ async function retrieveEnrolment(obj, courseID){
 
 
 function getClassDescription(){
-    console.log("test8");
     classID = 1
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -228,7 +218,6 @@ async function retrieveClassDescription(obj, classID){
 
 
 async function insertSelfEnrol(){
-    console.log("test9");
     // var response_json = JSON.parse(obj.responseText);
     var learnerID = 1;
     var courseID = 1;
