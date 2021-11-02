@@ -2,7 +2,7 @@ import os
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from sqlalchemy import select, update, delete, values
+# from sqlalchemy import select, update, delete, values
 from sqlalchemy.sql import expression
 from datetime import timedelta
 import json
@@ -1156,6 +1156,92 @@ def retrieveCourseNameByCoursesID(CourseID):
             "message": "No enrollment available for selected student." 
         } 
     ), 404
+
+@app.route("/trainerschedule/<int:CourseID>") 
+def retrieveTrainerSchedule(CourseID): 
+    schedule = TrainerSchedule.query.filter_by(CourseID=CourseID).all() 
+    if len(schedule): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "trainerschedules": [x.json() for x in schedule] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No schedule available for selected course." 
+        } 
+    ), 404
+
+@app.route("/trainer/<int:TrainerID>") 
+def retrieveTrainer(TrainerID): 
+    trainer = Trainer.query.filter_by(TrainerID=TrainerID).all() 
+    if len(trainer): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "trainers": [x.json() for x in trainer] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No trainer available for selected trainer ID." 
+        } 
+    ), 404
+
+@app.route("/prerequisite/<int:CourseID>") 
+def retrievePrerequisite(CourseID): 
+    prerequisite = CoursePrerequisite.query.filter_by(MainCourseID=CourseID).all() 
+    if len(prerequisite): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "trainers": [x.json() for x in prerequisite] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No prerequisite available for selected course ID." 
+        } 
+    ), 404
+
+@app.route('/insertSelfEnrol', methods=['GET']) 
+def insertSelfEnrol(): 
+    LearnerID = request.get_json()["LearnerID"]
+    CourseID = request.get_json()["CourseID"]
+    ClassID = request.get_json()["ClassID"]
+    Approved= request.get_json()["Approved"]
+    passPrerequisite = request.get_json()["passPrerequisite"]
+
+    selfEnrol = Enrollment(LearnerID=LearnerID, EnrollmentID=None, CourseID=CourseID,ClassID=ClassID,Approved=Approved,passPrerequisite=passPrerequisite)
+ 
+    try:
+        db.session.add(selfEnrol)
+        db.session.commit()
+
+        return jsonify(
+            {
+                "code": 200,
+                "message": "Insertion Successful"
+            }
+        ), 200
+
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred while creating the enrolment. "
+            }
+        ), 500
 
    
 if __name__ == '__main__': 

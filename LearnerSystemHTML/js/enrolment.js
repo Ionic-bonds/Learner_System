@@ -4,9 +4,11 @@ window.onload=function(){
     getTrainerID();
     getPrerequisiteID();
     getEnrolment();
+    getClassDescription()
 };
 
 function displayCourseDescription(){
+    console.log("test1");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -20,7 +22,6 @@ function displayCourseDescription(){
 }
 
 async function retrieveCourseDescription(obj){
-    
     var response_json = JSON.parse(obj.responseText);
     var courseDescription = response_json["data"]["courses"][0]["CourseDescription"];
     var courseTitle = response_json["data"]["courses"][0]["CourseName"]
@@ -43,6 +44,7 @@ async function retrieveCourseDescription(obj){
 
 
 function getTrainerID(){
+    console.log("test2");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -58,11 +60,13 @@ function getTrainerID(){
 async function retrieveTrainerID(obj){
     var response_json = JSON.parse(obj.responseText);
     var trainerID = response_json["data"]["trainerschedules"][0]["TrainerID"]
-    console.log(trainerID);
+    // console.log(trainerID);
     getPersonID(trainerID);
+    console.log("test2.5");
 }
 
 function getPersonID(trainerID){
+    console.log("test3");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -77,11 +81,12 @@ function getPersonID(trainerID){
 async function retrievePersonID(obj){
     var response_json = JSON.parse(obj.responseText);
     var personID = response_json["data"]["trainers"][0]["PersonID"]
-    console.log(personID)
+    // console.log(personID)
     getPersonName(personID)
 }
 
 function getPersonName(personID){
+    console.log("test4");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -96,7 +101,7 @@ function getPersonName(personID){
 async function retrievePersonName(obj){
     var response_json = JSON.parse(obj.responseText);
     var personName = response_json["data"]["Person"][0]["name"]
-    console.log(personName)
+    // console.log(personName)
     document.getElementById("trainerName").innerText = "Course Trainer: "+personName;
 }
 
@@ -109,6 +114,7 @@ async function retrievePersonName(obj){
 
 
 function getPrerequisiteID(){
+    console.log("test5");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -132,6 +138,7 @@ async function retrievePrerequisiteID(obj){
 }
 
 function getPrerequisiteName(prerequisiteID){
+    console.log("test6");
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -156,6 +163,7 @@ async function retrievePrerequisiteName(obj){
 
 
 function getEnrolment(){
+    console.log("test7");
     var courseID = 1;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
@@ -171,13 +179,90 @@ function getEnrolment(){
 async function retrieveEnrolment(obj, courseID){
     var response_json = JSON.parse(obj.responseText);
     var enrolment = response_json["data"]["Enrollment"]
-    console.log(enrolment);
+    // console.log(enrolment);
     var count = 0
     for(var i = 0; i < enrolment.length; i++) {
-        console.log(enrolment[i]["ClassID"]);
+        // console.log(enrolment[i]["ClassID"]);
         if (enrolment[i]["ClassID"] == courseID) {
             count += 1
         }
     }
     document.getElementById("enrolmentCount").innerText = `${count}/50 enrolled`;
+}
+
+
+
+
+
+
+
+function getClassDescription(){
+    console.log("test8");
+    classID = 1
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            retrieveClassDescription(this, classID);
+        }
+    }
+    request.open("GET", 'http://localhost:5016/class', false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+
+async function retrieveClassDescription(obj, classID){
+    var response_json = JSON.parse(obj.responseText);
+    var classDescription = response_json["data"]["courses"]
+    for(var i = 0; i < classDescription.length; i++) {
+        // console.log(enrolment[i]["ClassID"]);
+        if (classDescription[i]["ClassID"] == classID) {
+            var dateTime = classDescription[i]["StartDate"] + " " + classDescription[i]["StartTime"] + " " + classDescription[i]["EndDate"] + " " + classDescription[i]["EndTime"];
+        }
+    }
+    // console.log(prerequisiteName)
+    document.getElementById("courseDuration").innerText = "Course Duration: "+dateTime;
+}
+
+
+
+
+
+async function insertSelfEnrol(){
+    console.log("test9");
+    // var response_json = JSON.parse(obj.responseText);
+    var learnerID = 1;
+    var courseID = 1;
+    var classID = 1;
+    var approved = 0;
+    var passPrerequisite = 1; // dummy
+
+    var data = { 
+        "LearnerID": learnerID, 
+        "CourseID": courseID, 
+        "ClassID": classID, 
+        "Approved": approved, 
+        "passPrerequisite": passPrerequisite
+      };
+
+        console.log(data);
+        // Change serviceURL to your own
+        var serviceURL = "http://localhost:5016/insertSelfEnrol";
+        
+        try {
+            const response =
+                await fetch(
+                    serviceURL, { 
+                        method: 'POST',
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"*"},
+                        body: JSON.stringify(data) 
+                    }
+                );
+                const result = await response.json();
+                console.log(result);
+                
+        } catch (error) {
+            // Errors when calling the service; such as network error, 
+            // service offline, etc
+            console.log("Cannot connect!");
+        } // error
 }

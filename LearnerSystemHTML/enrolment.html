@@ -46,36 +46,34 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <div class="sb-sidenav-menu-heading">Navigation</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
-                            </a>
-                            <div class="sb-sidenav-menu-heading">Courses</div>
-                            <a class="nav-link" href="index.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Courses available
-                            </a>
-                            <a class="nav-link" href="course-overview.html">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Overview
-                            </a>
-                            <a class="nav-link" href="#">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Class info
-                            </a>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Quizzes
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="quiz.html">Section 1</a>
-                                    <a class="nav-link" href="quiz2.html">Section 2</a>
-                                    <a class="nav-link" href="quiz3.html">Section 3</a>
-                                    <a class="nav-link" href="quiz4.html">Section 4</a>
-                                </nav>
-                            </div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <div class="sb-sidenav-menu-heading">Courses</div>
+                        <a class="nav-link" href="#">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Courses available
+                        </a>
+                        <a class="nav-link" href="course-overview.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Course Overview
+                        </a>
+                        <a class="nav-link" href="#">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Class info
+                        </a>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Quizzes
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="quiz.html">Quiz</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                            </nav>
+                        </div>
                         <a class="nav-link" href="#">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Grades
@@ -125,17 +123,19 @@
                     <div class="col-xl-10">
                         <div class="card mb-4 border-primary">
                             <div class="card-body">
-                            Course Duration: 10 Sept 2021, 9 a.m. to 10 Oct 2021, 9 p.m. 
-                            <div id = "trainerName">
-                                <!-- js this stuff -->
-                            </div>
-                            <div id="prerequisiteName">
-                                <!-- js this stuff -->
-                            </div>
+                                <div id = "courseDuration">
+                                    <!-- js this stuff -->
+                                </div>
+                                <div id = "trainerName">
+                                    <!-- js this stuff -->
+                                </div>
+                                <div id="prerequisiteName">
+                                    <!-- js this stuff -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <button type='button' class='btn btn-primary'>Enroll</button>
+                    <button type='button' class='btn btn-primary' onclick="insertSelfEnrol()">Enroll</button>
                 </div>
             </main>
 
