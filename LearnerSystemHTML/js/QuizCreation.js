@@ -1,7 +1,8 @@
+var endpoint_url = '3.144.166.168'
 function onLoads(){
     var id = sessionStorage.setItem('CourseID', 1)
     var id = 1
-    var serviceURL = `http://localhost:5016/retrieveSections/${id}`
+    var serviceURL = `http://${endpoint_url}:5016/retrieveSections/${id}`
     console.log('here');
     displayEnrolledCourses(serviceURL)
 }
@@ -78,7 +79,7 @@ async function CreateQuiz(){
     var SectionQuizID = 1;
     document.getElementById('display2').innerText = tableHtml2;
     var data = {"SectionQuizID": 1, "SectionID": 3 , "CourseID":1 ,"SectionMaterialsID":3 ,"quizResult":"P" ,"duration":120 ,"quizStartTime":"12:30:50"}
-    var serviceURL = "http://localhost:5016/review/insert";
+    var serviceURL = `http://${endpoint_url}:5016/review/insert`;
         
         try {
             const response =
@@ -170,7 +171,7 @@ async function submitAllOptions(SectionQuizID,CourseID, SectionID, SectionMateri
                 "QuizOption": item.value
               };
                 // Change serviceURL to your own
-                var serviceURL = "http://localhost:5016/createquizzes";
+                var serviceURL = `http://${endpoint_url}:5016/createquizzes`;
                 
                 try {
                     const response =

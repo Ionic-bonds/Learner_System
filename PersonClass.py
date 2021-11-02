@@ -10,7 +10,8 @@ from os import environ
 from datetime import date, datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://root@localhost:3306/LearnerSystem'
+rds_password = 'spm:spmteam09@spm-database-1.cujkm1zfxmqs.us-east-2.rds.amazonaws.com'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://' + rds_password + ':3306/LearnerSystem'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_recycle': 299}
 
@@ -19,8 +20,8 @@ CORS(app)
 
 
 class Person(db.Model):
-    __tableName__ = 'person'
-    __mapper_args__ = {'polymorphic_identity': 'person'}
+    __tableName__ = 'Person'
+    __mapper_args__ = {'polymorphic_identity': 'Person'}
     PersonID = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     NRIC = db.Column(db.String(100), nullable=False)
@@ -52,7 +53,7 @@ class Person(db.Model):
 
 class Trainer(Person):
     __tableName__ = 'Trainer'
-    __mapper_args__ = {'polymorphic_identity': 'trainer'}
+    __mapper_args__ = {'polymorphic_identity': 'Trainer'}
     PersonID = db.Column(db.ForeignKey(Person.PersonID), nullable=False)
     TrainerID = db.Column(db.Integer, primary_key=True)
 
@@ -68,7 +69,7 @@ class Trainer(Person):
 
 class Learner(Person):
     __tableName__ = 'Learner'
-    __mapper_args__ = {'polymorphic_identity': 'learner'}
+    __mapper_args__ = {'polymorphic_identity': 'Learner'}
     PersonID = db.Column(db.ForeignKey(Person.PersonID), nullable=False, primary_key=False)
     LearnerID = db.Column(db.Integer, primary_key=True)
   

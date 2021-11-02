@@ -1,7 +1,8 @@
+var endpoint_url = '3.144.166.168'
 function onLoad(){
     var id = sessionStorage.getItem('SectionID')
     var id = 1
-    var serviceURL = `http://localhost:5016/sectionoverview/${id}`
+    var serviceURL = `http://${endpoint_url}:5016/sectionoverview/${id}`
     displaySectionOverview(id)
 }
 
@@ -53,7 +54,7 @@ function retrieveAllSections(obj){
     }
 
 function displayIndividualSections(SectionID){
-    var retrieveCourseNameJURL = `http://localhost:5016/retrieveAllSections/`+ SectionID;
+    var retrieveCourseNameJURL = `http://${endpoint_url}:5016/retrieveAllSections/`+ SectionID;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {

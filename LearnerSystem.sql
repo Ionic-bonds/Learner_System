@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS Person (
 CREATE TABLE IF NOT EXISTS Trainer (
   TrainerID integer AUTO_INCREMENT NOT NULL,
   personid integer NOT NULL,
+  
   constraint Trainer_pk primary key (TrainerID),
   constraint Trainer_fk foreign key (personid) references Person(personID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -175,7 +176,7 @@ CREATE TABLE IF NOT EXISTS Section_Materials (
   SectionID integer,
   SectionMaterials varchar(10000),
   constraint SectionMaterials_pk primary key(SectionMaterialsID, CourseID, SectionID),
-  constraint SectionMaterials_fk2 foreign key(CourseID,SectionID) references section_overview(CourseID,SectionID)
+  constraint SectionMaterials_fk2 foreign key(CourseID,SectionID) references Section_Overview(CourseID,SectionID)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

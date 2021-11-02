@@ -1,3 +1,4 @@
+var endpoint_url = '3.144.166.168'
 window.onload=function(){
     console.log("in onload");
     displayEnrollment();
@@ -11,7 +12,7 @@ function displayEnrollment(){
             retrieveAllEnrollment(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/courserecord', false);
+    request.open("GET", `http://${endpoint_url}:5016/courserecord`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -73,7 +74,7 @@ async function retrieveAllEnrollment(obj){
 function getCourseDetails(courseID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/getCourseName/${courseID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/getCourseName/${courseID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -91,7 +92,7 @@ function getCourseDetails(courseID) {
 function getLearnerDetails(LearnerID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/learnerDetails/${LearnerID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/learnerDetails/${LearnerID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -123,7 +124,7 @@ async function removeRecord(courseRecordID){
         "ID": courseRecordID
     };
     console.log(data);
-    var serviceURL = "http://localhost:5016/removeCourseRecords";
+    var serviceURL = `http://${endpoint_url}:5016/removeCourseRecords`;
         
         try {
             const response =
