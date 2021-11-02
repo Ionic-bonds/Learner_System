@@ -1214,7 +1214,7 @@ def retrievePrerequisite(CourseID):
         } 
     ), 404
 
-@app.route('/insertSelfEnrol', methods=['GET']) 
+@app.route('/insertSelfEnrol', methods=['POST']) 
 def insertSelfEnrol(): 
     LearnerID = request.get_json()["LearnerID"]
     CourseID = request.get_json()["CourseID"]
