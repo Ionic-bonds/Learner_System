@@ -1242,6 +1242,91 @@ def insertSelfEnrol():
                 "message": "An error occurred while creating the enrolment. "
             }
         ), 500
+@app.route("/retrieveCoursesID/<int:CourseID>") 
+def retrieveSpecificCourseByID(CourseID): 
+    #I have to join with Trainer table & class table => because of primary key => FK constraints
+    rows = db.session.query(CourseOverview).filter((SectionOverview.CourseID == CourseRecord.CourseID) & (CourseOverview.CourseID == CourseID)).all()
+    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+    if len(rows): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in rows] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404   
+
+@app.route("/retrieveSectionsByID/<int:CourseID>") 
+def retrieveSections(CourseID): 
+    #I have to join with Trainer table & class table => because of primary key => FK constraints
+    rows = db.session.query(SectionOverview).filter((SectionOverview.CourseID == SectionMaterials.CourseID) & (SectionOverview.SectionID == SectionMaterials.SectionID) & (SectionOverview.CourseID == CourseID)).all()
+    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+    if len(rows): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in rows] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404   
+
+
+@app.route("/retrieveSectionMaterialsByCourseID/<int:CourseID>") 
+def retrieveSectionMaterialsByCourseID(CourseID): 
+    #I have to join with Trainer table & class table => because of primary key => FK constraints
+    rows = db.session.query(SectionQuiz).filter((SectionOverview.CourseID == SectionMaterials.CourseID) & (SectionQuiz.CourseID == SectionMaterials.CourseID) & (SectionMaterials.CourseID == CourseID)).all()
+    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+    if len(rows): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in rows] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404   
+
+
+@app.route("/sectionmaterialsbyCourse/<int:CourseID>") 
+def sectionmaterialsByCourse(CourseID): 
+    #I have to join with Trainer table & class table => because of primary key => FK constraints
+    rows = db.session.query(SectionMaterials).filter((SectionOverview.CourseID == SectionMaterials.CourseID) & (SectionQuiz.CourseID == SectionMaterials.CourseID) & (SectionMaterials.CourseID == CourseID)).all()
+    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+    if len(rows): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in rows] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404   
 
    
 if __name__ == '__main__': 
