@@ -81,7 +81,7 @@ function appendTables(obj, tableHtml, CourseID){
     // ^ have to include in new SQL with the added 'name' variable inside sectionmaterials
     for(element of courseList){
         tableHtml += `<tr><th scope="row"> Videos </th><td> Duration ${element['duration']} </td> <td> &#10004;</td> </tr>
-        <tr><th scope="row"><div id="Section1Quiz"><a href="quiz.html?=${element['SectionID']}">Section Quiz</a></div></th>
+        <tr><th scope="row"><div id="SectionQuiz"><a href="quiz.html?=${element['SectionID']}">Section Quiz</a></div></th>
         <tr><th scope="row"><td> Start Time: ${element['quizStartTime']} </td></tr>
         `;
     }

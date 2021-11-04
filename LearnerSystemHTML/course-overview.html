@@ -10,7 +10,7 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
 
-        <script src="js/courseoverview.js"></script>
+        <script src="js/IndividualCourses.js"></script>
 
         <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> -->
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -24,7 +24,7 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
     </head>
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" onload='onLoad()'>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">Welcome to eLearn</a>
@@ -160,7 +160,7 @@
 
                         
                         <div id="accordion">
-                            <div class="card">
+                            <div class="card" id="tableretrieve">
                               <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">&#10004;
                                   <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -177,7 +177,7 @@
                                             <th scope="col">Section 1: Keeping your documents safe</th>
                                           </tr>
                                           <tr>
-                                              <td><div id="Section1Description">Section description</div></td>
+                                              <td><div id="SectionDescription">Section description</div></td>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -192,27 +192,28 @@
                                                 <td>&#10004;</td>
                                             </tr>
                                             <tr>
-                                                <th scope="row"><div id="Section1Quiz"><a href="quiz.html">Section Quiz</a></div></th>
+                                                <th scope="row"><div id="SectionQuiz"><a href="quiz.html">Section Quiz</a></div></th>
                                                 <td>2h</td>
                                                 <td>&#10004;</td>
                                             </tr>
                                             <tr>
                                                 <td>Section Progress</td>
                                                 <td></td>
-                                                <td><div id="Section1Progress">100%</div></td>
+                                                <td><div id="SectionProgress">100%</div></td>
                                             </tr>
                                             <tr>
                                                 <td>Deadline: 20 Nov 2021</td>
                                             </tr>
                                             <tr>
-                                                <td><br><div id="Section1Materials"><a class="btn btn-primary" href="https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf" role="button">View section materials</a></div></td>
+                                                <td><br><div id="SectionMaterials"><a class="btn btn-primary" href="https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf" role="button">View section materials</a></div></td>
                                             </tr>
                                         </tbody>
                                       </table>
                                 </div>
                               </div>
                             </div>
-                            <div class="card">
+
+                            <!-- <div class="card">
                               <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
                                   <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -313,7 +314,8 @@
                                       </table>
                                 </div>
                               </div>
-                            </div>
+                            </div> -->
+
                           </div>
                     
                         <div class="card">
