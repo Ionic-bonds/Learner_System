@@ -77,7 +77,6 @@ function retrieveSectionsByID(obj, CourseID){
                             <tr>
                                 <td> Section Progress: ${element['SectionProgress']}</td>
                             </tr>
-            
             `;
     }
     appendTable(tableHtml, CourseID);
