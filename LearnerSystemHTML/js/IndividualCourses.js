@@ -62,7 +62,6 @@ function retrieveSectionsByID(obj, CourseID){
                 </h5>
             </div>
             
-        
             <div id="collapse${count}" class="collapse" aria-labelledby="heading${count}" data-parent="#accordion">
                 <div class="card-body">
                     <table class="table">
