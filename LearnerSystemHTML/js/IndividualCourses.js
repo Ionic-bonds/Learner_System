@@ -52,21 +52,33 @@ function retrieveSectionsByID(obj, CourseID){
 
     for(element of courseList){
         count += 1
-        tableHtml += `<div class="card">
-            <div class="card-header" id="headingOne">
+        tableHtml += `
+        <div class="card">
+            <div class="card-header" id="heading${count}">
                 <h5 class="mb-0">&#10004;
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Section ${count}
-                </button>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${count}" aria-expanded="true" aria-controls="collapse${count}">
+                        Section ${count}
+                    </button>
                 </h5>
             </div>
+            
         
-            <div id="collapse${count}" class="collapse show" aria-labelledby="heading${count}" data-parent="#accordion">
-            <div class="card-body">
-            <table><thead><tr><th scope="col">${element['SectionID']} </th></tr>
-            <tr><td> ${element['SectionDescription']} </td></tr>
-            <tbody><tr><td> Section Progress: ${element['SectionProgress']}</td></tr>
-            </tbody></table>
+            <div id="collapse${count}" class="collapse" aria-labelledby="heading${count}" data-parent="#accordion">
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">${element['SectionID']} </th>
+                            </tr>
+                            <tr>   
+                                <td> ${element['SectionDescription']} </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td> Section Progress: ${element['SectionProgress']}</td>
+                            </tr>
+            
             `;
     }
     appendTable(tableHtml, CourseID);
@@ -92,9 +104,26 @@ function appendTables(obj, tableHtml, CourseID){
     //<tr><th scope="row"> Videos => Replace it with ${element['name']} <- to retrieve the name of the section materials
     // ^ have to include in new SQL with the added 'name' variable inside sectionmaterials
     for(element of courseList){
-        tableHtml += `<tr><th scope="row"> Videos </th><td> Duration ${element['duration']} </td> <td> &#10004;</td> </tr>
-        <tr><th scope="row"><div id="SectionQuiz"><a href="quiz.html?=${element['SectionID']}">Section Quiz</a></div></th>
-        <tr><th scope="row"><td> Start Time: ${element['quizStartTime']} </td></tr>
+        tableHtml += `
+                            <tr>
+                                <th scope="row"> Videos </th>
+                                <td> Duration ${element['duration']} </td> 
+                                <td> &#10004;</td> 
+                            </tr>
+
+                            <tr>
+                                <th scope="row">
+                                    <div id="SectionQuiz">
+                                        <a href="quiz.html?=${element['SectionID']}">Section Quiz</a>
+                                    </div>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <th scope="row">
+                                    <td> Start Time: ${element['quizStartTime']} </td>
+                                </th>
+                            </tr>
         `;
     }
     document.getElementById('tableretrieve').innerHTML = tableHtml;
@@ -121,8 +150,17 @@ function newappendTables(obj, tableHtml){
                                          
     for(element of courseList){
         //this is for retrieving of the url from sectionmaterials variable
-        tableHtml += `</div></div><tr><td><br><a class="btn btn-primary" href="${element['SectionMaterials']}" role="button">View section materials</a></div></td></tr>
-        </tbody>`;
+        tableHtml += `
+                            <tr>
+                                <td>
+                                    <a class="btn btn-primary" href="${element['SectionMaterials']}" role="button">View section materials</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>`;
     }
     tableHtml += `</table>`;
     document.getElementById('tableretrieve').innerHTML = tableHtml;
