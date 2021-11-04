@@ -2,7 +2,7 @@
 -- Dummy Data for table Course_Overview
 --
 insert into Course_Overview(CourseName, CourseDescription, Prerequisite)
-values('Fundamentals of Xerox WorkCentre 7845', 'This is a course', FALSE);
+values('Fundamentals of Xerox WorkCentre 7845', 'Xerox now offers on-demand training for added convenience and flexibility at no additional cost to you. No matter where you are, 24/7 access to training will be available through Xerox. Learn how to properly use your office technology to get day-to-day work done more efficiently. Here are some examples of how training can help you:Keep documents safe by utilizing the secure print feature, Maximize machine uptime by properly clearing paper jams, Go digital with scan to email and more.', FALSE);
 insert into Course_Overview(CourseName, CourseDescription, Prerequisite)
 values('Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
 insert into Course_Overview(CourseName, CourseDescription, Prerequisite)

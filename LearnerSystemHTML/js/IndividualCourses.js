@@ -52,10 +52,22 @@ function retrieveSectionsByID(obj, CourseID){
 
     for(element of courseList){
         count += 1
-        tableHtml += `<div class="card"><div id="collapse${count}" class="collapse show" aria-labelledby="heading${count}" data-parent="#accordion">
-        <div class="card-body"></div>
-        <table><thead><tr><th scope="col">${element['SectionID']} </th></tr>
-        <tr><td> ${element['SectionDescription']} </td> <td> Section Progress: ${element['SectionProgress']}</td></tr>`;
+        tableHtml += `<div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">&#10004;
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Section ${count}
+                </button>
+                </h5>
+            </div>
+        
+            <div id="collapse${count}" class="collapse show" aria-labelledby="heading${count}" data-parent="#accordion">
+            <div class="card-body">
+            <table><thead><tr><th scope="col">${element['SectionID']} </th></tr>
+            <tr><td> ${element['SectionDescription']} </td></tr>
+            <tbody><tr><td> Section Progress: ${element['SectionProgress']}</td></tr>
+            </tbody></table>
+            `;
     }
     appendTable(tableHtml, CourseID);
 }
