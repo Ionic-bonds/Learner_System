@@ -2,13 +2,17 @@ window.onload=function(){
     console.log("in onload");
     displayEnrollment();
     console.log("testing jenkins");
+
+    const input = document.querySelector('input');
+
+    input.addEventListener('input', searchLearners);
 };
 
-function displayEnrollment(){
+function displayEnrollment(name_arr = ""){
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            retrieveAllEnrollment(this);
+            retrieveAllEnrollment(this, name_arr);
         }
     }
     request.open("GET", 'http://localhost:5016/enrollment', false);
@@ -16,13 +20,17 @@ function displayEnrollment(){
     request.send();
 }
 
-async function retrieveAllEnrollment(obj){
+async function retrieveAllEnrollment(obj, name_arr){
+    console.log("retrieve");
+    console.log(name_arr);
     
     var response_json = JSON.parse(obj.responseText);
     var enrollmentList = response_json["data"]["Enrollment"];
     // sessionStorage.setItem('enrolledList', enrolledList)
     // tableHtml += `<div>Course Name</div>`;
     var html = ``;
+
+    var learnerList = [];
     for(element of enrollmentList){
 
         var LearnerID = element['LearnerID'];
@@ -48,43 +56,78 @@ async function retrieveAllEnrollment(obj){
         }
         
         var details = getLearnerDetails(LearnerID);
-        console.log(details)
+        //console.log(details)
 
         var name = details['data']['name'];
         var email = details['data']['Email'];
+
+        learnerList.push(name);
 
         // Action
         // sendRequest(LearnerID, function(result){
         // console.log(result['data']);
 
-
-        html += `
-        <tr class="alert" role="alert" id="${enrollmentID}">
-        <td>
-        <label class="checkbox-wrap checkbox-primary">
+        if (name_arr == ""){
+            html += `
+            <tr class="alert" role="alert" id="${enrollmentID}" class="${name}">
+            <td>
+            <label class="checkbox-wrap checkbox-primary">
               <input type="checkbox" value="enrollmentID${enrollmentID}">
               <span class="checkmark"></span>
             </label>
-        </td>
-        <td class=" align-items-center">
-        <div class="pl-3 email" id="details">
-          <span>${name}</span>
-          <span>${email}</span>
-        </div>
-        </td>
-        <td>${element['ClassID']}</td>
-        <td>Course Name Loren Ipsum</td>
-        <td>${passPrerequisite}</td>
-        <td class="status" id="Status${enrollmentID}">${status}</td>
-        <td>
+            </td>
+            <td class=" align-items-center">
+            <div class="pl-3 email" id="details">
+            <span>${name}</span>
+            <span>${email}</span>
+            </div>
+            </td>
+            <td>${element['ClassID']}</td>
+            <td>Course Name Loren Ipsum</td>
+            <td>${passPrerequisite}</td>
+            <td class="status" id="Status${enrollmentID}">${status}</td>
+            <td>
             ${button}
-        </button>
-        </td>
-        </tr>`;
+            </button>
+            </td>
+            </tr>`;
+        } else {
+            console.log("in else");
+
+            for (filteredName of name_arr){
+                if(name == filteredName) {
+                    html += `
+            <tr class="alert" role="alert" id="${enrollmentID}" class="${name}">
+            <td>
+            <label class="checkbox-wrap checkbox-primary">
+              <input type="checkbox" value="enrollmentID${enrollmentID}">
+              <span class="checkmark"></span>
+            </label>
+            </td>
+            <td class=" align-items-center">
+            <div class="pl-3 email" id="details">
+            <span>${name}</span>
+            <span>${email}</span>
+            </div>
+            </td>
+            <td>${element['ClassID']}</td>
+            <td>Course Name Loren Ipsum</td>
+            <td>${passPrerequisite}</td>
+            <td class="status" id="Status${enrollmentID}">${status}</td>
+            <td>
+            ${button}
+            </button>
+            </td>
+            </tr>`;
+                }
+            }
+        }
 
         
     }
     document.getElementById("tablebody").innerHTML = html;
+
+    sessionStorage.setItem('learnerList',JSON.stringify(learnerList));
 
 }
 
@@ -204,4 +247,30 @@ function getTrainerSchedule(CourseID) {
     } else console.warn('request_error');
 
     return JSON.parse(xhr.responseText);
+}
+
+//search bar functions
+
+function searchLearners(e) {
+    console.log("in search func");
+    console.log(e.target.value);
+    //let hpCharacters = [];
+    learnerList = JSON.parse(sessionStorage.getItem('learnerList'));
+    console.log(typeof(learnerList));
+
+    const searchString = e.target.value.toLowerCase();
+
+    const filteredCharacters = learnerList.filter((character) => {
+        return (
+            character.toLowerCase().includes(searchString)
+        );
+    });
+    displayCharacters(filteredCharacters);
+    
+
+}
+
+function displayCharacters(filteredCharacters){
+    console.log(filteredCharacters);
+    displayEnrollment(filteredCharacters);
 }
