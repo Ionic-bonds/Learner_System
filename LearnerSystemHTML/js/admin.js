@@ -5,7 +5,7 @@ window.onload=function(){
 
     const input = document.querySelector('input');
 
-    input.addEventListener('input', searchLearners);
+    input.addEventListener('keydown', searchLearners);
 };
 
 function displayEnrollment(name_arr = ""){
@@ -252,7 +252,9 @@ function getTrainerSchedule(CourseID) {
 //search bar functions
 
 function searchLearners(e) {
-    console.log("in search func");
+    if (e.key == 'Enter' || e.keyCode == 13) {
+        // Do something
+        console.log("in search func");
     console.log(e.target.value);
     //let hpCharacters = [];
     learnerList = JSON.parse(sessionStorage.getItem('learnerList'));
@@ -266,7 +268,7 @@ function searchLearners(e) {
         );
     });
     displayCharacters(filteredCharacters);
-    
+    }
 
 }
 
