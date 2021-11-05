@@ -32,13 +32,15 @@ function all(obj){
         counter+= 1;
         console.log(element['CourseID'])
         tableHtml += `
-        <div class="col-sm-6">
-        <div class="card">
+        <div class="col-sm-4">
+        <div class="card m-2 p-2">
         <div class="card-body">
         <h5 class="card-title">${element['CourseName']}</h5>
-        <img class="card-img-top img-fluid" src="./Courses_images/image${counter}.jpg" alt="Image" width="250" height="300"> <br>
+        <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${counter}.jpg" alt="Image" width="250" height="300"> <br>
+        </br>
         <a class="card-text" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
-        </div></div></div>`;
+        </div></div></div>
+        </br>`;
     }
     document.getElementById('retrieveCourses').innerHTML = tableHtml;
 }
@@ -159,11 +161,12 @@ function retrieveAllCourses(obj){
         console.log(element['CourseID'])
         count+=1
         tableHtml += `
-        <div class="col-sm-6">
-        <div class="card">
+        <div class="col-sm-4">
+        <div class="card m-2 p-2">
         <div class="card-body">
         <h5 class="card-title">${element['CourseName']}</h5>
-        <img class="card-img-top img-fluid" src="./Courses_images/image${count}.jpg" alt="Image"> <br>
+        <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${count}.jpg" alt="Image"> <br>
+        </br>
         <a class="card-text" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
         </div></div></div>`;
         //<div> Course Description: ${element['CourseDescription']} </div>
