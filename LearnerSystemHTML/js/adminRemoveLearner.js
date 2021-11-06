@@ -131,7 +131,7 @@ async function removeRecord(courseRecordID){
                 await fetch(
                     serviceURL, { 
                         method: 'POST',
-                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://localhost:5016/removeCourseRecords"},
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://3.144.166.168/:5016/removeCourseRecords"},
                         body: JSON.stringify(data) 
                     }
                 );
