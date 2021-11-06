@@ -35,7 +35,7 @@
               margin: auto;
               padding: 20px;
               border: 1px solid #888;
-              width: 80%;
+              width: 40%;
             }
             
             /* The Close Button */
@@ -184,7 +184,8 @@
                         <!-- Modal content -->
                         <div class="modal-content">
                         <span class="close">&times;</span>
-                        <p>Successfully Enrolled!</p>
+                            <p style="text-align: center;">Successfully Enrolled!</p><br>
+                            <!-- <button id="closemodal" type="button" class="btn-sm btn btn-primary">Close</button> -->
                         </div>
                     </div>
 
@@ -224,6 +225,8 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
+        var closebtn = document.getElementById("closemodal");
+
         // When the user clicks the button, open the modal 
         btn.onclick = function() {
         modal.style.display = "block";
@@ -235,6 +238,9 @@
         span.onclick = function() {
         modal.style.display = "none";
         }
+        // closebtn.onclick = function() {
+        // modal.style.display = "none";
+        // }
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
