@@ -108,7 +108,7 @@ class CourseOverview(db.Model):
     __mapper_args__ = {'polymorphic_identity': 'CourseOverview'}
     CourseID = db.Column(db.Integer, primary_key=True)
     CourseName = db.Column(db.String(100), nullable=False)
-    CourseDescription = db.Column(db.String(100), nullable=False)
+    CourseDescription = db.Column(db.String(10000), nullable=False)
     Prerequisite = db.Column(db.Boolean, nullable=False)
 
     def __init__(self, CourseID, CourseName,CourseDescription,Prerequisite ):

@@ -17,7 +17,7 @@ USE LearnerSystem;
 CREATE TABLE IF NOT EXISTS Course_Overview (
   CourseID integer NOT NULL AUTO_INCREMENT,
   CourseName varchar(100),
-  CourseDescription varchar(100),
+  CourseDescription varchar(10000),
   Prerequisite boolean,
   constraint CourseOverview_pk primary key(CourseID)
 
