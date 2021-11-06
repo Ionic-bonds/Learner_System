@@ -83,7 +83,7 @@ async function retrieveAllEnrollment(obj, name_arr){
             </div>
             </td>
             <td>${element['ClassID']}</td>
-            <td>Course Name Loren Ipsum</td>
+            <td>Fundamentals of Xerox WorkCentre 7845</td>
             <td>${passPrerequisite}</td>
             <td class="status" id="Status${enrollmentID}">${status}</td>
             <td>
@@ -111,7 +111,7 @@ async function retrieveAllEnrollment(obj, name_arr){
             </div>
             </td>
             <td>${element['ClassID']}</td>
-            <td>Course Name Loren Ipsum</td>
+            <td>Programming for Xerox WorkCentre with CardAccess and Integration</td>
             <td>${passPrerequisite}</td>
             <td class="status" id="Status${enrollmentID}">${status}</td>
             <td>
