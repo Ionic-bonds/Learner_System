@@ -6,7 +6,7 @@ function onLoads(){
     displayEnrolledCourses(serviceURL)
 }
 function onLoad(){
-    var tableHtml = `<button id='View' onClick='CreateQuiz()'> Create Quizzes </button>`; 
+    var tableHtml = `<button type="button" class="btn btn-primary" id='View' onClick='CreateQuiz()'> Create Quizzes </button>`; 
     document.getElementById('display1').innerHTML = tableHtml;
 }
 function displayEnrolledCourses(url){
@@ -43,7 +43,7 @@ function retrieveCourseNameOnly(obj){
     var sectionID = document.getElementById("Section").value
     var sectionMaterialsID = document.getElementById('Materials')
     console.log(sectionID)
-    var tableHtml3 = `<button id='View' onClick='CreateQuizzes(${sectionID}, ${sectionMaterialsID})'> Create Quizzes </button>`;
+    var tableHtml3 = `<button  type="button" class="btn btn-primary" id='View' onClick='CreateQuizzes(${sectionID}, ${sectionMaterialsID})'> Create Quizzes </button>`;
     document.getElementById('display3').innerHTML = tableHtml3;
 }
 function retrievesCourseNameOnly(obj){
@@ -53,7 +53,7 @@ function retrievesCourseNameOnly(obj){
     var tableHtml = `<label for="Section"> Choose a section you want to create a quiz for: </label>
     <select name="Section" id="Section">`;
     var tableHtml2 = `<label for="Materials"> Choose the materials that you want to create a quiz for: </label>
-    <select name="Materials" id="Materials">`;
+    <select name="Materials" id="Materials"> </br>`;
     
     for(element of data){
         tableHtml += ` <option value="${element['SectionID']}">${element['SectionID']}</option>`
@@ -66,7 +66,7 @@ function retrievesCourseNameOnly(obj){
     var sectionID = document.getElementById("Section").value
     var sectionMaterialsID = document.getElementById('Materials')
     console.log(sectionID)
-    var tableHtml3 = `<button id='View' onClick='CreateQuizzes(${sectionID}, ${sectionMaterialsID})'> Create Quizzes </button>`;
+    var tableHtml3 = `<button id='View'  type="button" class="btn btn-primary" onClick='CreateQuizzes(${sectionID}, ${sectionMaterialsID})'> Create Quizzes </button>`;
     document.getElementById('display3').innerHTML = tableHtml3;
 }
 async function CreateQuiz(){
@@ -100,8 +100,15 @@ async function CreateQuiz(){
     click(SectionQuizID,CourseID, SectionID, SectionMaterialsID)
 }
 function click(SectionQuizID,CourseID, SectionID, SectionMaterialsID){
-    var NumberOfQuizzes = `Enter the number of questions you would like to set <input type='text' id='questions'></input><br>
-    <button onClick='displayRemainingQuizes(${SectionQuizID},${CourseID}, ${SectionID}, ${SectionMaterialsID})'> Submit number of questions </button>`;
+    var NumberOfQuizzes = `
+    <div class="form-group row">
+    <label for="questions" class="col-sm-5 col-form-label">Enter the number of questions you would like to set </label> 
+    <div class="col-sm-3">
+    <input type='text' id='questions' class="form-control"></input>
+    </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" onClick='displayRemainingQuizes(${SectionQuizID},${CourseID}, ${SectionID}, ${SectionMaterialsID})'> Submit number of questions </button>`;
     document.getElementById('display3').innerHTML = NumberOfQuizzes
 }
 async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, SectionMaterialsID){
@@ -110,31 +117,38 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
     for(let i = 0; i < retrievedValue; i++){
         tableHtml+= `Question ${i+1} <br>
         <div id='maindiv${i+1}'>
-        <input type='text' class='quizzes${i+1}' id='quizzes${i+1}'></input> <br>
+        <div class="col-sm-6 my-1">
+        <input type='text' class='quizzes${i+1} form-control' id='quizzes${i+1}'></input> 
+        </div>
+
         <input type='radio' name='options${i+1}' id='MCQ' value='MCQ'><label for='MCQ'> MCQ </label>
         <input type='radio' name='options${i+1}' id='boolean' value='boolean'><label for='boolean'> True/False </label>
         <br><br>
         </div>
         <div id='${i+1}' class='allresults${i+1}'>
-        Option <input type='text' class='results${i+1}' id='results${i+1}'>
-        <br><br>
-        Option <input type='text' class='results${i+1}' id='results${i+1}'>
-        <br><br>
+        <div class="col-sm-3 my-1">
+        Option <input type='text' class='results${i+1} form-control' id='results${i+1}'>
+        </div>
+        <div class="col-sm-3 my-1">
+        Option <input type='text' class='results${i+1} form-control' id='results${i+1}'>
+        </div>
         </div>
         <div>
-        <button onClick='AddOptions(${i+1})'> Add Option </button>
+        <button  type="button" class="btn btn-primary" onClick='AddOptions(${i+1})'> Add Option </button>
         </div>
+        </br>
         
          `;
     }
-    tableHtml += `<button onClick='submitAllOptions(${SectionQuizID},${CourseID}, ${SectionID}, ${SectionMaterialsID}, ${retrievedValue})'> Submit to create all questions </button>`
+    tableHtml += `<button type="button" class="btn btn-primary" onClick='submitAllOptions(${SectionQuizID},${CourseID}, ${SectionID}, ${SectionMaterialsID}, ${retrievedValue})'> Submit to create all questions </button>`
     document.getElementById('display4').innerHTML = tableHtml;
 }
 function AddOptions(value){
     console.log(value)
     // Here have to dynamically increase the options
     var result = document.getElementById(`${value}`);
-    var htmlTable = `Option <input type='text' class='results${value}' id='results${value}'> <br><br>`;
+    var htmlTable = `<div class="col-sm-3 my-1">
+    Option <input type='text' class='results${value} form-control' id='results${value}'> </div>`;
     result.insertAdjacentHTML('beforeend', htmlTable);
 
 }
