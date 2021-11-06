@@ -38,10 +38,6 @@ async function retrieveCourseDescription(obj){
 
 
 
-
-
-
-
 function getTrainerID(){
     var courseID = 1;
     var request = new XMLHttpRequest();
@@ -206,7 +202,7 @@ async function retrieveClassDescription(obj, classID){
     for(var i = 0; i < classDescription.length; i++) {
         // console.log(enrolment[i]["ClassID"]);
         if (classDescription[i]["ClassID"] == classID) {
-            var dateTime = classDescription[i]["StartDate"] + " " + classDescription[i]["StartTime"] + " " + classDescription[i]["EndDate"] + " " + classDescription[i]["EndTime"];
+            var dateTime = classDescription[i]["StartDate"] + " " + classDescription[i]["StartTime"] + " to " + classDescription[i]["EndDate"] + " " + classDescription[i]["EndTime"];
         }
     }
     // console.log(prerequisiteName)

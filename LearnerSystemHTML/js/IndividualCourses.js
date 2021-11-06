@@ -89,27 +89,37 @@ function retrieveSectionsByID(obj, CourseID){
                         <tbody>
             `;
 
+        var materialsCount = 1;
         for (index of getAllIndexes(materialsData,sectionID)) {
-
+            if(materialsCount == 1 || materialsCount ==2 ) {
+                var title = "Learning Materials";
+            } else {
+                var title = "Videos";
+            }
                     tableHtml += `
                             <tr>
                                 <th scope="row">
                                 <div style="display: block">
-                                <p style="display: inline-block; float: left"> Title placeholder</p>
+                                <p style="display: inline-block; float: left">${title}</p>
                                     <div class="sectionmaterials${sectionID}"  style="display: inline-block; float: right">
-                                        <a href="materialsData[${index}]["SectionMaterials"]">View Course Materials</a>
+                                        <a href="materialsData[${index}]["SectionMaterials"]">View</a>
                                     </div>
                                 </div>
                                 </th>
-                            </tr>
-        `;
+                            </tr>`
+            materialsCount+=1
+        ;
 
         }
+
+        for (index of getAllIndexes(quizData,sectionID)) {
+        console.log(quizData[index]['SectionQuizID']);
+        var quizID = quizData[index]['SectionQuizID'];
 
         tableHtml += `
                             <tr>
                                 <td>
-                                    <a class="btn btn-primary" href="#" role="button">Quiz placeholder</a>
+                                    <a class="btn btn-primary" href="quiz.html?=${quizID}" role="button">Quiz for section ${sectionID}</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -117,6 +127,7 @@ function retrieveSectionsByID(obj, CourseID){
                 </div>
             </div>
         </div>`;
+        }
         
     }
     document.getElementById('tableretrieve').innerHTML = tableHtml;

@@ -222,7 +222,10 @@ values(9, 1, 3,'https://www.youtube.com/watch?v=Bt8lkPUmv7I');
 INSERT INTO Section_Quiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
 values(1,1,1,1,'P',90,'12:30:00');
 INSERT INTO Section_Quiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
-values(2,1,1,1,'G',90,'12:30:00');
+values(2,2,4,1,'G',90,'12:30:00');
+INSERT INTO Section_Quiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
+values(2,3,7,1,'G',90,'12:30:00');
+
 
 -- --------------------------------------------------------
 -- Dummy Data for table Quiz_Qn
