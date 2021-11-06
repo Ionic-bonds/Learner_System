@@ -15,68 +15,68 @@ values('Practical Practices W76', 'Practice makes perfect. Practice practicing.'
 -- --------------------------------------------------------
 -- Dummy Data for table CoursePrerequisite
 --
-insert into Course_Prerequisite(MainCourseID, PrerequisiteCourseID)
+insert into course_prerequisite(MainCourseID, PrerequisiteCourseID)
 values(2, 1);
-insert into Course_Prerequisite(MainCourseID, PrerequisiteCourseID)
+insert into course_prerequisite(MainCourseID, PrerequisiteCourseID)
 values(5, 3);
-insert into Course_Prerequisite(MainCourseID, PrerequisiteCourseID)
+insert into course_prerequisite(MainCourseID, PrerequisiteCourseID)
 values(5, 4);
 
 -- --------------------------------------------------------
 -- Dummy Data for table Person
 --
-insert into Person(name, nric, ContactNo, email)
+insert into person(name, nric, ContactNo, email)
 values('Jacky', 'S9624229H', 82011734, 'jacky@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Leaky', 'S91234567A', 97011734, 'leeky@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('JaiQee', 'S9999999A', 89999999, 'jiaqilovesponiesandstrawberries@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('kingston', 'S91111111A', 91111111, 'imtheking@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Leenord', 'S9222222A', 82222222, 'ibuycoffeeidonlike@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('King', 'S9222222A', 82222222, 'ibuycoffeeidonlike2@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Leo', 'S9222222A', 82222222, 'ibuycoffeeidonlike3@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Leonard', 'S9222222A', 82222222, 'ibuycoffeeidonlike4@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Timmy', 'S9222222A', 82222222, 'ibuycoffeeidonlike5@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Elvis', 'S9222222A', 82222222, 'ibuycoffeeidonlike6@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Aloy', 'S9222222A', 82222222, 'ibuycoffeeidonlike7@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Aloysious', 'S9222222A', 82222222, 'ibuycoffeeidonlike8@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Tan', 'S9222222A', 82222222, 'ibuycoffeeidonlike9@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Yuhao', 'S9222222A', 82222222, 'yuhao@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Ling', 'S9222222A', 82222222, 'ling@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Thomas', 'S9222222A', 82222222, 'Thomas@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Sam', 'S9222222A', 82222222, 'sam@company.com');
 
-insert into Person(name, nric, ContactNo , email)
+insert into person(name, nric, ContactNo , email)
 values('Sammy', 'S9222222A', 82222222, 'Sammy@company.com');
 
 -- --------------------------------------------------------
@@ -161,12 +161,12 @@ insert into Course_Record(CourseID, TrainerScheduleID,LearnerID, ClassID, Course
 --
 -- need to edit 
 
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, FALSE, TRUE); 
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, FALSE, FALSE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, FALSE, TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,5, 13, FALSE, TRUE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,2, 4, FALSE, FALSE);
-insert into Enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,5, 13, TRUE, FALSE);
+insert into enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(11,2, 4, FALSE, TRUE); 
+insert into enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(12,2, 4, FALSE, FALSE);
+insert into enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(13,1, 1, FALSE, TRUE);
+insert into enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,5, 13, FALSE, TRUE);
+insert into enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(14,2, 4, FALSE, FALSE);
+insert into enrollment(LearnerID,CourseID, ClassID, Approved, passPrerequisite) values(15,5, 13, TRUE, FALSE);
 
 
 -- --------------------------------------------------------

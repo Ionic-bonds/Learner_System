@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS Course_Overview (
 -- Table structure for table CoursePrerequisite
 --
 
-CREATE TABLE IF NOT EXISTS Course_Prerequisite (
+CREATE TABLE IF NOT EXISTS course_prerequisite (
   MainCourseID integer NOT NULL,
   PrerequisiteCourseID integer NOT NULL,
   constraint CourseOverview_pk primary key(MainCourseID, PrerequisiteCourseID),
@@ -39,13 +39,13 @@ CREATE TABLE IF NOT EXISTS Course_Prerequisite (
 -- Table structure for table Person
 --
 
-CREATE TABLE IF NOT EXISTS Person (
+CREATE TABLE IF NOT EXISTS person (
   personID integer AUTO_INCREMENT NOT NULL,
   name varchar(100) DEFAULT NULL,
   NRIC varchar(15) DEFAULT NULL,
   ContactNo int(11) DEFAULT NULL,
   email varchar(100) DEFAULT NULL,
-  constraint Person_pk primary key (personID)
+  constraint person_pk primary key (personID)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 -- --------------------------------------------------------
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Trainer (
   personid integer NOT NULL,
   
   constraint Trainer_pk primary key (TrainerID),
-  constraint Trainer_fk foreign key (personid) references Person(personID)
+  constraint Trainer_fk foreign key (personid) references person(personID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS Learner (
   LearnerID integer AUTO_INCREMENT NOT NULL,
   personid integer,
   constraint Learner_pk primary key (LearnerID),
-  constraint Learner_fk foreign key (personid) references Person(personID)
+  constraint Learner_fk foreign key (personid) references person(personID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS Course_Record (
 -- --------------------------------------------------------
 -- Table structure for table Enrollment
 --
-CREATE TABLE IF NOT EXISTS Enrollment (
+CREATE TABLE IF NOT EXISTS enrollment (
   LearnerID integer,
   EnrollmentID integer AUTO_INCREMENT NOT NULL,
   CourseID integer NOT NULL,

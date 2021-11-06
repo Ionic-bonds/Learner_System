@@ -527,6 +527,27 @@ def enrollment():
         } 
     ), 404 
 
+
+@app.route('/enrolledAllPerson', methods=['GET']) 
+def getAllPerson(): 
+    enrollmentRecords = Person.query.all() 
+    if len(enrollmentRecords): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "Enrollment":  [courses.json() for courses in enrollmentRecords]  
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "Enrollment details not found." 
+        } 
+    ), 404 
+
+
 @app.route('/courserecord', methods=['GET']) 
 def courserecord(): 
     courseRecords = CourseRecord.query.all() 
