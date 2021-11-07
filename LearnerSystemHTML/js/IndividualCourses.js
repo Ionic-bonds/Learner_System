@@ -6,7 +6,7 @@ function onLoad(){
 }
 
 function retrieveIndividualCoursesByCourseID(CourseID){
-    var url = `http://localhost:5016/retrieveCoursesID/${CourseID}`;
+    var url = `http://${endpoint_url}:5016/retrieveCoursesID/${CourseID}`;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -30,7 +30,7 @@ function retrieveAllCourses(obj){
     
 }
 function retrieveAllSectionsByCourseID(CourseID){
-    var url = `http://localhost:5016/retrieveSectionsByID/${CourseID}`;
+    var url = `http://${endpoint_url}:5016/retrieveSectionsByID/${CourseID}`;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -137,7 +137,7 @@ function retrieveSectionsByID(obj, CourseID){
 function retrieveSectionMaterialsByCourseID(CourseID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/retrieveSectionMaterialsByCourseID/${CourseID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/retrieveSectionMaterialsByCourseID/${CourseID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -155,7 +155,7 @@ function retrieveSectionMaterialsByCourseID(CourseID) {
 function retrieveSectionMaterialsCourse(CourseID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/sectionmaterialsbyCourse/${CourseID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/sectionmaterialsbyCourse/${CourseID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done

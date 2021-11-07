@@ -1,3 +1,4 @@
+var endpoint_url = '3.144.166.168'
 window.onload=function(){
     console.log("in onload");
     displayEnrollment();
@@ -15,7 +16,7 @@ function displayEnrollment(name_arr = ""){
             retrieveAllEnrollment(this, name_arr);
         }
     }
-    request.open("GET", 'http://localhost:5016/enrollment', false);
+    request.open("GET", `http://${endpoint_url}:5016/enrollment`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -135,7 +136,7 @@ async function retrieveAllEnrollment(obj, name_arr){
 function getLearnerDetails(LearnerID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/learnerDetails/${LearnerID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/learnerDetails/${LearnerID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -160,7 +161,7 @@ function Approve(button) {
             //InsertCourseRecord();
         }
     }
-    request.open("GET", `http://localhost:5016/updateEnrollment/${enrollmentID}`, false);
+    request.open("GET", `http://${endpoint_url}:5016/updateEnrollment/${enrollmentID}`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -182,7 +183,7 @@ function RetrieveEnrollmentbyID(enrollmentID) {
             //InsertCourseRecord();
         }
     }
-    request.open("GET", `http://localhost:5016/getEnrollment/${enrollmentID}`, false);
+    request.open("GET", `http://${endpoint_url}:5016/getEnrollment/${enrollmentID}`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 
@@ -210,7 +211,7 @@ async function InsertCourseRecord(obj){
         "FinalQuizResult": "NA"
       };
         // Change serviceURL to your own
-        var serviceURL = "http://localhost:5016/insertCourseRecord";
+        var serviceURL = `http://${endpoint_url}:5016/insertCourseRecord`;
         
         try {
             const response =
@@ -234,7 +235,7 @@ async function InsertCourseRecord(obj){
 function getTrainerSchedule(CourseID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/trainerSchedule/${CourseID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/trainerSchedule/${CourseID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
