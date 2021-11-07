@@ -11,6 +11,40 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src="js/SectionQuiz.js"></script>
     </head>
+    <style>
+        .timer {
+          font-family: sans-serif;
+          display: inline-block;
+          padding: 24px 32px;
+          border-radius: 30px;
+          background: white;
+        }
+        
+        .timer__part {
+          font-size: 36px;
+          font-weight: bold;
+        }
+        
+        .timer__btn {
+          width: 50px;
+          height: 50px;
+          margin-left: 16px;
+          border-radius: 50%;
+          border: none;
+          color: white;
+          background: #8208e6;
+          cursor: pointer;
+        }
+        
+        .timer__btn--start {
+          background: #00b84c;
+        }
+        
+        .timer__btn--stop {
+          background: #ff0256;
+        }
+                    
+            </style>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
@@ -106,14 +140,24 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Section 2 Quiz</h1>
-
+                        <div id = "SectionQuiz">
+                            <!--JS-->
+                        </div>
+                        <br>
+                        <h1 class="mt-4 d-inline">Section 2 Quiz</h1>
+                        <div class="d-inline">
+                        <h2 class="timer d-inline" id="count-down-timer" style="background: #dddddd;margin: 40px;">
+                        </div>
                         <br>
                         
                         <div id = "QuizQns">
                             <!--JS-->
+                            <div id ="QuizQnsOption">
+                                
+                            </div>
                         </div>
-                           
+
+
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
