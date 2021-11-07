@@ -2,7 +2,7 @@
 -- Dummy Data for table course_overview
 --
 insert into course_overview(CourseName, CourseDescription, Prerequisite)
-values('Fundamentals of Xerox WorkCentre 7845', 'This is a course', FALSE);
+values('Fundamentals of Xerox WorkCentre 7845', 'Xerox now offers on-demand training for added convenience and flexibility at no additional cost to you. No matter where you are, 24/7 access to training will be available through Xerox. Learn how to properly use your office technology to get day-to-day work done more efficiently. Here are some examples of how training can help you:Keep documents safe by utilizing the secure print feature, Maximize machine uptime by properly clearing paper jams, Go digital with scan to email and more.', FALSE);
 insert into course_overview(CourseName, CourseDescription, Prerequisite)
 values('Programming for Xerox WorkCentre with CardAccess and Integration', 'This is a software practices course', TRUE);
 insert into course_overview(CourseName, CourseDescription, Prerequisite)
@@ -179,27 +179,42 @@ values(2, 1, 'In this section, you will learn how to maximize your machine uptim
 insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(3, 1, 'In this section, you will learn how to go digital with scan to email and more. You will learn the functionalities of wireless and digital printing.', 0);
 
+
+insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(1, 2, 'In this section, you will be learning what is secure access.', 100);
+insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(2, 2, 'In this section, you will learn the secure access components.', 60);
+insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(3, 2, 'In this section, you will learn about data reader support and user workflow.', 0);
+
+insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(1, 3, 'In this section, you will be learning what is software.', 100);
+insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(2, 3, 'In this section, you will learn the various components of software.', 60);
+insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+values(3, 3, 'In this section, you will learn about how software has changed over the years.', 0);
+
 -- --------------------------------------------------------
 -- Dummy Data for table section_materials
 --
 insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
 values(1, 1, 1,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(2, 1, 2,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+values(2, 1, 1,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
 insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
-values(3, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
--- insert into section_materials(SectionMaterialsID, CourseID, SectionID, section_materials)
--- values(4, 2, 4,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
--- insert into section_materials(SectionMaterialsID, CourseID, SectionID, section_materials)
--- values(5, 2, 5,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
--- insert into section_materials(SectionMaterialsID, CourseID, SectionID, section_materials)
--- values(6, 2, 6,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
--- insert into section_materials(SectionMaterialsID, CourseID, SectionID, section_materials)
--- values(7, 3, 7,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
--- insert into section_materials(SectionMaterialsID, CourseID, SectionID, section_materials)
--- values(8, 3, 8,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
--- insert into section_materials(SectionMaterialsID, CourseID, SectionID, section_materials)
--- values(9, 3, 9,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+values(3, 1, 1,'https://www.youtube.com/watch?v=Bt8lkPUmv7I');
+insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(4, 1, 2,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(5, 1, 2,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(6, 1, 2,'https://www.youtube.com/watch?v=Bt8lkPUmv7I');
+insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(7, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(8, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fundamentals+of+Xerox+WorkCentre+7845.pdf');
+insert into section_materials(SectionMaterialsID, CourseID, SectionID, SectionMaterials)
+values(9, 1, 3,'https://www.youtube.com/watch?v=Bt8lkPUmv7I');
 
 -- --------------------------------------------------------
 -- Dummy Data for table section_quiz
@@ -207,7 +222,10 @@ values(3, 1, 3,'https://spmprojectcoursematerials.s3.us-east-2.amazonaws.com/Fun
 INSERT INTO section_quiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
 values(1,1,1,1,'P',90,'12:30:00');
 INSERT INTO section_quiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
-values(2,1,1,1,'G',90,'12:30:00');
+values(2,2,4,1,'G',90,'12:30:00');
+INSERT INTO section_quiz(SectionQuizID,SectionID,SectionMaterialsID,CourseID,quizResult,duration,quizStartTime)
+values(2,3,7,1,'G',90,'12:30:00');
+
 
 -- --------------------------------------------------------
 -- Dummy Data for table quiz_qn

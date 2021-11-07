@@ -11,6 +11,7 @@
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
         <script src='js/Courses.js'></script>
+
     </head>
     <body class="sb-nav-fixed" onload='onLoad()'>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -97,21 +98,29 @@
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Homepage</h1>
-                        <ol class="breadcrumb mb-4">
+                        <br>
+                        <h4 style="color: #808080;">Your Courses</h4>
+                        <br>
+                        <!-- <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Your Courses</li>
-                        </ol>
+                        </ol> -->
                         <div class = "container-fluid"></div>
+                        <div id='insertion'></div>
                         <div class="row">
-                            <div id='insertion'></div>
+                            
                             
                         </div>
+                        
 
                         <br>
                         
                         <br>
 
-                        <h2>Course Available</h2>
-
+                        <h4 style="color: #808080;">Courses Available</h4>
+                        <br>
+                        <div class="row">
+                            <div id='retrieveCourses'></div>
+                        </div>
                         
                         <div class = "col-container">
                             <div class="row">

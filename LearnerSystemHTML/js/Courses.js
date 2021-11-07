@@ -3,9 +3,46 @@ function onLoad(){
     var id = sessionStorage.setItem('LearnerID', 1)
     var id = 1
     var serviceURL = `http://${endpoint_url}:5016/individualcourse/${id}`
-    displayEnrolledCourses(serviceURL)
+    displayAllcourses();
+    displayEnrolledCourses(serviceURL);
+    
 }
-
+function displayAllcourses(){
+    var url = `http://${endpoint_url}:5016/courseoverview`;
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("entered here line 16");
+            //will do for a loop here to retrieve each course
+            all(this);
+        }
+    }
+    //request.open("GET", (`${checkoutURL}/${LearnerID}`), false);
+    request.open("GET", (`${url}`), false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+function all(obj){
+    var response_json = JSON.parse(obj.responseText);
+    var incomplete_courses = response_json["data"]["courses"]
+    var tableHtml = `<div class='row'>`;
+    var counter = 0;
+    for(element of incomplete_courses){
+        counter+= 1;
+        console.log(element['CourseID'])
+        tableHtml += `
+        <div class="col-sm-4">
+        <div class="card m-2 p-2">
+        <div class="card-body">
+        <h5 class="card-title">${element['CourseName']}</h5>
+        <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${counter}.jpg" alt="Image" width="250" height="300"> <br>
+        </br>
+        <a class="card-text" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
+        </div></div></div>
+        </br>`;
+    }
+    document.getElementById('retrieveCourses').innerHTML = tableHtml;
+}
 function onLoadingDashboard(){
     var id = sessionStorage.setItem('LearnerID', 1)
     var LearnerID = sessionStorage.getItem(LearnerID)
@@ -17,6 +54,7 @@ function retrieveAllCoursesByValue(value){
     var LearnerID = sessionStorage.getItem('LearnerID')
     progressurl = `http://${endpoint_url}:5016/retrievecompletedcourse/`+ LearnerID;
     completedurl = `http://${endpoint_url}:5016/retrieveinprogress/`+ LearnerID;
+    incompleteurl = `http://${endpoint_url}:5016/retrieveincomplete` + LearnerID
     if(value == 2){
         retrieveProgress(progressurl);
         
@@ -27,7 +65,25 @@ function retrieveAllCoursesByValue(value){
     }
     else if(value == 1){
 //need to do incomplete
+        retrieveInComplete(incompleteUrl)
     }
+}
+function retrieveInComplete(url){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //will do for a loop here to retrieve each course
+            incompleteindividualprogress(this);
+        }
+    }
+    //request.open("GET", (`${checkoutURL}/${LearnerID}`), false);
+    request.open("GET", (`${url}`), false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+//need to do this here
+function incompleteindividualprogress(obj){
+
 }
 function retrieveProgress(url){
     var request = new XMLHttpRequest();
@@ -53,7 +109,7 @@ function individualprogress(obj){
     }
 }
 function retrieveCourseOverview(CourseID, CourseProgress){
-    var retrieveCourseNameUrl = `http://${endpoint_url}:5016/retrieveCourseNameByCourseID/` + CourseID
+    var retrieveCourseNameUrl = `http://${endpoint_url}:5016/retrieveinprogress/` + CourseID
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -99,13 +155,19 @@ function retrieveAllCourses(obj){
     console.log(enrolledList)
     sessionStorage.setItem('enrolledList', enrolledList)
     count = 0;
-    tableHtml += `<div>`
+    tableHtml += `<div class='row'>`
     for(element of enrolledList){
+        console.log(element['CourseID'])
         count+=1
-        tableHtml += `<div class="col-xl-3 col-md-6"><div class="card-body"> Course Name: ${element['CourseName']}<div id='retrieveAll${count}'></div> </div>
-        <div class="card-footer d-flex align-items-center justify-content-between">
-        <a class="small text-white stretched-link" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
-        <div class="small text-white"><i class="fas fa-angle-right"></i></div></div></div></div>`;
+        tableHtml += `
+        <div class="col-sm-4">
+        <div class="card m-2 p-2">
+        <div class="card-body">
+        <h5 class="card-title">${element['CourseName']}</h5>
+        <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${count}.jpg" alt="Image"> <br>
+        </br>
+        <a class="card-text" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
+        </div></div></div>`;
         //<div> Course Description: ${element['CourseDescription']} </div>
         //<div id='retrieveAll${count}'>
         //</div>`;
@@ -113,9 +175,14 @@ function retrieveAllCourses(obj){
         //the code line below is to for loop to retrieve courseName using another function because right now only have courseID   
         LearnerID = sessionStorage.getItem('LearnerID')
         sessionStorage.setItem('LearnerID', LearnerID)
-        displayIndividualCourses(LearnerID, tableHtml, count);
+        //displayIndividualCourses(LearnerID, tableHtml, count);
         console.log("display here")
     }
+    tableHtml += `</div>`;
+    document.getElementById('insertion').innerHTML = tableHtml; 
+    document.getElementById(`retrieveAll${count}`).innerHTML = newTableHtml;
+    var LearnerID = sessionStorage.getItem('LearnerID')
+    retrievePrequisiteCourses(LearnerID); 
 
 }
 function displayIndividualCourses(LearnerID, tableHtml, count){
@@ -132,20 +199,19 @@ function displayIndividualCourses(LearnerID, tableHtml, count){
     request.send();
 }
 
-function retrieveIndividualCourses(obj, tableHtml,count, LearnerID){
-    console.log(LearnerID)
-    var response_json = JSON.parse(obj.responseText);
-    var courseName = response_json["data"]["courses"];
-    var newTableHtml = ``;
+//function retrieveIndividualCourses(obj, tableHtml,count, LearnerID){
+  //  console.log(LearnerID)
+   // var response_json = JSON.parse(obj.responseText);
+   // var courseName = response_json["data"]["courses"];
+    //var newTableHtml = ``;
     //for(element of courseName){
         //newTableHtml += `<div> Progress: ${element['CourseProgress']}</div>`;
     //}
-    tableHtml += `</div>`;
-    document.getElementById('insertion').innerHTML = tableHtml; 
-    document.getElementById(`retrieveAll${count}`).innerHTML = newTableHtml
-    retrievePrequisiteCourses(LearnerID);  
+    //tableHtml += `</div>`;
     
-}
+     
+    
+//}
 //Retrieve individual available courses by LearnerID according to satisfied pre-requisite
 function retrievePrequisiteCourses(LearnerID){
     var retrieveCourseNameJURL = `http://${endpoint_url}:5016/prereq/`+ LearnerID;
@@ -206,13 +272,16 @@ function retrieveIndividualCourseNameByID(obj){
     var NewesttableHtml = ``;
 
     for(element of courseList){
-        NewesttableHtml += `<div class="col-xl-6 col-md-6 d-flex"><img src="./Courses_images/software engineering.jfif' class="card-img-top" alt="...">
-        <div class="card-body"><h5 class="card-title">${element['CourseName']} </h5>
-        <p class="card-text">${element['CourseDescription']}</p><div class="Medium text-white">
+        console.log(element['CourseID']);
+        NewesttableHtml += `<div class="col-xl-6 col-md-6 d-flex">
+        <img src="./Courses_images/software engineering.jfif' class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">${element['CourseName']}</h5>
+        <p class="card-text">${element['CourseDescription']}</p>
+        <div class="Medium text-white">
         <a class="small text-white stretched-link" href="course-overview.html?CourseID=${element['CourseID']}">View Details</a>
         <i class="fas fa-angle-right"></i></div></div>
         </div>
-    </div>
         `;
     }
     document.getElementById('prereq').innerHTML = NewesttableHtml

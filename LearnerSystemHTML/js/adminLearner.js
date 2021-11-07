@@ -46,10 +46,6 @@ async function retrieveAllEnrollment(obj){
         html += `
         <tr class="alert" role="alert" id="${CourseRecordID}">
         <td>
-        <label class="checkbox-wrap checkbox-primary">
-              <input type="checkbox" value="${CourseRecordID}">
-              <span class="checkmark"></span>
-            </label>
         </td>
         <td class=" align-items-center">
         <div class="pl-3 email" id="details">
@@ -111,10 +107,6 @@ function displayLearners(result){
         var email = details['data']['Person'][0]['Email'];
         html += `<tr class="alert" role="alert" id="${learnerID}">
         <td>
-        <label class="checkbox-wrap checkbox-primary">
-              <input type="checkbox" value="${learnerID}">
-              <span class="checkmark"></span>
-        </label>
         </td>
         <td>
         <div class="pl-3 email" id="details">
