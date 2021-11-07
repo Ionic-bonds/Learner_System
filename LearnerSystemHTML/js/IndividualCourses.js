@@ -1,3 +1,4 @@
+var endpoint_url = '3.144.166.168'
 function onLoad(){
     var CourseID = sessionStorage.getItem('CourseID')
     var CourseID = 1
