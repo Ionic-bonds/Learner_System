@@ -1,3 +1,4 @@
+var endpoint_url = '3.144.166.168'
 window.onload=function(){
     console.log("in onload");
     sessionStorage.setItem('CourseID',1);
@@ -13,7 +14,7 @@ function displayEnrollment(){
             retrieveAllEnrollment(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/courserecord/1', false);
+    request.open("GET", `http://${endpoint_url}:5016/courserecord/1`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -71,14 +72,14 @@ async function addLearners(learnerIDs){
         "ID": learnerIDs
     };
     console.log(data);
-    var serviceURL = "http://localhost:5016/getCourseRecords";
+    var serviceURL = `http://${endpoint_url}:5016/getCourseRecords`;
         
         try {
             const response =
                 await fetch(
                     serviceURL, { 
                         method: 'POST',
-                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://localhost:5016/getCourseRecords"},
+                        headers: {'Accept': 'application/json','Content-Type': 'application/json', "Access-Control-Allow-Origin":"http://3.144.166.168/:5016/getCourseRecords"},
                         body: JSON.stringify(data) 
                     }
                 );
@@ -136,7 +137,7 @@ async function addLearner(learnerID) {
         "FinalQuizResult": "NA"
       };
         // Change serviceURL to your own
-        var serviceURL = "http://localhost:5016/insertCourseRecord";
+        var serviceURL = `http://${endpoint_url}:5016/insertCourseRecord`;
         
         try {
             const response =
@@ -162,7 +163,7 @@ async function addLearner(learnerID) {
 function getTrainerSchedule(CourseID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/trainerSchedule/${CourseID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/trainerSchedule/${CourseID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -181,7 +182,7 @@ function getTrainerSchedule(CourseID) {
 function getPersonDetails(personID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/person/${personID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/person/${personID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -199,7 +200,7 @@ function getPersonDetails(personID) {
 function getCourseDetails(courseID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/getCourseName/${courseID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/getCourseName/${courseID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -217,7 +218,7 @@ function getCourseDetails(courseID) {
 function getLearnerDetails(LearnerID) {
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/learnerDetails/${LearnerID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/learnerDetails/${LearnerID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done

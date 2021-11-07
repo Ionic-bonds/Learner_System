@@ -1,3 +1,4 @@
+var endpoint_url = '3.144.166.168'
 window.onload=function(){
     //displayQuizQns()
     // displayUniqueQuizQns()
@@ -29,7 +30,7 @@ window.onload=function(){
 function getDuration(SectionQuizID){
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/sectionquiz/${SectionQuizID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/sectionquiz/${SectionQuizID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -132,7 +133,7 @@ function displayQuestions(SectionQuizID){
 function getNumOfQns(SectionQuizID){
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/quizquestionsNo/${SectionQuizID}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/quizquestionsNo/${SectionQuizID}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done
@@ -150,7 +151,7 @@ function getNumOfQns(SectionQuizID){
 function getQuestions(qnsNo){
 
     var xhr = new XMLHttpRequest();
-    xhr.open("GET",`http://localhost:5016/quizquestions/${qnsNo}`, false);
+    xhr.open("GET",`http://${endpoint_url}:5016/quizquestions/${qnsNo}`, false);
     xhr.send();
 
     // stop the engine while xhr isn't done

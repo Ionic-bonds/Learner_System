@@ -1,4 +1,4 @@
-Steps to running application:
+Steps to running Learner System application:
 1. Load application into putty 
  - Host Name: 3.144.166.168
  - SSH > Auth > Private key file: spm.ppk
@@ -14,7 +14,7 @@ Steps to running application:
 
 4. Access database via phpMyAdmin on your browser using the URL: http://localhost:8080/
  - Username: spm
- - Password: spmteam09
+ - Password: *********
  - To check if database is connected to the instance, access http://3.144.166.168:5016/person. If no error message shows up, it means connection is successful.
  
 5. To access application instance, enter in the URL: http://3.144.166.168/efs-mount-point/sampledir/

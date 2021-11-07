@@ -1,3 +1,4 @@
+var endpoint_url = '3.144.166.168'
 window.onload=function(){
     console.log("in onload");
     displayCourseDescription();
@@ -15,7 +16,7 @@ function displayCourseDescription(){
             retrieveCourseDescription(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/courseoverview/'+courseID, false);
+    request.open("GET", `http://${endpoint_url}:5016/courseoverview/`+courseID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -46,7 +47,7 @@ function getTrainerID(){
             retrieveTrainerID(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/trainerschedule/'+courseID, false);
+    request.open("GET", `http://${endpoint_url}:5016/trainerschedule/`+courseID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -65,7 +66,7 @@ function getPersonID(trainerID){
             retrievePersonID(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/trainer/'+trainerID, false);
+    request.open("GET", `http://${endpoint_url}:5016/trainer/`+trainerID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -84,7 +85,7 @@ function getPersonName(personID){
             retrievePersonName(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/person/'+personID, false);
+    request.open("GET", `http://${endpoint_url}:5016/person/`+personID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -115,7 +116,7 @@ function getPrerequisiteID(){
             document.getElementById("prerequisiteName").innerText = "Course Pre-requisite: None";
         }
     }
-    request.open("GET", 'http://localhost:5016/prerequisite/'+courseID, false);
+    request.open("GET", `http://${endpoint_url}:5016/prerequisite/`+courseID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -133,7 +134,7 @@ function getPrerequisiteName(prerequisiteID){
             retrievePrerequisiteName(this);
         }
     }
-    request.open("GET", 'http://localhost:5016/courseoverview/'+prerequisiteID, false);
+    request.open("GET", `http://${endpoint_url}:5016/courseoverview/`+prerequisiteID, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -158,7 +159,7 @@ function getEnrolment(){
             retrieveEnrolment(this, courseID);
         }
     }
-    request.open("GET", 'http://localhost:5016/enrollment', false);
+    request.open("GET", `http://${endpoint_url}:5016/enrollment`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -191,7 +192,7 @@ function getClassDescription(){
             retrieveClassDescription(this, classID);
         }
     }
-    request.open("GET", 'http://localhost:5016/class', false);
+    request.open("GET", `http://${endpoint_url}:5016/class`, false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -231,7 +232,7 @@ async function insertSelfEnrol(){
 
         console.log(data);
         // Change serviceURL to your own
-        var serviceURL = "http://localhost:5016/insertSelfEnrol";
+        var serviceURL = `http://${endpoint_url}:5016/insertSelfEnrol`;
         
         try {
             const response =
