@@ -180,18 +180,18 @@ insert into section_overview(SectionID, CourseID, SectionDescription, SectionPro
 values(3, 1, 'In this section, you will learn how to go digital with scan to email and more. You will learn the functionalities of wireless and digital printing.', 0);
 
 
-insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(1, 2, 'In this section, you will be learning what is secure access.', 100);
-insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(2, 2, 'In this section, you will learn the secure access components.', 60);
-insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(3, 2, 'In this section, you will learn about data reader support and user workflow.', 0);
 
-insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(1, 3, 'In this section, you will be learning what is software.', 100);
-insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(2, 3, 'In this section, you will learn the various components of software.', 60);
-insert into Section_Overview(SectionID, CourseID, SectionDescription, SectionProgress)
+insert into section_overview(SectionID, CourseID, SectionDescription, SectionProgress)
 values(3, 3, 'In this section, you will learn about how software has changed over the years.', 0);
 
 -- --------------------------------------------------------
