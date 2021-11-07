@@ -121,7 +121,7 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
         <input type='text' class='quizzes${i+1} form-control' id='quizzes${i+1}'></input> 
         </div>
 
-        <input type='radio' name='options${i+1}' id='MCQ' value='MCQ'><label for='MCQ'> MCQ </label>
+        <input type='radio' name='options${i+1}' id='MCQ${i+1}' value='MCQ' onclick='appendbelow(${i+1})><label for='MCQ'> MCQ </label>
         <input type='radio' name='options${i+1}' id='boolean' value='boolean'><label for='boolean'> True/False </label>
         <br><br>
         </div>
@@ -142,6 +142,14 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
     }
     tableHtml += `<button type="button" class="btn btn-primary" onClick='submitAllOptions(${SectionQuizID},${CourseID}, ${SectionID}, ${SectionMaterialsID}, ${retrievedValue})'> Submit to create all questions </button>`
     document.getElementById('display4').innerHTML = tableHtml;
+}
+function appendbelow(value){
+    var appendValues = document.getElementById(value);
+    var amendHtml = `<div class="col-sm-3 my-1">
+    Option <input type='text' class='results${value} form-control' id='results${value}'> </div>
+    <div class="col-sm-3 my-1">Option <input type='text' class='results${value} form-control' id='results${value}'> </div>
+    </div>`;
+    appendValues.insertAdjacentHTML('beforeend', amendHtml);
 }
 function AddOptions(value){
     console.log(value)
