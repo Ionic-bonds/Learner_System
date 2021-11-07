@@ -92,6 +92,7 @@ function retrieveSectionsByID(obj, CourseID){
 
         var materialsCount = 1;
         for (index of getAllIndexes(materialsData,sectionID)) {
+            materialsURL = materialsData[index]["SectionMaterials"];
             if(materialsCount == 1 || materialsCount ==2 ) {
                 var title = "Learning Materials";
             } else {
@@ -103,7 +104,7 @@ function retrieveSectionsByID(obj, CourseID){
                                 <div style="display: block">
                                 <p style="display: inline-block; float: left">${title}</p>
                                     <div class="sectionmaterials${sectionID}"  style="display: inline-block; float: right">
-                                        <a href="materialsData[${index}]["SectionMaterials"]">View</a>
+                                        <a href="${materialsURL}">View</a>
                                     </div>
                                 </div>
                                 </th>
