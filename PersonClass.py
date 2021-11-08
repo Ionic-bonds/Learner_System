@@ -84,26 +84,6 @@ class Learner(Person):
         return {'LearnerID': self.LearnerID, 'PersonID':self.PersonID}
 
 
-@app.route("/prereq/<int:LearnerID>") 
-def retrievePrereqCourses(LearnerID): 
-    #I have to join with Trainer table & class table => because of primary key => FK constraints
-    rows = db.session.query(CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID) & (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
-    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
-    if len(rows): 
-        return jsonify( 
-            { 
-                "code": 200, 
-                "data": { 
-                    "courses": [courses.json() for courses in rows] 
-                } 
-            } 
-        ) 
-    return jsonify( 
-        { 
-            "code": 404, 
-            "message": "No enrollment available for selected student." 
-        } 
-    ), 404
 class CourseOverview(db.Model):
     __tableName__ = 'CourseOverview'
     __mapper_args__ = {'polymorphic_identity': 'CourseOverview'}
@@ -704,26 +684,26 @@ def classes():
     ), 404 
  
  
-@app.route("/retrievecompletedcourse/<int:LearnerID>") 
-def retrievecompletedcourse(LearnerID): 
-    #I have to join with Trainer table & class table => because of primary key => FK constraints
-    rows = db.session.query(CourseRecord).filter((Learner.LearnerID == CourseRecord.LearnerID) & (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & ((CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded'))).all()
-    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
-    if len(rows): 
-        return jsonify( 
-            { 
-                "code": 200, 
-                "data": { 
-                    "courses": [courses.json() for courses in rows] 
-                } 
-            } 
-        ) 
-    return jsonify( 
-        { 
-            "code": 404, 
-            "message": "No enrollment available for selected student." 
-        } 
-    ), 404
+# @app.route("/retrievecompletedcourse/<int:LearnerID>") 
+# def retrievecompletedcourse(LearnerID): 
+#     #I have to join with Trainer table & class table => because of primary key => FK constraints
+#     rows = db.session.query(CourseRecord).filter((Learner.LearnerID == CourseRecord.LearnerID) & (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & ((CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded'))).all()
+#     #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+#     if len(rows): 
+#         return jsonify( 
+#             { 
+#                 "code": 200, 
+#                 "data": { 
+#                     "courses": [courses.json() for courses in rows] 
+#                 } 
+#             } 
+#         ) 
+#     return jsonify( 
+#         { 
+#             "code": 404, 
+#             "message": "No enrollment available for selected student." 
+#         } 
+#     ), 404
  
 @app.route("/retrieveCourseNameCompleted/<int:LearnerID>") 
 def retrieveCourseNameCompleted(LearnerID): 
