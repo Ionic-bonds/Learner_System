@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Learner's Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="js/Dashboard.js'></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+    <body onload='onLoad()'>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="button" class="btn btn-secondary" value='0' onclick=`${retrieveAllCoursesByValue(0)}`>Home</button>
+            <button type="button" class="btn btn-secondary" value='1' onclick=`${retrieveAllCoursesByValue(1)}`>Incomplete</button>
+            <button type="button" class="btn btn-secondary" value='2'onclick=`${retrieveAllCoursesByValue(2)}`>In-progress</button>
+            <button type="button" class="btn btn-secondary" value='3' onclick=`${retrieveAllCoursesByValue(3)}`>Completed</button>
+        </div>
+        <div id='insertion'></div>
+        <div id='status'></div>
+    </body>
+    
+</html>
