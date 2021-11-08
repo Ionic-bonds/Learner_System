@@ -5,8 +5,10 @@ from PersonClass import CourseRecord
 from PersonClass import ClassDescription
 
 class TestLearner(unittest.TestCase):
-    def test_learner(self):
-        
+    def test_class(self):
+        self.assertEqual()
+        learner_name = Learner()
+
     def test_trainer(self):
 
     def test_course(self):
