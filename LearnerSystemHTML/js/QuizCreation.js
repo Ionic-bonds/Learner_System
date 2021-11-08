@@ -112,6 +112,7 @@ function click(SectionQuizID,CourseID, SectionID, SectionMaterialsID){
     <button type="button" class="btn btn-primary" onClick='displayRemainingQuizes(${SectionQuizID},${CourseID}, ${SectionID}, ${SectionMaterialsID})'> Submit number of questions </button>`;
     document.getElementById('display3').innerHTML = NumberOfQuizzes
 }
+
 async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, SectionMaterialsID){
     var retrievedValue = document.getElementById('questions').value
     var tableHtml = ``;
@@ -121,9 +122,8 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
         <div class="col-sm-6 my-1">
         <input type='text' class='quizzes${i+1} form-control' id='quizzes${i+1}'></input> 
         </div>
-
-        <input type='radio' name='options${i+1}' id='MCQ${i+1}' value='MCQ' onclick='appendbelow(${i+1})><label for='MCQ'> MCQ </label>
-        <input type='radio' name='options${i+1}' id='boolean' value='boolean'><label for='boolean'> True/False </label>
+        <input type='radio' name='options${i+1}' id='MCQ${i+1}' value='MCQ' onclick='appendbelow(${i+1})'><label for='MCQ'> MCQ </label>
+        <input type='radio' name='options${i+1}' id='boolean' value='boolean' onclick="removeappend(${i+1})"><label for='boolean'> True/False </label>
         <br><br>
         </div>
         <div id='${i+1}' class='allresults${i+1}'>
@@ -135,7 +135,7 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
         </div>
         </div>
         <div>
-        <button  type="button" class="btn btn-primary" onClick='AddOptions(${i+1})'> Add Option </button>
+
         </div>
         </br>
         
@@ -146,11 +146,36 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
 }
 function appendbelow(value){
     var appendValues = document.getElementById(value);
-    var amendHtml = `<div class="col-sm-3 my-1">
-    Option <input type='text' class='results${value} form-control' id='results${value}'> </div>
-    <div class="col-sm-3 my-1">Option <input type='text' class='results${value} form-control' id='results${value}'> </div>
-    </div>`;
-    appendValues.insertAdjacentHTML('beforeend', amendHtml);
+    
+    console.log(lengthylength)
+    
+    var lengthylength = appendValues.getElementsByTagName('input').length
+    console.log(lengthylength)
+    if(lengthylength <= 2){
+        var amendHtml = `<div class="col-sm-3 my-1">
+        Option <input type='text' class='results${value} form-control' id='results${value}'> </div>
+        <div class="col-sm-3 my-1">Option <input type='text' class='results${value} form-control' id='results${value}'> </div>
+        </div>`;
+    
+        appendValues.insertAdjacentHTML('beforeend', amendHtml);
+    }
+    //var buttonsfortable = `<button  type="button" class="btn btn-primary" onClick='AddOptions(${value})'> Add Option </button>`;
+
+}
+function removeappend(value){
+    var appendValues = document.getElementById(value);
+    var lengthylength = appendValues.getElementsByTagName('input').length
+    console.log(lengthylength)
+    if(lengthylength > 2){
+        var amendHtml = `<div class="col-sm-3 my-1">
+        Option <input type='text' class='results${value} form-control' id='results${value}'>
+        </div>
+        <div class="col-sm-3 my-1">
+        Option <input type='text' class='results${value} form-control' id='results${value}'>`;
+        document.getElementById(value).innerHTML = amendHtml;
+    }
+    
+    
 }
 function AddOptions(value){
     console.log(value)
