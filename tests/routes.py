@@ -47,57 +47,54 @@ def configure_routes(app):
         except Exception as e:
             return e, 500
 
-    # @app.route('/learner/<int:LearnerID>') 
-    # def learner_by_id(LearnerID): 
-    #     learnerDetails = Learner.query.filter_by(LearnerID=LearnerID).all() 
-    #     if learnerDetails: 
-    #         return jsonify( 
-    #             { 
-    #                 "code": 200, 
-    #                 "data": { 
-    #                     "Learner":  [learners.json() for learners in learnerDetails]  
-    #                 } 
-    #             } 
-    #         ) 
-    #     return jsonify( 
-    #             return 'Ok', 200
-    #     ), 404 
+    @app.route('/learner/<int:LearnerID>') 
+    def learner_by_id(LearnerID): 
+        learnerDetails = Learner.query.filter_by(LearnerID=LearnerID).all() 
+        if learnerDetails: 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "Learner":  [learners.json() for learners in learnerDetails]  
+                    } 
+                } 
+            ) 
+        if (learnerDetails): 
+            return 'Ok', 200
+        else:
+            return 'Bad Request', 400 
 
-    # @app.route('/courserecord', methods=['GET']) 
-    # def courserecord(): 
-    #     courseRecords = CourseRecord.query.all() 
-    #     if len(courseRecords): 
-    #         return jsonify( 
-    #             { 
-    #                 "code": 200, 
-    #                 "data": { 
-    #                     "CourseRecords":  [courses.json() for courses in courseRecords]  
-    #                 } 
-    #             } 
-    #         ) 
-    #     return jsonify( 
-    #         { 
-    #             "code": 404, 
-    #             "message": "Enrollment details not found." 
-    #         } 
-    #     ), 4
+    @app.route("/learnerDetails/<int:LearnerID>") 
+    def retrievelearnerDetails(LearnerID): 
+        data = db.session.query(Person, Learner)\
+        .filter(
+        (Learner.LearnerID == LearnerID)
+        & (Learner.PersonID==Person.PersonID)
+        & (Person.PersonID==Learner.PersonID)
+        ).first()
+
+        if (data): 
+            return 'Ok', 200
+        else:
+            return 'Bad Request', 400
 
 
-    # @app.route("/sectionquiz") 
-    # def retrieveSectionQuiz(): 
-    # SectionQuizList = SectionQuiz.query.all()
-    # if len(SectionQuizList): 
-    #     return jsonify( 
-    #         { 
-    #             "code": 200, 
-    #             "data": { 
-    #                 "sectionquiz": [sectionquiz.json() for sectionquiz in SectionQuizList] 
-    #             } 
-    #         } 
-    #     ) 
-    # return jsonify( 
-    #     { 
-    #         "code": 404, 
-    #         "message": "No sectionquiz available." 
-    #     } 
-    # ), 404 
+    @app.route("/sectionquiz") 
+    def retrieveSectionQuiz(): 
+        SectionQuizList = SectionQuiz.query.all()
+        if len(SectionQuizList): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "sectionquiz": [sectionquiz.json() for sectionquiz in SectionQuizList] 
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No sectionquiz available." 
+            } 
+        ), 404 
+

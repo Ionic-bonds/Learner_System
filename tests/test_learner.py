@@ -1,29 +1,16 @@
-# JiaQi's TDD
+# Kingson's TDD
 
-import os
-from os import path
-import PersonClass
-#PersonClass.path.append('/.../spm-project/')
-from PersonClass import Enrollment
+import unittest
 from PersonClass import *
 from routes import *
 
 from flask import Flask
 import json
 
-
-def test_new_enrolment():
-    """
-    GIVEN a Enrollment model
-    WHEN a new Enrollment is created
-    THEN check the LearnerID, CourseID,ClassID,Approved and passPrerequisite fields are defined correctly
-    """
-    enroll = Enrollment(9, 8, 5, 13, False, False)
-    assert enroll.LearnerID == 9
-    assert enroll.CourseID == 5
-    assert enroll.ClassID == 13
-    assert enroll.Approved == False
-    assert enroll.passPrerequisite == False
+def test_new_learner(self):
+    learner = Learner(9, 5)
+    assert learner.LearnerID == 9
+    assert learner.PersonID == 5 
 
 def test_base_route():
     app = Flask(__name__)
@@ -35,7 +22,7 @@ def test_base_route():
     assert response.get_data() == b'Hello, World!'
     assert response.status_code == 200
 
-def test_get_enrolment():
+def test_get_learner(self):
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://spm:spmteam09@spm-database-1.cujkm1zfxmqs.us-east-2.rds.amazonaws.com:3306/LearnerSystem'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -47,11 +34,11 @@ def test_get_enrolment():
     CORS(app)
     configure_routes(app)
     client = app.test_client()
-    url = 'http://3.144.166.168:5016/enrollment'
+    url = 'http://3.144.166.168:5016/learner/1'
     response = client.get(url)
     assert response.status_code == 200
 
-def test_get_enrolment_byID():
+def test_learner_details(self):
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://spm:spmteam09@spm-database-1.cujkm1zfxmqs.us-east-2.rds.amazonaws.com:3306/LearnerSystem'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -63,14 +50,16 @@ def test_get_enrolment_byID():
     CORS(app)
     configure_routes(app)
     client = app.test_client()
-    url = 'http://3.144.166.168:5016/getEnrollment/1'
+    url = 'http://3.144.166.168:5016/learnerDetails/1'
 
     mock_request_data = {
-        'LearnerID': 1,
-        'CourseID': 1,
-        'Approved': False,
-        'passPrerequisite': False
+        'ContactNo': 89999999,
+        'Email': "jiaqilovesponiesandstrawberries@company.com",
+        'NRIC': "S9999999A",
+        'PersonID': 3,
+        'name': "JaiQee"
     }
 
     response = client.get(url, data= mock_request_data)
     assert response.status_code == 200
+        
