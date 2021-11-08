@@ -1,3 +1,7 @@
+import os
+from os import path
+import PersonClass
+#PersonClass.path.append('/.../spm-project/')
 from PersonClass import Enrollment
 from PersonClass import *
 from routes import *

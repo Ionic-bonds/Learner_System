@@ -1,3 +1,7 @@
+import os
+from os import path
+import PersonClass
+#PersonClass.path.append('/.../spm-project/')
 from PersonClass import *
 
 def configure_routes(app):
@@ -58,3 +62,42 @@ def configure_routes(app):
     #     return jsonify( 
     #             return 'Ok', 200
     #     ), 404 
+
+    # @app.route('/courserecord', methods=['GET']) 
+    # def courserecord(): 
+    #     courseRecords = CourseRecord.query.all() 
+    #     if len(courseRecords): 
+    #         return jsonify( 
+    #             { 
+    #                 "code": 200, 
+    #                 "data": { 
+    #                     "CourseRecords":  [courses.json() for courses in courseRecords]  
+    #                 } 
+    #             } 
+    #         ) 
+    #     return jsonify( 
+    #         { 
+    #             "code": 404, 
+    #             "message": "Enrollment details not found." 
+    #         } 
+    #     ), 4
+
+
+    # @app.route("/sectionquiz") 
+    # def retrieveSectionQuiz(): 
+    # SectionQuizList = SectionQuiz.query.all()
+    # if len(SectionQuizList): 
+    #     return jsonify( 
+    #         { 
+    #             "code": 200, 
+    #             "data": { 
+    #                 "sectionquiz": [sectionquiz.json() for sectionquiz in SectionQuizList] 
+    #             } 
+    #         } 
+    #     ) 
+    # return jsonify( 
+    #     { 
+    #         "code": 404, 
+    #         "message": "No sectionquiz available." 
+    #     } 
+    # ), 404 
