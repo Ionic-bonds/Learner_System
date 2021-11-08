@@ -1392,6 +1392,39 @@ def retrievePrereqCourses(LearnerID):
             "message": "No enrollment available for selected student." 
         } 
     ), 404
+
+@app.route("/createquizzes", methods=['GET','POST']) 
+def Create_Quizzes(): 
+ 
+    QuizQnID = request.get_json()["QuizQnID"] 
+    CourseID = request.get_json()["CourseID"] 
+    SectionMaterialsID = request.get_json()["SectionMaterialsID"] 
+    SectionQuizID = request.get_json()["SectionQuizID"] 
+    SectionID = request.get_json()["SectionID"] 
+    QuizQuestion = request.get_json()["QuizQuestion"] 
+    QuizOptionNo = request.get_json()["QuizOptionNo"] 
+    QuizOption = request.get_json()['QuizOption'] 
+    Courserecord = QuizQn(QuizQnID=QuizQnID, CourseID=CourseID,SectionMaterialsID=SectionMaterialsID,SectionQuizID=SectionQuizID,SectionID=SectionID,QuizQuestion=QuizQuestion, QuizOptionNo = QuizOptionNo, QuizOption = QuizOption) 
+  
+    try: 
+        db.session.add(Courserecord) 
+        db.session.commit() 
+    except Exception as e: 
+        return jsonify( 
+            { 
+                "code": 500, 
+                "message": "An error occurred while creating the review. " + str(e) 
+            } 
+        ), 500 
+ 
+    print(json.dumps(Courserecord.json(), default=str)) # convert a JSON object to a string and print 
+    print() 
+    return jsonify( 
+        { 
+            "code": 201, 
+            "data": Courserecord.json() 
+        } 
+    ), 201
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
