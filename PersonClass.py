@@ -1350,6 +1350,48 @@ def sectionmaterialsByCourse(CourseID):
         } 
     ), 404   
 
+@app.route("/retrievecompletedcourse/<int:LearnerID>") 
+def retrievecompletedcourse(LearnerID): 
+    #I have to join with Trainer table & class table => because of primary key => FK constraints
+    rows = db.session.query(CourseOverview).filter((Learner.LearnerID == CourseRecord.LearnerID) & (CourseRecord.LearnerID == LearnerID) & (CourseOverview.CourseID == CourseRecord.CourseID) & (CourseRecord.CourseProgress == 100) & ((CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded'))).all()
+    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+    if len(rows): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in rows] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404
+ 
+@app.route("/retrievecompletingcompleted/<int:LearnerID>") 
+def retrievecompletingcompleted(LearnerID): 
+    #I have to join with Trainer table & class table => because of primary key => FK constraints
+    rows = db.session.query(CourseOverview).filter((Learner.LearnerID == CourseRecord.LearnerID) & (CourseRecord.LearnerID == LearnerID) & (CourseOverview.CourseID == CourseRecord.CourseID) & (CourseRecord.CourseProgress  < 100)).all()
+    #db.session.query(CoursePrerequisite).join(CourseRecord, CoursePrerequisite).filter((CoursePrerequisite.PrerequisiteCourseID == CourseRecord.CourseID)& (CourseRecord.LearnerID == LearnerID) & (CourseRecord.CourseProgress == 100) & (CourseRecord.FinalQuizResult == 'Pass') |(CourseRecord.FinalQuizResult == 'Ungraded')).all()
+    if len(rows): 
+        return jsonify( 
+            { 
+                "code": 200, 
+                "data": { 
+                    "courses": [courses.json() for courses in rows] 
+                } 
+            } 
+        ) 
+    return jsonify( 
+        { 
+            "code": 404, 
+            "message": "No enrollment available for selected student." 
+        } 
+    ), 404
+
    
 if __name__ == '__main__': 
     print("This is flask for " + os.path.basename(__file__) + ": retrieve Trainer Details ...") 
