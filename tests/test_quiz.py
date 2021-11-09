@@ -12,7 +12,7 @@ from flask import Flask
 import json
 
 
-def test_quiz():
+def test_new_quiz():
     """
     GIVEN a Quiz model
     WHEN a new Quiz is created
