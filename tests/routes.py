@@ -207,3 +207,22 @@ def configure_routes(app):
             return 'Ok', 200
         else:
             return 'Bad Request', 400 
+
+    @app.route("/trainerschedule/<int:CourseID>") 
+    def retrieveTrainerSchedule(CourseID): 
+        schedule = TrainerSchedule.query.filter_by(CourseID=CourseID).all() 
+        if len(schedule): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "trainerschedules": [x.json() for x in schedule] 
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No schedule available for selected course." 
+            } 
+        ), 404
