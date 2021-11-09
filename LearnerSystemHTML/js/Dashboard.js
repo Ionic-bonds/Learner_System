@@ -1,19 +1,19 @@
-
+// var endpoint_url = '3.144.166.168'
+var endpoint_url = 'localhost';
 
 function onLoad(){
     var id = sessionStorage.setItem('LearnerID', 1)
     var id = 1
-    var serviceURL = `http://localhost:5016/individualcourse/${id}`
+    var serviceURL = `http://${endpoint_url}:5016/individualcourse/${id}`
     //displayAllcourses();
     displayEnrolledCourses(serviceURL);
     var value = onLoadingDashboard()
     //retrieveAllCoursesByValue(value)
-    
 
     
 }
 function displayAllcourses(){
-    var url = `http://localhost:5016/courseoverview`;
+    var url = `http://${endpoint_url}:5016/courseoverview`;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -57,12 +57,12 @@ function onLoadingDashboard(){
 }
 function retrieveAllCoursesByValue(value){
     var LearnerID = sessionStorage.getItem('LearnerID')
-    completedurl = `http://localhost:5016/retrievecompletedcourse/`+ LearnerID;
-    progressurl = `http://localhost:5016/retrievecompletingcompleted/`+ LearnerID;
-    incompleteurl = `http://localhost:5016/retrieveincomplete` + LearnerID
+    completedurl = `http://${endpoint_url}:5016/retrievecompletedcourse/`+ LearnerID;
+    progressurl = `http://${endpoint_url}:5016/retrievecompletingcompleted/`+ LearnerID;
+    incompleteurl = `http://${endpoint_url}:5016/retrieveincomplete` + LearnerID
     if(value == 0){
         var id = 1
-        var serviceURL = `http://localhost:5016/individualcourse/${id}`
+        var serviceURL = `http://${endpoint_url}:5016/individualcourse/${id}`
     //displayAllcourses();
         displayEnrolledCourses(serviceURL);
     }
@@ -225,7 +225,7 @@ function individualprogress(obj){
     document.getElementById('status').innerHTML = tableHtml;
 }
 function retrieveCourseOverview(CourseID, CourseProgress){
-    var retrieveCourseNameUrl = `http://localhost:5016/retrieveinprogress/` + CourseID
+    var retrieveCourseNameUrl = `http://${endpoint_url}:5016/retrieveinprogress/` + CourseID
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -302,7 +302,7 @@ function retrieveAllCourses(obj){
 
 }
 function displayIndividualCourses(LearnerID, tableHtml, count){
-    var retrieveCourseNameJURL = `http://localhost:5016/retrieveCourseProgress/`+ LearnerID;
+    var retrieveCourseNameJURL = `http://${endpoint_url}:5016/retrieveCourseProgress/`+ LearnerID;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -330,7 +330,7 @@ function displayIndividualCourses(LearnerID, tableHtml, count){
 //}
 //Retrieve individual available courses by LearnerID according to satisfied pre-requisite
 function retrievePrequisiteCourses(LearnerID){
-    var retrieveCourseNameJURL = `http://localhost:5016/prereq/`+ LearnerID;
+    var retrieveCourseNameJURL = `http://${endpoint_url}:5016/prereq/`+ LearnerID;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -355,7 +355,7 @@ function returnArray(obj){
     }
     
 function retrieveIndividualCourses(CourseID){
-    var retrieveCourseNameJURL = `http://localhost:5016/retrieveCourseNameByCourseID/`+ CourseID;
+    var retrieveCourseNameJURL = `http://${endpoint_url}:5016/retrieveCourseNameByCourseID/`+ CourseID;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -369,7 +369,7 @@ function retrieveIndividualCourses(CourseID){
 }
 
 function retrieveIndividualCourses(CourseID){
-    var retrieveCourseNameJURL = `http://localhost:5016/retrieveCourseNameByCourseID/`+ CourseID;
+    var retrieveCourseNameJURL = `http://${endpoint_url}:5016/retrieveCourseNameByCourseID/`+ CourseID;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
