@@ -58,7 +58,7 @@ function displayboolean(obj){
         </br>`;
     }
     console.log(tableHtml)
-    document.getElementById('prerequisite').innerHTML = tableHtml;
+    document.getElementById('prereq').innerHTML = tableHtml;
     displayPreReq(counter, tableHtml)
     //</div></div></div>
 }
