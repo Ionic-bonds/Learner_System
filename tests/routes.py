@@ -192,3 +192,18 @@ def configure_routes(app):
             } 
         ), 404 
     
+    @app.route('/courseRecord', methods=['GET']) 
+    def courseRecord(): 
+        courseRecords = CourseRecord.query.all() 
+        if (courseRecords): 
+            return 'Ok', 200
+        else:
+            return 'Bad Request', 400
+
+    @app.route('/getCourseRecord/<int:CourseRecordID>', methods=['GET']) 
+    def getCourseRecord(CourseRecordID): 
+        courseRecord = CourseRecord.query.filter_by(CourseRecordID=CourseRecordID).all() 
+        if (courseRecord): 
+            return 'Ok', 200
+        else:
+            return 'Bad Request', 400 
