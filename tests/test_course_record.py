@@ -37,7 +37,7 @@ def test_get_course_record():
     response = client.get(url)
     assert response.status_code == 200
 
-def test_get_course_record_byID():
+def test_get_course_record_by_courseID():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://spm:spmteam09@spm-database-1.cujkm1zfxmqs.us-east-2.rds.amazonaws.com:3306/LearnerSystem'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -49,14 +49,51 @@ def test_get_course_record_byID():
     CORS(app)
     configure_routes(app)
     client = app.test_client()
-    url = 'http://3.144.166.168:5016/getCourseRecord/1'
+    url = 'http://3.144.166.168:5016/courserecord/1'
 
-    mock_request_data = {
-        'CourseRecordID': 1,
-        'CourseID': 1,
-        'TrainerScheduleID': 1,
-        'LearnerID': 1,
-        'ClassID': 1,
-        'CourseProgress': 80,
-        'FinalQuizResult': "NA"
-    }
+    mock_request_data = { 
+                    "code": 200, 
+                    "data": { 
+                        "CourseRecords":  
+                        [{
+                "ClassID": 1,
+                "CourseID": 1,
+                "CourseProgress": 100.0,
+                "CourseRecordID": 11,
+                "FinalQuizResult": "87.9",
+                "LearnerID": 11,
+                "TrainerScheduleID": 1
+            },
+            {
+                "ClassID": 1,
+                "CourseID": 1,
+                "CourseProgress": 0.0,
+                "CourseRecordID": 15,
+                "FinalQuizResult": "NA",
+                "LearnerID": 12,
+                "TrainerScheduleID": 1
+            },
+            {
+                "ClassID": 1,
+                "CourseID": 1,
+                "CourseProgress": 0.0,
+                "CourseRecordID": 16,
+                "FinalQuizResult": "NA",
+                "LearnerID": 1,
+                "TrainerScheduleID": 1
+            },
+            {
+                "ClassID": 1,
+                "CourseID": 1,
+                "CourseProgress": 0.0,
+                "CourseRecordID": 17,
+                "FinalQuizResult": "NA",
+                "LearnerID": 2,
+                "TrainerScheduleID": 1
+            }]
+                    } 
+                } 
+            
+
+    response = client.get(url, data= mock_request_data)
+    assert response.status_code == 200

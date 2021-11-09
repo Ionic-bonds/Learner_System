@@ -200,13 +200,24 @@ def configure_routes(app):
         else:
             return 'Bad Request', 400
 
-    @app.route('/getCourseRecord/<int:CourseRecordID>', methods=['GET']) 
-    def getCourseRecord(CourseRecordID): 
-        courseRecord = CourseRecord.query.filter_by(CourseRecordID=CourseRecordID).all() 
-        if (courseRecord): 
-            return 'Ok', 200
-        else:
-            return 'Bad Request', 400 
+    @app.route('/courserecord/<int:CourseID>', methods=['GET']) 
+    def getCourserecordbyID(CourseID): 
+        courseRecords = CourseRecord.query.filter_by(CourseID=CourseID).all() 
+        if len(courseRecords): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "CourseRecords":  [courses.json() for courses in courseRecords]  
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No course records with given ID" 
+            } 
+        ), 4
 
     @app.route("/trainerschedule/<int:CourseID>") 
     def retrieveTrainerSchedule(CourseID): 
