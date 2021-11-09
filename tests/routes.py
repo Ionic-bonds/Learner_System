@@ -79,7 +79,8 @@ def configure_routes(app):
             return 'Bad Request', 400
 
 
-    @app.route("/sectionquiz/<string:SectionQuizID>") 
+
+    @app.route("/sectionquiz") 
     def retrieveSectionQuiz(): 
         SectionQuizList = SectionQuiz.query.all()
         if len(SectionQuizList): 
@@ -98,78 +99,96 @@ def configure_routes(app):
             } 
         ), 404 
 
-
-    # @app.route("/sectionquiz") 
-    # def retrieveSectionQuiz(): 
-    #     SectionQuizList = SectionQuiz.query.all()
-    #     if len(SectionQuizList): 
-    #         return jsonify( 
-    #             { 
-    #                 "code": 200, 
-    #                 "data": { 
-    #                     "sectionquiz": [sectionquiz.json() for sectionquiz in SectionQuizList] 
-    #                 } 
-    #             } 
-    #         ) 
-    #     return jsonify( 
-    #         { 
-    #             "code": 404, 
-    #             "message": "No sectionquiz available." 
-    #         } 
-    #     ), 404 
-
+    @app.route("/quizquestions") 
+    def retrieveQuizQn(): 
+        QuizQnList = QuizQn.query.all()
+        if len(QuizQnList): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "quizquestions": [quizquestions.json() for quizquestions in QuizQnList] 
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No sectionquiz available." 
+            } 
+        ), 404 
     
-    # @app.route("/quizquestions/<int:QuizQnID>")
-    # def find_by_QuizQuestions(QuizQnID):
-    #     quizquestions = QuizQn.query.filter_by(QuizQnID=QuizQnID).all()
-    #     if quizquestions:
-    #         return jsonify(
-    #             {
-    #                 "code": 200,
-    #                 "data": [quizquestions.json() for quizquestions in quizquestions] 
-    #             }
-    #         )
-    #     return jsonify(
-    #         {
-    #             "code": 404,
-    #             "message": "quizquestions not found."
-    #         }
-    #     ), 404
+    @app.route("/quizquestions/<int:QuizQnID>")
+    def find_by_QuizQuestions(QuizQnID):
+        quizquestions = QuizQn.query.filter_by(QuizQnID=QuizQnID).all()
+        if quizquestions:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": [quizquestions.json() for quizquestions in quizquestions] 
+                }
+            )
+        return jsonify(
+            {
+                "code": 404,
+                "message": "quizquestions not found."
+            }
+        ), 404
 
-    # @app.route("/courseoverview") 
-    # def retrieveCourseName(): 
-    #     CourseList = CourseOverview.query.all() 
-    #     if len(CourseList): 
-    #         return jsonify( 
-    #             { 
-    #                 "code": 200, 
-    #                 "data": { 
-    #                     "courses": [courses.json() for courses in CourseList] 
-    #                 } 
-    #             } 
-    #         ) 
-    #     return jsonify( 
-    #         { 
-    #             "code": 404, 
-    #             "message": "No enrollment available for selected student." 
-    #         } 
-    #     ), 404 
+    @app.route("/courseoverview") 
+    def retrieveCourseName(): 
+        CourseList = CourseOverview.query.all() 
+        if len(CourseList): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "courses": [courses.json() for courses in CourseList] 
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No enrollment available for selected student." 
+            } 
+        ), 404 
 
-    # @app.route("/courseoverview/<int:CourseID>") 
-    # def retrieveCourseOverview(CourseID): 
-    #     CourseList = CourseOverview.query.filter_by(CourseID=CourseID).all() 
-    #     if len(CourseList): 
-    #         return jsonify( 
-    #             { 
-    #                 "code": 200, 
-    #                 "data": { 
-    #                     "courses": [courses.json() for courses in CourseList] 
-    #                 } 
-    #             } 
-    #         ) 
-    #     return jsonify( 
-    #         { 
-    #             "code": 404, 
-    #             "message": "No enrollment available for selected student." 
-    #         } 
-    #     ), 404
+    @app.route("/courseoverview/<int:CourseID>") 
+    def retrieveCourseOverview(CourseID): 
+        CourseList = CourseOverview.query.filter_by(CourseID=CourseID).all() 
+        if len(CourseList): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "courses": [courses.json() for courses in CourseList] 
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No enrollment available for selected student." 
+            } 
+        ), 404
+
+    @app.route("/sectionmaterials") 
+    def retrieveSectionMaterials(): 
+        SectionList = SectionMaterials.query.all() 
+        if len(SectionList): 
+            return jsonify( 
+                { 
+                    "code": 200, 
+                    "data": { 
+                        "courses": [sections.json() for sections in SectionList] 
+                    } 
+                } 
+            ) 
+        return jsonify( 
+            { 
+                "code": 404, 
+                "message": "No section materials available for selected student." 
+            } 
+        ), 404 
+    
