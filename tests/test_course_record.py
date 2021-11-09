@@ -1,4 +1,4 @@
-#  Elvis' TDD
+# Elvis' TDD
 from routes import *
 
 def test_new_course_record():
@@ -33,7 +33,7 @@ def test_get_course_record():
     CORS(app)
     configure_routes(app)
     client = app.test_client()
-    url = 'http://3.144.166.168:5016/courseRecord'
+    url = 'http://3.144.166.168:5016/courserecord'
     response = client.get(url)
     assert response.status_code == 200
 
@@ -50,50 +50,5 @@ def test_get_course_record_by_courseID():
     configure_routes(app)
     client = app.test_client()
     url = 'http://3.144.166.168:5016/courserecord/1'
-
-    mock_request_data = { 
-                    "code": 200, 
-                    "data": { 
-                        "CourseRecords":  
-                        [{
-                "ClassID": 1,
-                "CourseID": 1,
-                "CourseProgress": 100.0,
-                "CourseRecordID": 11,
-                "FinalQuizResult": "87.9",
-                "LearnerID": 11,
-                "TrainerScheduleID": 1
-            },
-            {
-                "ClassID": 1,
-                "CourseID": 1,
-                "CourseProgress": 0.0,
-                "CourseRecordID": 15,
-                "FinalQuizResult": "NA",
-                "LearnerID": 12,
-                "TrainerScheduleID": 1
-            },
-            {
-                "ClassID": 1,
-                "CourseID": 1,
-                "CourseProgress": 0.0,
-                "CourseRecordID": 16,
-                "FinalQuizResult": "NA",
-                "LearnerID": 1,
-                "TrainerScheduleID": 1
-            },
-            {
-                "ClassID": 1,
-                "CourseID": 1,
-                "CourseProgress": 0.0,
-                "CourseRecordID": 17,
-                "FinalQuizResult": "NA",
-                "LearnerID": 2,
-                "TrainerScheduleID": 1
-            }]
-                    } 
-                } 
-            
-
-    response = client.get(url, data= mock_request_data)
+    response = client.get(url)
     assert response.status_code == 200
