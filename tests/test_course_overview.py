@@ -10,8 +10,8 @@ from flask import Flask
 import json
 
 def test_new_section_overview():
-    Course_Overview = CourseOverview(1,'Practical Practices W76', 'Practice makes perfect. Practice practicing.', True)
-    assert Course_Overview.CourseID == 1
+    Course_Overview = CourseOverview(5,'Practical Practices W76', 'Practice makes perfect. Practice practicing.', True)
+    assert Course_Overview.CourseID == 5
     assert Course_Overview.CourseName == 'Practical Practices W76'
     assert Course_Overview.CourseDescription == 'Practice makes perfect. Practice practicing.'
     assert Course_Overview.Prerequisite == True
