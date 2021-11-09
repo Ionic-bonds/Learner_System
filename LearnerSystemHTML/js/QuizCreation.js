@@ -1,4 +1,5 @@
 var endpoint_url = '3.144.166.168'
+//var endpoint_url = 'localhost';
 function onLoads(){
     var id = sessionStorage.setItem('CourseID', 1)
     var id = 1
@@ -75,8 +76,8 @@ async function CreateQuiz(){
 
     var CourseID = 1;
     var SectionID = 3;
-    var SectionMaterialsID = 3;
-    var SectionQuizID = 1;
+    var SectionMaterialsID = 7;
+    var SectionQuizID = 2;
     document.getElementById('display2').innerText = tableHtml2;
     var data = {"SectionQuizID": 1, "SectionID": 3 , "CourseID":1 ,"SectionMaterialsID":3 ,"quizResult":"P" ,"duration":120 ,"quizStartTime":"12:30:50"}
     var serviceURL = `http://${endpoint_url}:5016/review/insert`;
@@ -123,7 +124,7 @@ async function displayRemainingQuizes(SectionQuizID,CourseID, SectionID, Section
         <input type='text' class='quizzes${i+1} form-control' id='quizzes${i+1}'></input> 
         </div>
         <input type='radio' name='options${i+1}' id='MCQ${i+1}' value='MCQ' onclick='appendbelow(${i+1})'><label for='MCQ'> MCQ </label>
-        <input type='radio' name='options${i+1}' id='boolean' value='boolean' onclick="removeappend(${i+1})"><label for='boolean'> True/False </label>
+        <input type='radio' name='options${i+1}' id='boolean' value='boolean' onclick="removeappend(${i+1})"  checked="checked" ><label for='boolean'> True/False </label>
         <br><br>
         </div>
         <div id='${i+1}' class='allresults${i+1}'>
@@ -231,11 +232,13 @@ async function submitAllOptions(SectionQuizID,CourseID, SectionID, SectionMateri
                         );
                         const result = await response.json();
                         console.log(result);
+                        confrimMessage(result);
                         
                 } catch (error) {
                     // Errors when calling the service; such as network error, 
                     // service offline, etc
                     console.log("Cannot connect!");
+                    confrimMessage('false');
                 }
             
         }
@@ -247,3 +250,17 @@ async function submitAllOptions(SectionQuizID,CourseID, SectionID, SectionMateri
     }
 }
 
+function confrimMessage(success) {
+    if ( (success == 'false') || (success['code'] != 201) ){
+        document.getElementById("error-modal-body").innerHTML = "Cannot Connect. Try again later.";
+        // document.getElementById("closeBtn").innerHTML =`<button type="button btn" class="close" data-dismiss="modal" aria-label="Close">
+        // <span aria-hidden="true">&times;</span>`;
+    } else {
+        document.getElementById("error-modal-body").innerHTML = "Your quiz has been created.";
+        document.getElementById("errorsFooter").innerHTML = `<button class="btn btnSubmit" data-dismiss="modal" id="redirectBtn" onclick="location.href='index.html';">Done</button> `;
+        document.getElementById("closeBtn").innerHTML ="";
+        
+    }
+    $('#errorModal').modal('show');
+    
+}
