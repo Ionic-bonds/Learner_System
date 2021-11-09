@@ -1,7 +1,6 @@
 import os
 from os import path
 import PersonClass
-#PersonClass.path.append('/.../spm-project/')
 from PersonClass import *
 
 def configure_routes(app):
