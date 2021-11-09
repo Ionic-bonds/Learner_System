@@ -3,9 +3,11 @@ function onLoad(){
     var id = sessionStorage.setItem('LearnerID', 1)
     var id = 1
     var serviceURL = `http://${endpoint_url}:5016/individualcourse/${id}`
+    var url = `http://${endpoint_url}:5016/retrievebooleanfalse/`
     displayAllcourses();
     displayEnrolledCourses(serviceURL);
-    
+    displayAllOfTheCourses(url)
+    //displayPreReq(url);
 }
 function displayAllcourses(){
     var url = `http://${endpoint_url}:5016/courseoverview`;
@@ -21,6 +23,95 @@ function displayAllcourses(){
     request.open("GET", (`${url}`), false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
+}
+function displayAllOfTheCourses(url){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("entered here line 16");
+            //will do for a loop here to retrieve each course
+            displayboolean(this);
+        }
+    }
+    //request.open("GET", (`${checkoutURL}/${LearnerID}`), false);
+    request.open("GET", (`${url}`), false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+function displayboolean(obj){
+    var response_json = JSON.parse(obj.responseText);
+    var incomplete_courses = response_json["data"]["courses"]
+    var tableHtml = `<div class='row'><div class="col-sm-4">
+    <div class="card m-2 p-2">
+    <div class="card-body">`;
+    var counter = 0;
+    for(element of incomplete_courses){
+        counter+= 1;
+        console.log(element['CourseID'])
+        tableHtml += `
+        
+        <h5 class="card-title">${element['CourseName']}</h5>
+        <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${counter}.jpg" alt="Image" width="250" height="300"> <br>
+        </br>
+        <a class="card-text" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
+        
+        </br>`;
+    }
+    displayPreReq(counter, tableHtml)
+    //</div></div></div>
+}
+function displayPreReq(counter, tableHtml){
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("entered here line 16");
+            //will do for a loop here to retrieve each course
+            displayOnlyprerequisites(this, counter, tableHtml);
+        }
+    }
+    //request.open("GET", (`${checkoutURL}/${LearnerID}`), false);
+    request.open("GET", (`${endpoint_url}:5016/retrievePrerequisitecourses/1`), false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+function displayOnlyprerequisites(obj, counter, tableHtml){
+    var response_json = JSON.parse(obj.responseText);
+    var incomplete_courses = response_json["data"]["courses"]
+    //lets say counter == 3,
+    for(element of incomplete_courses){
+        if(element['MainCourseID'] > counter){
+            retrieveByAllCourses(element['MainCourseID'], tableHtml)
+        }
+    }   
+}
+function retrieveByAllCourses(CourseID, tableHtml){
+    var url = `${endpoint_url}:5016/retrieveinprogress/${CourseID}`
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log("entered here line 16");
+            //will do for a loop here to retrieve each course
+            displaydisplaying(this,tableHtml, CourseID);
+        }
+    }
+    //request.open("GET", (`${checkoutURL}/${LearnerID}`), false);
+    request.open("GET", (`url`), false);
+    request.setRequestHeader("Content-type", "application/json");
+    request.send();
+}
+function displaydisplaying(obj, tableHtml, CourseID){
+    var response_json = JSON.parse(obj.responseText);
+    var incomplete_courses = response_json["data"]["courses"]
+    //lets say counter == 3,
+    for(element of incomplete_courses){
+        tableHtml += ` <h5 class="card-title">${element['CourseName']}</h5>
+        <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${counter}.jpg" alt="Image" width="250" height="300"> <br>
+        </br>
+        <a class="card-text" href='course-overview.html?CourseID=${CourseID}'>View Details</a>
+        `
+    } 
+    tableHtml += `</div></div></div>`;  
+    document.getElementById('prereq').innerHTML = tableHtml;
 }
 function all(obj){
     var response_json = JSON.parse(obj.responseText);
