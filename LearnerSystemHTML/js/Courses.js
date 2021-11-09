@@ -3,7 +3,7 @@ function onLoad(){
     var id = sessionStorage.setItem('LearnerID', 1)
     var id = 1
     var serviceURL = `http://${endpoint_url}:5016/individualcourse/${id}`
-    var url = `http://${endpoint_url}:5016/retrievebooleanfalse/`
+    var url = `http://${endpoint_url}:5016/retrievebooleanfalse`
     displayAllcourses();
     displayEnrolledCourses(serviceURL);
     displayAllOfTheCourses(url)
@@ -41,22 +41,24 @@ function displayAllOfTheCourses(url){
 function displayboolean(obj){
     var response_json = JSON.parse(obj.responseText);
     var incomplete_courses = response_json["data"]["courses"]
-    var tableHtml = `<div class='row'><div class="col-sm-4">
-    <div class="card m-2 p-2">
-    <div class="card-body">`;
+    var tableHtml = `<div class='row'>`;
     var counter = 0;
     for(element of incomplete_courses){
         counter+= 1;
         console.log(element['CourseID'])
         tableHtml += `
-        
+        <div class="col-sm-4">
+    <div class="card m-2 p-2">
+    <div class="card-body">
         <h5 class="card-title">${element['CourseName']}</h5>
         <img class="card-img-top img-fluid rounded-top" src="./Courses_images/image${counter}.jpg" alt="Image" width="250" height="300"> <br>
         </br>
         <a class="card-text" href='course-overview.html?CourseID=${element['CourseID']}'>View Details</a>
-        
+        </div></div></div>
         </br>`;
     }
+    console.log(tableHtml)
+    document.getElementById('prerequisite').innerHTML = tableHtml;
     displayPreReq(counter, tableHtml)
     //</div></div></div>
 }
@@ -70,7 +72,7 @@ function displayPreReq(counter, tableHtml){
         }
     }
     //request.open("GET", (`${checkoutURL}/${LearnerID}`), false);
-    request.open("GET", (`${endpoint_url}:5016/retrievePrerequisitecourses/1`), false);
+    request.open("GET", (`http://${endpoint_url}:5016/retrievePrerequisitecourses/1`), false);
     request.setRequestHeader("Content-type", "application/json");
     request.send();
 }
@@ -85,7 +87,7 @@ function displayOnlyprerequisites(obj, counter, tableHtml){
     }   
 }
 function retrieveByAllCourses(CourseID, tableHtml){
-    var url = `${endpoint_url}:5016/retrieveinprogress/${CourseID}`
+    var url = `http://${endpoint_url}:5016/retrieveinprogress/${CourseID}`
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -111,7 +113,7 @@ function displaydisplaying(obj, tableHtml, CourseID){
         `
     } 
     tableHtml += `</div></div></div>`;  
-    document.getElementById('prereq').innerHTML = tableHtml;
+    document.getElementById('prerequiste').innerHTML = tableHtml;
 }
 function all(obj){
     var response_json = JSON.parse(obj.responseText);
