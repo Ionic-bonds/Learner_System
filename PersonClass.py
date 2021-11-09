@@ -908,7 +908,7 @@ def retrieveSectionMaterials():
         } 
     ), 404 
 
-@app.route("/sectionquiz") 
+@app.route("/sectionquiz", methods=['GET']) 
 def retrieveSectionQuiz(): 
     SectionQuizList = SectionQuiz.query.all()
     if len(SectionQuizList): 
@@ -970,7 +970,7 @@ def retrieveCourseNameID(LearnerID):
     #SELECT a.*, b.* from course_record a, course_prerequisite b where a.CourseID = b.PrerequisiteCourseID and a.LearnerID = 1
 #and a.CourseProgress = 100 and (a.FinalQuizResult ='Pass' or a.FinalQuizResult = 'Ungraded')
 
-@app.route("/sectionquiz/<string:SectionQuizID>")
+@app.route("/sectionquiz/<string:SectionQuizID>", methods=['GET'])
 def find_by_SectionQuizID(SectionQuizID):
     sectionquiz = SectionQuiz.query.filter_by(SectionQuizID=SectionQuizID).first()
     if sectionquiz:

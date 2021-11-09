@@ -1,16 +1,24 @@
-# Kingson's TDD
-
-import unittest
+import os
+from os import path
+import PersonClass
+#PersonClass.path.append('/.../spm-project/')
+from PersonClass import QuizQn
 from PersonClass import *
 from routes import *
 
 from flask import Flask
 import json
 
-def test_new_learner():
-    learner = Learner(1,9)
-    assert learner.LearnerID == 9
-    assert learner.PersonID == 1 
+def test_new_quiz_qn():
+    quiz_qn = QuizQn(2,5,2,1,8,'A display listing of program options which users can select, is called',4,'Monitor')
+    assert quiz_qn.QuizQnID == 2
+    assert quiz_qn.CourseID == 5
+    assert quiz_qn.SectionMaterialsID == 2
+    assert quiz_qn.SectionQuizID == 1  
+    assert quiz_qn.SectionID == 8
+    assert quiz_qn.QuizQuestion == 'A display listing of program options which users can select, is called'  
+    assert quiz_qn.QuizOptionNo == 4
+    assert quiz_qn.QuizOption == 'Monitor'    
 
 def test_base_route():
     app = Flask(__name__)
@@ -22,7 +30,7 @@ def test_base_route():
     assert response.get_data() == b'Hello, World!'
     assert response.status_code == 200
 
-def test_get_learner():
+def test_get_quiz_qn():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://spm:spmteam09@spm-database-1.cujkm1zfxmqs.us-east-2.rds.amazonaws.com:3306/LearnerSystem'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -34,11 +42,11 @@ def test_get_learner():
     CORS(app)
     configure_routes(app)
     client = app.test_client()
-    url = 'http://3.144.166.168:5016/learner/1'
+    url = 'http://3.144.166.168:5016/quizquestions'
     response = client.get(url)
     assert response.status_code == 200
 
-def test_learner_details():
+def test_quiz_qn_details():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL') or 'mysql+mysqlconnector://spm:spmteam09@spm-database-1.cujkm1zfxmqs.us-east-2.rds.amazonaws.com:3306/LearnerSystem'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -50,14 +58,15 @@ def test_learner_details():
     CORS(app)
     configure_routes(app)
     client = app.test_client()
-    url = 'http://3.144.166.168:5016/learnerDetails/1'
+    url = 'http://3.144.166.168:5016/quizquestions/1'
 
     mock_request_data = {
-        'ContactNo': 89999999,
-        'Email': "jiaqilovesponiesandstrawberries@company.com",
-        'NRIC': "S9999999A",
-        'PersonID': 3,
-        'name': "JaiQee"
+      "CourseID": 1, 
+      "QuizQnID": 1, 
+      "SectionID": 1, 
+      "SectionMaterialsID": 1, 
+      "SectionQuizID": 1
+
     }
 
     response = client.get(url, data= mock_request_data)
