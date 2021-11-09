@@ -137,6 +137,7 @@ async function removeRecord(courseRecordID){
                 );
                 const result = await response.json();
                 console.log(result);
+                window.location.reload();
                 
         } catch (error) {
             // Errors when calling the service; such as network error, 
