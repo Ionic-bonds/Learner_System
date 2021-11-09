@@ -12,7 +12,7 @@ from flask import Flask
 import json
 
 
-def test_new_enrolment():
+def test_createTrainerSchedule():
     """
     GIVEN a TrainerSchedule model
     WHEN a new Enrollment is created
